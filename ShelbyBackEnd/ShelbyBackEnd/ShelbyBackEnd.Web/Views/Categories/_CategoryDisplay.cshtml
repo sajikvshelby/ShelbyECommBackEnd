@@ -1,5 +1,8 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using ShelbyBackEnd.Web.Models.ViewModels
+@model CategoriesVM
+
+<div class="form-floating py-2 col-12">
+    <input asp-for="Category.display_order" class="form-control border shadow" />
+    <label asp-for="Category.display_order" class="ms-2"></label>
+
+</div>

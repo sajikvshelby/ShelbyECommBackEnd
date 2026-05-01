@@ -96,7 +96,7 @@
                     <select id="sub_category" asp-for="Category.category_id" class="form-control form-select border shadow">
                         <option value="">--Select category--</option>
                     </select>
-                    <label asp-for="Category.parent_category_id" class="ms-2"></label>
+                    <label asp-for="Category.category_id" class="ms-2"></label>
                     <span asp-validation-for="Category.category_id" class="text-danger"></span>
                    
                 </div>
@@ -116,9 +116,9 @@
                         <button type="button" id="btn-6" class="col-2 btn btn-secondary content-button" onclick="showOnly('6')">Misc</button>
                     </div>
                     <div class="d-flex justify-content-center align-items-center fw-bold text-decoration-underline">Advanced Info</div>
-                    </div>
+                </div>
 
-                 <div>
+                <div>
                     <div id="1" class="content-box"> <partial name="_CategoryDescriptions" model="@Model" /></div>
                     <div id="2" class="content-box" style="display:none;"><partial name="_SearchEngineOptimization" model="@Model" /></div>
                     <div id="3" class="content-box" style="display:none;"><partial name="_CategoryDisplay" model="@Model" /></div>
@@ -126,11 +126,11 @@
                     <div id="5" class="content-box" style="display:none;"><partial name="_ProductDisplay" model="@Model" /></div>
                     <div id="6" class="content-box" style="display:none;"><partial name="_Misc" model="@Model" /></div>
                 </div>
+
                 
 
                
-
-                <div class="row pt-2">
+                <div class="row pt-2 d-flex justify-content-center align-items-center">
                     <div class="col-6 col-md-3">
                         <button type="submit" class="btn btn-success w-100">
                             <i class="bi bi-check-circle"></i>Create

@@ -3,7 +3,27 @@
 
 
 <div class="form-floating py-2 col-12">
-    <input asp-for="Category.meta_title" class="form-control border shadow" />
+    <input asp-for="Category.alt_url" class="form-control border shadow" />
+    <label asp-for="Category.alt_url" class="ms-2"></label>
+
+</div>
+
+<div class="form-floating py-2 col-12">
+    <textarea asp-for="Category.meta_title" class="form-control w-100 h-20 " rows="5"></textarea>
     <label asp-for="Category.meta_title" class="ms-2"></label>
 
 </div>
+
+<div class="form-floating py-2 col-12">
+    <textarea asp-for="Category.meta_desc" class="form-control w-100 h-25 " rows="5"></textarea>
+    <label asp-for="Category.meta_desc" class="ms-2"></label>
+
+</div>
+<div class="form-floating py-2 col-12">
+    <textarea asp-for="Category.meta_keywords" class="form-control w-100 h-25 " rows="5"></textarea>
+    <label asp-for="Category.meta_keywords" class="ms-2"></label>
+
+</div>
+
+
+@* Meta Override  *@
