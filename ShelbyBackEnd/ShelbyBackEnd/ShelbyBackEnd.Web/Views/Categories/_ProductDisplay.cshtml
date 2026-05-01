@@ -6,9 +6,9 @@
     <select id="parent_category" asp-for="Category.default_sort_by_id" asp-items="@Model.sortByList" class="form-control form-select border shadow">
         <option value="">--Select Sort By--</option>
     </select>
-    <label asp-for="Category.default_sort_by_id" class="ms-2"></label>
+    <label asp-for="Category.default_sort_by_id" class="ms-2">Default Sort By</label>
 
-    <span asp-validation-for="Category.default_sort_by_id" class="text-danger"></span>
+    
                    
 </div>
 
