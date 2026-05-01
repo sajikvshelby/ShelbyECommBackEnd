@@ -1,0 +1,175 @@
+
+
+:root {
+    --bs-base-font-size: 16px;
+    --shelby-font-family: source-sans-pro, sans-serif;
+    /* Color Variables */
+    --clr-black: hsla(0, 0%, 0%, 1); /* Shelby Black */
+    --clr-white: hsla(0, 0%, 100%, 1); /* Shelby White */
+    --clr-lt-grey: hsla(0, 0%, 90%, 1); /* Shelby Light Grey */
+    --clr-dk-grey: hsla(0, 0%, 35%, 1); /* Shelby Dark Grey */
+    --clr-md-grey: #EBECF0; /* Shelby Medium Grey */
+    --clr-shelby-red: hsla(0, 80%, 45%, 1); /* Shelby Red */
+    --clr-b2b-blu: rgb(17,84,137); /* Shelby B2B Blue */
+    --clr-blu-hover: hsla(206, 88%, 40%, 1); /* Shelby Blue Hover */
+    /* Font Sizing Variables */
+    --fs-050: 0.75rem; /* 12px */
+    --fs-100: 0.875rem; /* 14px */
+    --fs-200: 1.0rem; /* 16px */
+    --fs-250: 1.065rem; /* 16px */
+    --fs-300: 1.125rem; /* 18px */
+    --fs-400: 1.25rem; /* 20px */
+    --fs-500: 1.375rem; /* 22px */
+    --fs-550: 1.4rem; /* 23px */
+    --fs-600: 1.5rem; /* 24px */
+    --fs-650: 1.563rem; /* 25px */
+    --fs-700: 1.625rem; /* 26px */
+    --fs-800: 1.75rem; /* 28px */
+    --fs-900: 1.875rem; /* 30px */
+    --fs-1000: 2.0rem; /* 32px */
+    --fs-1050: 2.125rem; /* 34px */
+    --fs-1100: 2.25rem; /* 36px */
+    --fs-1150: 2.375rem; /* 38px */
+    --fs-1200: 2.5rem; /* 40px */
+    /* Padding and Margin Variables */
+    --spc-025: 0.313em;
+    --spc-050: 0.375em;
+    --spc-075: 0.438em;
+    --spc-100: 0.500em;
+    /* Text Colors */
+    --clr-text-100: hsla(0, 0%, 100%, 1); /* Shelby White Text */
+    --clr-text-200: hsla(0, 0%, 80%, 1); /* Shelby Light Grey */
+    --clr-text-300: hsla(0, 0%, 60%, 1); /* Shelby Medium Grey */
+    --clr-text-400: hsla(0, 0%, 45%, 1); /* Shelby Dark Grey */
+    --clr-text-450: hsla(0, 0%, 20%, 1); /* Shelby Darkest Grey */
+    --clr-text-500: hsla(0, 80%, 45%, 1); /* Shelby Red */
+    --clr-text-600: hsla(206, 88%, 30%, 1); /* Shelby Blue */
+    --clr-text-700: hsla(205, 81%, 29%, 1); /* Shelby Dark Blue */
+    --clr-text-800: hsla(46, 78%, 48%, 1); /* Low Inventory Yellow  */
+    --clr-text-850: hsla(0, 80%, 45%, 1); /* Out Of Stock Red  */
+    --clr-text-875: hsla(120, 100%, 25%, 1); /* Green Stock Alert Color  */
+    --clr-text-900: hsla(0, 0%, 0%, 1); /* Shelby t Black Text */
+    /* Background Colors */
+    --clr-bg-100: hsla(0, 0%, 100%, 1); /* shelby white bg */
+    --clr-bg-125: hsla(0, 0%, 100%, 0.25); /* shelby white bg 25% opacity */
+    --clr-bg-150: hsla(0, 0%, 100%, 0.5); /* shelby white bg 50% opacity */
+    --clr-bg-175: hsla(0, 0%, 100%, 0.75); /* shelby white bg 75% opacity */
+    --clr-bg-200: hsla(0, 0%, 90%, 1); /* shelby light grey */
+    --clr-bg-300: hsla(0, 0%, 70%, 1); /* shelby medium grey */
+    --clr-bg-400: hsla(0, 0%, 35%, 1); /* shelby dark grey */
+    --clr-bg-450: hsla(0, 0%, 7%, 1); /* shelby dark grey */
+    --clr-bg-500: hsla(0, 80%, 45%, 1); /* shelby red */
+    --clr-bg-525: hsla(0, 80%, 45%, 0.25); /* shelby red 25% opacity */
+    --clr-bg-550: hsla(0, 80%, 45%, 0.5); /* shelby red 50% opacity */
+    --clr-bg-575: hsla(0, 80%, 45%, 0.75); /* shelby red 75% opacity */
+    --clr-bg-600: hsla(206, 88%, 30%, 1); /* shelby blue 100% opacity */
+    --clr-bg-625: hsla(206, 88%, 30%, .25); /* shelby blue 25% opacity */
+    --clr-bg-650: hsla(206, 88%, 30%, .5); /* shelby blue 50% opacity */
+    --clr-bg-675: hsla(206, 88%, 30%, .75); /* shelby blue 75% opacity */
+    --clr-bg-610: hsla(206, 88%, 40%, 1); /* shelby blue hover */
+    --clr-bg-700: hsla(214, 66%, 18%, 1); /* dark shelby blue 100% opacity */
+    --clr-bg-725: hsla(214, 66%, 18%, .25); /* dark shelby blue 25% opacity */
+    --clr-bg-750: hsla(214, 66%, 18%, .5); /* dark shelby blue 50% opacity */
+    --clr-bg-775: hsla(214, 66%, 18%, .75); /* dark shelby blue 75% opacity */
+    --clr-bg-800: hsla(0, 51%, 43%, 1); /* TS signup red */
+    --clr-bg-900: hsla(0, 0%, 0%, 1); /* shelby black bg */
+    --clr-bg-925: hsla(0, 0%, 0%, 0.25); /* shelby black bg 25% opacity */
+    --clr-bg-950: hsla(0, 0%, 0%, 0.5); /* shelby black bg 50% opacity */
+    --clr-bg-975: hsla(0, 0%, 0%, 0.75); /* shelby black bg 75% opacity */
+    --clr-bg-1000: hsla(46, 78%, 48%, 1); /* Amazon yellow */
+    --clr-bg-1010: hsla(40, 100%, 46%, 1); /* Amazon dark yellow */
+    --clr-bg-1100: hsla(57, 100%, 50%, 1); /* Top Alert Banner Yellow */
+    /**********************************/
+}
+
+.b2b_blu {
+    background-color: var(--clr-b2b-blu);
+}
+
+.b2b-link_blu:hover {
+    background-color: var(--clr-b2b-blu);
+}
+
+.b2b_white {
+    background-color: var(--clr-white);
+}
+
+.b2b_medium_gry {
+    background-color: var(--clr-bg-200);
+}
+
+.b2b_Dark_gry {
+    background-color: var(--clr-text-400);
+}
+
+.b2b_black {
+    background-color: var( --clr-black);
+}
+
+
+.custom-link:hover {
+    background-color: var( --clr-black);
+}
+
+
+
+@media (max-width:2000px) {
+    .navbar-expand-srset > .container, .navbar-expand-srset > .container-fluid {
+        padding-right: 0;
+        padding-left: 0
+    }
+}
+
+@media (min-width:2000px) {
+    .navbar-expand-srset {
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+        -ms-flex-pack: start;
+        justify-content: flex-start
+    }
+
+        .navbar-expand-srset .navbar-nav {
+            -ms-flex-direction: row;
+            flex-direction: row
+        }
+
+            .navbar-expand-srset .navbar-nav .dropdown-menu {
+                position: absolute
+            }
+
+            .navbar-expand-srset .navbar-nav .dropdown-menu-right {
+                right: 0;
+                left: auto
+            }
+
+            .navbar-expand-srset .navbar-nav .nav-link {
+                padding-right: .5rem;
+                padding-left: .5rem
+            }
+
+        .navbar-expand-srset > .container, .navbar-expand-srset > .container-fluid {
+            -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap
+        }
+
+        .navbar-expand-srset .navbar-collapse {
+            display: -ms-flexbox !important;
+            display: flex !important
+        }
+
+        .navbar-expand-srset .navbar-toggler {
+            display: none
+        }
+
+    .navbar {
+        flex-wrap: nowrap !important;
+        -ms-flex-wrap: nowrap !important;
+    }
+}
+
+
+
+
+/*--------------------------*/

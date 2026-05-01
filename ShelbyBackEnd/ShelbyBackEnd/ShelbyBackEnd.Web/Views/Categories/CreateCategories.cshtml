@@ -1,0 +1,160 @@
+﻿@using ShelbyBackEnd.Web.Models.ViewModels
+@model CategoriesVM
+
+
+@section Scripts {
+    
+    <script>
+        $(document).ready(function () {
+           
+            $('#parent_category').change(function () {
+                var parentCategoryId = $(this).val();
+                var subCategorySelect = $('#sub_category');
+                subCategorySelect.empty();
+                subCategorySelect.append('<option value="">-- Select Subcategory --</option>');
+                if (parentCategoryId) {
+                    $.ajax({
+                        url: '@Url.Action("GetSubcategories", "Categories")',
+                        type: 'GET',
+                        data: { parentCategoryId: parentCategoryId },
+                        success: function (subcategories) {
+                            $.each(subcategories, function (i, subcategory) {
+                                subCategorySelect.append($('<option>', {
+                                    value: subcategory.category_id,
+                                    text: subcategory.category_name
+                                }));
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
+
+
+
+
+                function showOnly(id) {
+          const allDivs = document.getElementsByClassName('content-box');
+          for (let div of allDivs) {
+            div.style.display = "none";
+          }
+
+          for (let i = 1; i <= 6; i++) {
+
+               let element = document.getElementById("btn-" + i);
+         element.style.backgroundColor = "gray";
+          }
+          //      const allbutton = document.getElementsByClassName('btn');
+          // for (let b of allbutton) {
+          //   b.style.backgroundColor = "btn-secondary";
+          // }
+
+
+          
+            let element = document.getElementById("btn-" + id);
+         element.style.backgroundColor = "green";
+          
+          document.getElementById(id).style.display = "block";
+        }
+
+    </script>
+}
+
+
+<div class="w-100 card border-0 p-4">
+    <div class="card-header bg-success bg-gradient m-lg-0 py-3">
+        <div class="row">
+            <div class="col text-center">
+                <h2 class="text-white py-2">Create Category</h2>
+
+            </div>
+        </div>
+    </div>
+    <div class="card-body border p-4">
+        <form method="post" class="row" enctype="multipart/form-data">
+            <div class="p-3">
+
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="Category.category_name" class="form-control border shadow" />
+                    <label asp-for="Category.category_name" class="ms-2"></label>
+                    <span asp-validation-for="Category.category_name" class="text-danger"></span>
+                </div>
+           
+                <div class="form-floating py-2 col-12">
+                    
+                    <select id="parent_category" asp-for="Category.parent_category_id" asp-items="@Model.categoryList" class="form-control form-select border shadow">
+                        <option value="">--Select Category--</option>
+                    </select>
+                    <label asp-for="Category.parent_category_id" class="ms-2"></label>
+
+                    <span asp-validation-for="Category.parent_category_id" class="text-danger"></span>
+                   
+                </div>
+
+                <div class="form-floating py-2 col-12">
+                    <select id="sub_category" asp-for="Category.category_id" class="form-control form-select border shadow">
+                        <option value="">--Select category--</option>
+                    </select>
+                    <label asp-for="Category.parent_category_id" class="ms-2"></label>
+                    <span asp-validation-for="Category.category_id" class="text-danger"></span>
+                   
+                </div>
+
+                <div class="form-floating py-2 col-12">
+                    
+                    <div>  <input type="checkbox" asp-for="Category.hidden" />   Hidden </div>
+                </div>
+                <div class="container">
+                    <div class="row flex-nowrap overflow-auto py-3">
+
+                        <button type="button" id="btn-1" class="col-2 btn btn-secondary content-button" onclick="showOnly('1')">Category Descriptions</button>
+                        <button type="button" id="btn-2" class="col-3 btn btn-secondary content-button" onclick="showOnly('2')">Search Engine Optimization</button>
+                        <button type="button" id="btn-3" class="col-2 btn btn-secondary content-button" onclick="showOnly('3')">Category Display</button>
+                        <button type="button" id="btn-4" class="col-2 btn btn-secondary content-button" onclick="showOnly('4')">Subcategory Display</button>
+                        <button type="button" id="btn-5" class="col-2 btn btn-secondary content-button" onclick="showOnly('5')">Product Display</button>
+                        <button type="button" id="btn-6" class="col-2 btn btn-secondary content-button" onclick="showOnly('6')">Misc</button>
+                    </div>
+                    </div>
+
+                 <div>
+                <div id="1" class="content-box">Content for Section 1</div>
+                <div id="2" class="content-box" style="display:none;">Content for Section 2</div>
+                <div id="3" class="content-box" style="display:none;">Content for Section 2</div>
+                <div id="4" class="content-box">Content for Section 1</div>
+                <div id="5" class="content-box" style="display:none;">Content for Section 2</div>
+                <div id="6" class="content-box" style="display:none;">Content for Section 2</div>
+                </div>
+                
+
+               
+
+                <div class="row pt-2">
+                    <div class="col-6 col-md-3">
+                        <button type="submit" class="btn btn-success w-100">
+                            <i class="bi bi-check-circle"></i>Create
+                        </button>
+                    
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a asp-controller="Categories" asp-action="Index" class="btn btn-secondary w-100"> <i class="bi bi-x-circle"></i>Cancel</a>
+                    
+                    </div>
+
+                   
+                </div>
+
+                
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+
+

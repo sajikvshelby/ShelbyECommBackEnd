@@ -1,0 +1,106 @@
+﻿@using ShelbyBackEnd.Infrastructure.Models
+@model IEnumerable<Select_CategoriesResult>
+@{
+
+    string id = "";
+}
+
+
+<div class="w-100 card border-0 p-4">
+    <div class="card-header bg-success bg-gradient m-lg-0 py-3">
+        <div class="row">
+            <div class="col text-center">
+                <h2 class="text-white py-2">Categories List</h2>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="w-100 card border-0 p-4">
+
+    <div class="row pb-3">
+        <div class="col-6 offset-6 text-end">
+            <a asp-action="CreateCategories" asp-controller="Categories" class="btn btn-secondary"> <i class="bi bi-plus-circle"></i>Create new category</a>
+        </div>
+    </div>
+    <div class="row content-center">
+        <div class="col">
+            <h5>ID</h5>
+        </div>
+        <div class="col">
+            <h5> Category Name</h5>
+        </div>
+
+        @foreach (var category in Model.Where(l => l.parent_category_id == 0))
+        {
+            @if (Model.Any(m => m.parent_category_id == category.category_id))
+            {
+                <div class="accordion w-100" id="categoryAccordion">
+                    <div class="border">
+                        <button class="accordion-button collapsed w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-@category.category_id">
+                            <partial name="_category" model="@category" />
+                        </button>
+                    </div>
+                    @foreach (var subMenuItem in Model.Where(l => l.parent_category_id == category.category_id))
+                    {
+                       
+                        @* @if (Model.Any(m => m.parent_category_id == subMenuItem.category_id))
+                        {
+                            <div class="accordion w-100" id="subMenuAccordion1">
+                                <div class="border">
+                                    <button class="accordion-button collapsed w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-@subMenuItem.category_id">
+                                        <partial name="_category" model="@subMenuItem" />
+                                    </button>
+                                </div>
+                                @foreach (var subsubMenuItem in Model.Where(l => l.parent_category_id == subMenuItem.category_id).ToList())
+                                {
+
+                                       <div id="collapseOne-@subMenuItem.category_id" class="accordion-collapse collapse  border-5" data-bs-parent="#subMenuAccordion">
+                                        <div class="accordion w-100" id="subMenuAccordion2">
+                                            <div class="border row">
+                                                <partial name="_category" model="@subsubMenuItem" />
+                                            </div>
+                                        </div>
+                   
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        { *@
+                            <div id="collapseOne-@category.category_id" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
+                                <div class="accordion w-100" id="categoryAccordion">
+                                    <div class="border row">
+                                        <partial name="_category" model="@subMenuItem" />
+                                    </div>
+                            
+                                </div>
+                   
+                            </div>
+                        @* } *@
+                    }
+                </div>
+              
+            }
+            else
+            {
+                <div class="accordion row pt-2 border" id="myAccordion">
+                    <partial name="_category" model="@category" />
+                </div>
+            }
+        }
+    </div>
+</div>
+
+
+
+
+  
+
+
+
+
+
+
+  

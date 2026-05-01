@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ShelbyBackEnd.Web</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ShelbyBackEnd.Web.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://use.typekit.net/grr1gqr.css">
+</head>
+<body>
+    <header class="b2b_medium_gry d-flex flex-column">
+
+
+        <div class="w-100 mx-auto">
+            <nav class="navbar  navbar-light   b2b_blu  navbar-expand-srset">
+
+                <div class="container-fluid ">
+               
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+ 
+                    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                    
+                        <ul class="navbar-nav flex-grow-1 justify-content-center">
+                            @await Component.InvokeAsync("ShelbyBackEndMenu")
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+    </header>
+
+
+    <div class="w-50  container-fluid  b2b_white    mx-auto overflow-auto mb-3 vh-100" style="scrollbar-width: thin;">
+
+            @RenderBody()
+    
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2026 - ShelbyBackEnd.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://kit.fontawesome.com/7094d47d5a.js" crossorigin="anonymous"></script>
+    <script src="https://googleapis.com"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

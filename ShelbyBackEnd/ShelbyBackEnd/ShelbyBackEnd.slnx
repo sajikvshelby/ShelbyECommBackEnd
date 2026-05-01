@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="../ShelbyBackEnd.Application/ShelbyBackEnd.Application.csproj" />
+  <Project Path="../ShelbyBackEnd.Infrastructure/ShelbyBackEnd.Infrastructure.csproj" />
+  <Project Path="../ShelbyBackEnd.Services/ShelbyBackEnd.Services.csproj" />
+  <Project Path="ShelbyBackEnd.Web/ShelbyBackEnd.Web.csproj" />
+</Solution>

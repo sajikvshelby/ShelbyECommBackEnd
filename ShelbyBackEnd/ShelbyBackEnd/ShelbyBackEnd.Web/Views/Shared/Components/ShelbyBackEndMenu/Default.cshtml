@@ -1,0 +1,43 @@
+﻿@using ShelbyBackEnd.Infrastructure.Models
+
+ 
+@model IEnumerable<Select_BackEnd_MenuResult>
+
+
+
+<ul class="navbar-nav  d-flex justify-content-center">
+    @foreach (var category in Model.Where(l => l.parent_backend_menu_id == 0))
+    {
+        <li class="nav-item dropdown  me-3">
+            <a class="dropdown-item text-white b2b-link_blu" href="#">@category.backend_menu_name</a>
+
+            @if (Model.Any(m => m.parent_backend_menu_id == category.backend_menu_id))
+            {
+                <ul class="dropdown-menu sub-menu" aria-labelledby="navbarDropdown_@category.backend_menu_id">
+                    @foreach (var subMenuItem in Model.Where(l => l.parent_backend_menu_id == category.backend_menu_id))
+                    {
+                        <li>
+                            <a class="dropdown-item" asp-controller="Categories" asp-action="Index">@subMenuItem.backend_menu_name</a>
+                        </li>
+                    }
+                </ul>
+            }
+        </li>
+                
+    }
+       
+</ul>
+
+<style>
+  
+    .sub-menu {
+        display: none;
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .nav-item:hover .sub-menu {
+        display: grid;
+    }
+</style>
+
+ 
