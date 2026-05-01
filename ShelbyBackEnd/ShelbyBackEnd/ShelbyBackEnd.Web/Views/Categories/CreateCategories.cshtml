@@ -115,15 +115,16 @@
                         <button type="button" id="btn-5" class="col-2 btn btn-secondary content-button" onclick="showOnly('5')">Product Display</button>
                         <button type="button" id="btn-6" class="col-2 btn btn-secondary content-button" onclick="showOnly('6')">Misc</button>
                     </div>
+                    <div class="d-flex justify-content-center align-items-center fw-bold text-decoration-underline">Advanced Info</div>
                     </div>
 
                  <div>
-                <div id="1" class="content-box">Content for Section 1</div>
-                <div id="2" class="content-box" style="display:none;">Content for Section 2</div>
-                <div id="3" class="content-box" style="display:none;">Content for Section 2</div>
-                <div id="4" class="content-box">Content for Section 1</div>
-                <div id="5" class="content-box" style="display:none;">Content for Section 2</div>
-                <div id="6" class="content-box" style="display:none;">Content for Section 2</div>
+                    <div id="1" class="content-box"> <partial name="_CategoryDescriptions" model="@Model" /></div>
+                    <div id="2" class="content-box" style="display:none;"><partial name="_SearchEngineOptimization" model="@Model" /></div>
+                    <div id="3" class="content-box" style="display:none;"><partial name="_CategoryDisplay" model="@Model" /></div>
+                    <div id="4" class="content-box" style="display:none;"><partial name="_SubcategoryDisplay" model="@Model" />  </div>
+                    <div id="5" class="content-box" style="display:none;"><partial name="_ProductDisplay" model="@Model" /></div>
+                    <div id="6" class="content-box" style="display:none;"><partial name="_Misc" model="@Model" /></div>
                 </div>
                 
 
