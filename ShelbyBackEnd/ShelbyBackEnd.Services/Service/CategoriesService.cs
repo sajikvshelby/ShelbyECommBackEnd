@@ -10,6 +10,7 @@ namespace ShelbyBackEnd.Services.Service
     {
         private readonly ShelbyECommContext _db;
 
+
         public CategoriesService(ShelbyECommContext db)
         {
             _db = db;
