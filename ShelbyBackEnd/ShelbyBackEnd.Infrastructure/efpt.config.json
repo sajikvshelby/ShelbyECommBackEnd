@@ -39,6 +39,10 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[Select_Sort_By_List]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[Update_Categories]",
          "ObjectType": 1
       }

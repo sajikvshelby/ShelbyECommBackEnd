@@ -39,7 +39,14 @@ namespace ShelbyBackEnd.Web.Controllers
                {
                    Text = u.category_name,
                    Value = u.category_id.ToString()
-               })
+               }),
+
+
+                sortByList = (await _categorieService.GetSortByList()).Select(u => new SelectListItem
+                {
+                    Text = u.sort_by_desc,
+                    Value = u.sort_by_id.ToString()
+                })
             };
 
             return View(categoriesVM);

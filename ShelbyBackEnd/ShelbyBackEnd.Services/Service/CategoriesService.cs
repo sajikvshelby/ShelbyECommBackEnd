@@ -26,6 +26,12 @@ namespace ShelbyBackEnd.Services.Service
             return await _db.Procedures.Select_All_Categories_MenuAsync( cancellationToken: cancellationToken);
         }
 
+        public async Task<IEnumerable<Select_Sort_By_ListResult>> GetSortByList(CancellationToken cancellationToken = default)
+        {
+            return await _db.Procedures.Select_Sort_By_ListAsync(cancellationToken: cancellationToken);
+        }
+
+
 
         public async Task<bool> Insert_Categories(Select_CategoriesResult category, CancellationToken cancellationToken = default)
         {

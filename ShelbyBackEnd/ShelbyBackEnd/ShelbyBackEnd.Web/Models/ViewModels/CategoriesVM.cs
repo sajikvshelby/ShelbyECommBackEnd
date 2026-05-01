@@ -7,5 +7,6 @@ namespace ShelbyBackEnd.Web.Models.ViewModels
     {
        public Select_CategoriesResult? Category { get; set; }
         public IEnumerable<SelectListItem> categoryList {  get; set; }
+        public IEnumerable<SelectListItem> sortByList { get; set; }
     }
 }

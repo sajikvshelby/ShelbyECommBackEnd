@@ -329,6 +329,26 @@ namespace ShelbyBackEnd.Infrastructure.Models
             return _;
         }
 
+        public virtual async Task<List<Select_Sort_By_ListResult>> Select_Sort_By_ListAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<Select_Sort_By_ListResult>("EXEC @returnValue = [dbo].[Select_Sort_By_List]", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
         public virtual async Task<int> Update_CategoriesAsync(int? category_id, int? parent_category_id, string category_name, int? display_order, short? default_sort_by_id, bool? hidden, string category_placement, bool? display_subcat_items, string alt_url, string alt_url_target, string link_title, string meta_title, string meta_desc, string meta_keywords, string search_tags, string category_desc, bool? category_desc_hidden, string category_short_desc, bool? category_short_desc_hidden, string category_secondary_desc, bool? category_secondary_desc_hidden, int? modified_by, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
