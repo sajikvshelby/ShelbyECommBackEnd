@@ -11,6 +11,8 @@ namespace ShelbyBackEnd.Web.Models.ViewModels
         [ValidateNever]
         public IEnumerable<SelectListItem> categoryList {  get; set; }
         [ValidateNever]
+        public IEnumerable<SelectListItem> subCategoryList { get; set; }
+        [ValidateNever]
         public IEnumerable<SelectListItem> sortByList { get; set; }
 
         [ValidateNever]

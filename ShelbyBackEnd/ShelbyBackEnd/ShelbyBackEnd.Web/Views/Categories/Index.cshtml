@@ -45,12 +45,12 @@
                     @foreach (var subMenuItem in Model.Where(l => l.parent_category_id == category.category_id))
                     {
                        
-                        @* @if (Model.Any(m => m.parent_category_id == subMenuItem.category_id))
+                        @if (Model.Any(m => m.parent_category_id == subMenuItem.category_id))
                         {
                             <div class="accordion w-100" id="subMenuAccordion1">
                                 <div class="border">
                                     <button class="accordion-button collapsed w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-@subMenuItem.category_id">
-                                        <partial name="_category" model="@subMenuItem" />
+                                        <partial name="_subcategory" model="@subMenuItem" />
                                     </button>
                                 </div>
                                 @foreach (var subsubMenuItem in Model.Where(l => l.parent_category_id == subMenuItem.category_id).ToList())
@@ -59,7 +59,7 @@
                                        <div id="collapseOne-@subMenuItem.category_id" class="accordion-collapse collapse  border-5" data-bs-parent="#subMenuAccordion">
                                         <div class="accordion w-100" id="subMenuAccordion2">
                                             <div class="border row">
-                                                <partial name="_category" model="@subsubMenuItem" />
+                                                <partial name="_subcategory" model="@subsubMenuItem" />
                                             </div>
                                         </div>
                    
@@ -68,17 +68,17 @@
                             </div>
                         }
                         else
-                        { *@
+                        {
                             <div id="collapseOne-@category.category_id" class="accordion-collapse collapse" data-bs-parent="#categoryAccordion">
                                 <div class="accordion w-100" id="categoryAccordion">
                                     <div class="border row">
-                                        <partial name="_category" model="@subMenuItem" />
+                                        <partial name="_subcategory" model="@subMenuItem" />
                                     </div>
                             
                                 </div>
                    
                             </div>
-                        @* } *@
+                        }
                     }
                 </div>
               

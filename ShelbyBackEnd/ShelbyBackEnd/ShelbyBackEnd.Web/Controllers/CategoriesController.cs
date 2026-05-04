@@ -56,32 +56,31 @@ namespace ShelbyBackEnd.Web.Controllers
      
 
         [HttpPost]
-        public async Task<IActionResult> CreateCategories(CategoriesVM obj)
+        public async Task<IActionResult> Create(CategoriesVM obj)
         {
+            obj.Category.parent_category_id = (obj.Title == "Sub Sub") ? obj.Category.category_id : obj.Category.parent_category_id;
 
-    //        var errors = ModelState.Values
-    //.SelectMany(v => v.Errors)
-    //.Select(e => e.ErrorMessage)
-    //.ToList();
-          
-             await  _categorieService.Insert_Categories(obj.Category);
+                await  _categorieService.Insert_Categories(obj.Category);
                 TempData["success"] = "created successFully";
                 return RedirectToAction(nameof(Index));
 
         }
 
-        [HttpGet]
-        [Route("Categories/CreateCategories/{categoryid:int}")]
-        public async Task<IActionResult> CreateCategories(int categoryid)
+        //[HttpGet]
+        //[Route("Categories/CreateCategories/{categoryid:int}")]
+
+        [HttpGet("Categories/CreateCategories/{cid}")]
+       
+        public async Task<IActionResult> CreateCategories(int cid)
         {
             
-            var selectedCategories = await _categorieService.GetAllCategories(0,categoryid);
+         
             var categories = await _categorieService.GetCategories();
             CategoriesVM categoriesVM = new()
             {
 
                 Title ="Sub",
-                Category = new Select_All_CategoriesResult { parent_category_id = categoryid },
+                Category = new Select_All_CategoriesResult { parent_category_id = cid },
 
                 categoryList = categories.Where(l => l.parent_category_id == 0).Select(u => new SelectListItem
                 {
@@ -98,20 +97,42 @@ namespace ShelbyBackEnd.Web.Controllers
         }
 
 
-    //    [HttpPost]
-    //    public async Task<IActionResult> CreateSubCategories(CategoriesVM obj)
-    //    {
+        [HttpGet("Categories/CreateCategories/{pid}/{cid}")]
+        //[Route("Categories/CreateCategories/{pid}/{cid}")]
 
-    ////        var errors = ModelState.Values
-    ////.SelectMany(v => v.Errors)
-    ////.Select(e => e.ErrorMessage)
-    ////.ToList();
+        public async Task<IActionResult> CreateCategories(int pid, int cid)
+        {
 
-    //        await _categorieService.Insert_Categories(obj.Category);
-    //        TempData["success"] = "created successFully";
-    //        return RedirectToAction(nameof(Index));
+                    
+            var categories = await _categorieService.GetCategories();
+            CategoriesVM categoriesVM = new()
+            {
 
-    //    }
+                Title = "Sub Sub",
+                Category = new Select_All_CategoriesResult { parent_category_id = pid , category_id = cid },
+
+                categoryList = categories.Where(l => l.parent_category_id == 0).Select(u => new SelectListItem
+                {
+                    Text = u.category_name,
+                    Value = u.category_id.ToString()
+                }),
+                subCategoryList = categories.Where(l => l.parent_category_id == pid).Select(u => new SelectListItem
+                {
+                    Text = u.category_name,
+                    Value = u.category_id.ToString()
+                }),
+                sortByList = (await _categorieService.GetSortByList()).Select(u => new SelectListItem
+                {
+                    Text = u.sort_by_desc,
+                    Value = u.sort_by_id.ToString()
+                })
+            };
+            return View(categoriesVM);
+        }
+
+
+
+   
 
 
         public async Task<IActionResult> UpdateCategories(int categoryid)
