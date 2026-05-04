@@ -1,43 +1,90 @@
-﻿@using ShelbyBackEnd.Infrastructure.Models
-@model Select_All_CategoriesResult
+﻿@using ShelbyBackEnd.Web.Models.ViewModels
+@model CategoriesVM
+
+
+@section Scripts {
+    
+    <script>
+
+        $(document).ready(function () {
+           
+            $('#parent_category').change(function () {
+                var parentCategoryId = $(this).val();
+                var subCategorySelect = $('#sub_category');
+                subCategorySelect.empty();
+                subCategorySelect.append('<option value="">-- Select Subcategory --</option>');
+                if (parentCategoryId) {
+                    $.ajax({
+                        url: '@Url.Action("GetSubcategories", "Categories")',
+                        type: 'GET',
+                        data: { parentCategoryId: parentCategoryId },
+                        success: function (subcategories) {
+                            $.each(subcategories, function (i, subcategory) {
+                                subCategorySelect.append($('<option>', {
+                                    value: subcategory.category_id,
+                                    text: subcategory.category_name
+                                }));
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
+                function showOnly(id) {
+          const allDivs = document.getElementsByClassName('content-box');
+          for (let div of allDivs) {
+            div.style.display = "none";
+          }
+          for (let i = 1; i <= 5; i++) {
+               let element = document.getElementById("btn-" + i);
+         element.style.backgroundColor = "gray";
+          }
+            let element = document.getElementById("btn-" + id);
+         element.style.backgroundColor = "green";
+          document.getElementById(id).style.display = "block";
+        }
+
+    </script>
+}
+
 
 <div class="w-100 card border-0 p-4">
-    <div class="card-header bg-success bg-gradient ml-0 py-3">
+    <div class="card-header bg-success bg-gradient m-lg-0 py-3">
         <div class="row">
-            <div class="col-12 text-center">
-                <h2 class="text-white py-2">Update Category</h2>
+            <div class="col text-center">
+                <h2 class="text-white py-2">Update @Model.Title Category</h2>
+
             </div>
         </div>
     </div>
     <div class="card-body border p-4">
         <form method="post" class="row" enctype="multipart/form-data">
-            <input asp-for="category_id" hidden />
-            <div class="col-10">
-                <div class="p-3">
-                    @* <div asp-validation-summary="All"></div> *@
-                    <div class="form-floating py-1 col-12">
-                        <input asp-for="category_name" class="form-control border shadow" />
-                        <label asp-for="category_name" class="ms-2"></label>
-                        <span asp-validation-for="category_name" class="text-danger"></span>
+
+            @Html.HiddenFor(m => m.Title)
+            <div class="p-3">
+
+                
+                <partial name="_maincategory" model="@Model" />
+
+                <div class="row pt-2 d-flex justify-content-center align-items-center">
+                    <div class="col-6 col-md-3">
+                        <button type="submit" asp-action="UpdateCategories" class="btn btn-success w-100">
+                            <i class="bi bi-check-circle"></i>Update
+                        </button>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a asp-controller="Categories" asp-action="Index" class="btn btn-secondary w-100"> <i class="bi bi-x-circle"></i>Cancel</a>
+                    
                     </div>
                    
-                    <div class="row pt-2">
-                        <div class="col-6 col-md-3">
-                            <button type="submit" class="btn btn-success w-100">
-                                <i class="bi bi-check-circle"></i> Update
-                            </button>
-                        </div>
-                        <div class="col-6 col-md-3">
-                            <a asp-controller="Categories" asp-action="Index" class="btn btn-secondary w-100">
-                                <i class="bi bi-x-circle"></i> Cancel
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
-
-           
         </form>
     </div>
 </div>
+
+
+
+
 
