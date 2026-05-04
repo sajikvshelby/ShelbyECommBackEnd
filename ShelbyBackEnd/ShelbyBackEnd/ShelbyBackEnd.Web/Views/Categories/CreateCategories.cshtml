@@ -5,6 +5,13 @@
 @section Scripts {
     
     <script>
+
+
+
+ 
+
+
+
         $(document).ready(function () {
            
             $('#parent_category').change(function () {
@@ -66,8 +73,8 @@
             <div class="p-3">
 
                 <div class="form-floating py-2 col-12">
-                    <input asp-for="Category.category_name" class="form-control border shadow" />
-                    <label asp-for="Category.category_name" class="ms-2"></label>
+                    <input asp-for="Category.category_name" class="form-control border shadow" required="required" />
+                    <label asp-for="Category.category_name" class="ms-2">Category Name</label>
                     <span asp-validation-for="Category.category_name" class="text-danger"></span>
                 </div>
            
@@ -76,9 +83,9 @@
                     <select id="parent_category" asp-for="Category.parent_category_id" asp-items="@Model.categoryList" class="form-control form-select border shadow">
                         <option value="">--Select Parent Category--</option>
                     </select>
-                    <label asp-for="Category.parent_category_id" class="ms-2"></label>
+                    <label asp-for="Category.parent_category_id" class="ms-2">Parent Category</label>
 
-                    <span asp-validation-for="Category.parent_category_id" class="text-danger"></span>
+                    @* <span asp-validation-for="Category.parent_category_id" class="text-danger"></span> *@
                    
                 </div>
 
@@ -86,8 +93,8 @@
                     <select id="sub_category" asp-for="Category.category_id" class="form-control form-select border shadow">
                         <option value="">--Select  Sub category--</option>
                     </select>
-                    <label asp-for="Category.category_id" class="ms-2"></label>
-                    <span asp-validation-for="Category.category_id" class="text-danger"></span>
+                    <label asp-for="Category.category_id" class="ms-2">Sub category</label>
+                    @* <span asp-validation-for="Category.category_id" class="text-danger"></span> *@
                    
                 </div>
 

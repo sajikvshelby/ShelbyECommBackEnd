@@ -87,7 +87,7 @@ namespace ShelbyBackEnd.Infrastructure.Models
             return _;
         }
 
-        public virtual async Task<int> Insert_CategoriesAsync(int? parent_category_id, string category_name, int? display_order, short? default_sort_by_id, bool? hidden, string category_placement, bool? display_subcat_items, string alt_url, string alt_url_target, string link_title, string meta_title, string meta_desc, string meta_keywords, string search_tags, string category_desc, bool? category_desc_hidden, string category_short_desc, bool? category_short_desc_hidden, string category_secondary_desc, bool? category_secondary_desc_hidden, DateTime? create_date, int? created_by, DateTime? modified_date, int? modified_by, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<int> Insert_CategoriesAsync(int? parent_category_id, string category_name, int? display_order, short? default_sort_by_id, bool? hidden, string category_placement, bool? display_subcat_items, string alt_url, string alt_url_target, string link_title, string meta_title, string meta_desc, string meta_keywords, string search_tags, string category_desc, bool? category_desc_hidden, string category_short_desc, bool? category_short_desc_hidden, string category_secondary_desc, bool? category_secondary_desc_hidden, int? created_by, int? modified_by, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -232,21 +232,9 @@ namespace ShelbyBackEnd.Infrastructure.Models
                 },
                 new SqlParameter
                 {
-                    ParameterName = "create_date",
-                    Value = create_date ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.DateTime,
-                },
-                new SqlParameter
-                {
                     ParameterName = "created_by",
                     Value = created_by ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
-                },
-                new SqlParameter
-                {
-                    ParameterName = "modified_date",
-                    Value = modified_date ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.DateTime,
                 },
                 new SqlParameter
                 {
@@ -256,7 +244,7 @@ namespace ShelbyBackEnd.Infrastructure.Models
                 },
                 parameterreturnValue,
             };
-            var _ = await _context.Database.ExecuteSqlRawAsync("EXEC @returnValue = [dbo].[Insert_Categories] @parent_category_id = @parent_category_id, @category_name = @category_name, @display_order = @display_order, @default_sort_by_id = @default_sort_by_id, @hidden = @hidden, @category_placement = @category_placement, @display_subcat_items = @display_subcat_items, @alt_url = @alt_url, @alt_url_target = @alt_url_target, @link_title = @link_title, @meta_title = @meta_title, @meta_desc = @meta_desc, @meta_keywords = @meta_keywords, @search_tags = @search_tags, @category_desc = @category_desc, @category_desc_hidden = @category_desc_hidden, @category_short_desc = @category_short_desc, @category_short_desc_hidden = @category_short_desc_hidden, @category_secondary_desc = @category_secondary_desc, @category_secondary_desc_hidden = @category_secondary_desc_hidden, @create_date = @create_date, @created_by = @created_by, @modified_date = @modified_date, @modified_by = @modified_by", sqlParameters, cancellationToken);
+            var _ = await _context.Database.ExecuteSqlRawAsync("EXEC @returnValue = [dbo].[Insert_Categories] @parent_category_id = @parent_category_id, @category_name = @category_name, @display_order = @display_order, @default_sort_by_id = @default_sort_by_id, @hidden = @hidden, @category_placement = @category_placement, @display_subcat_items = @display_subcat_items, @alt_url = @alt_url, @alt_url_target = @alt_url_target, @link_title = @link_title, @meta_title = @meta_title, @meta_desc = @meta_desc, @meta_keywords = @meta_keywords, @search_tags = @search_tags, @category_desc = @category_desc, @category_desc_hidden = @category_desc_hidden, @category_short_desc = @category_short_desc, @category_short_desc_hidden = @category_short_desc_hidden, @category_secondary_desc = @category_secondary_desc, @category_secondary_desc_hidden = @category_secondary_desc_hidden, @created_by = @created_by, @modified_by = @modified_by", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 

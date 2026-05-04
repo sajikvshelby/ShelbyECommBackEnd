@@ -9,6 +9,7 @@ namespace ShelbyBackEnd.Services.Service
     public class CategoriesService : ICategorieService
     {
         private readonly ShelbyECommContext _db;
+     
 
 
         public CategoriesService(ShelbyECommContext db)
@@ -56,9 +57,7 @@ namespace ShelbyBackEnd.Services.Service
            , category.category_short_desc_hidden
            , category.category_secondary_desc
            , category.category_secondary_desc_hidden
-           , category.create_date
            , category.created_by
-           , category.modified_date
            , category.modified_by
             );
             return returnValue > 0;

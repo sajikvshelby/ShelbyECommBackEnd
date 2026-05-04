@@ -53,20 +53,21 @@ namespace ShelbyBackEnd.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateCategories(CategoriesVM obj)
+        public async Task<IActionResult> CreateCategories(CategoriesVM obj)
         {
 
+            var errors = ModelState.Values
+    .SelectMany(v => v.Errors)
+    .Select(e => e.ErrorMessage)
+    .ToList();
 
-            if (ModelState.IsValid)
-            {
-
-
-                //  _categorieService.CreateCategories(obj);
-
+          
+             await  _categorieService.Insert_Categories(obj.Category);
                 TempData["success"] = "created successFully";
                 return RedirectToAction(nameof(Index));
-            }
-            return View(obj);
+         
+
+           
 
         }
 
