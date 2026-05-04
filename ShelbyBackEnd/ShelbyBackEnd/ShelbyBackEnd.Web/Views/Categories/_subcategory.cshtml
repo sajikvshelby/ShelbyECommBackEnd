@@ -10,15 +10,8 @@
 
         <div class="w-75 btn-group  " role="group">
 
-            @* <a class="btn btn-secondary"
-                   onclick="event.stopPropagation(); location.href='@Url.Action("CreateCategories", "Categories", new { parent_category_id = @Model.parent_category_id, categoryid = @Model.category_id })'">
-                Create Sub Sub
-            </a> *@
-
-            <a class="btn btn-secondary"  asp-controller="Categories"
-                   asp-action="CreateCategories"
-                   asp-route-pid= "@Model.parent_category_id"
-                   asp-route-cid="@Model.category_id">
+               <a class="btn btn-secondary mx-2 "
+                   onclick="event.stopPropagation(); location.href='@Url.Action("CreateCategories", "Categories", new { pid = @Model.parent_category_id, cid = @Model.category_id })'">
                 Create Sub Sub
             </a>
                                
