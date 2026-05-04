@@ -48,7 +48,7 @@
                        
                         @if (Model.Any(m => m.parent_category_id == subMenuItem.category_id))
                         {
-                            <div class="accordion w-100 border" id="collapseOne-@category.category_id" data-bs-parent="#accordionMain-@category.category_id">
+                            <div class="accordion-collapse collapse w-100 border" id="collapseOne-@category.category_id" data-bs-parent="#accordionMain-@category.category_id">
                                
                                     <button class="accordion-button collapsed w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapsetwo-@category.category_id">
                                         <partial name="_subcategory" model="@subMenuItem" />
