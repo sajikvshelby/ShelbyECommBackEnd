@@ -6,12 +6,6 @@
     
     <script>
 
-
-
- 
-
-
-
         $(document).ready(function () {
            
             $('#parent_category').change(function () {
@@ -36,10 +30,6 @@
                 }
             });
         });
-
-
-
-
 
                 function showOnly(id) {
           const allDivs = document.getElementsByClassName('content-box');
@@ -86,9 +76,6 @@
                         <option value="">--Select Parent Category--</option>
                     </select>
                     <label asp-for="Category.parent_category_id" class="ms-2">Parent Category</label>
-
-                    @* <span asp-validation-for="Category.parent_category_id" class="text-danger"></span> *@
-                   
                 </div>
                 @if (@Model.Title != "Sub")
                 {
@@ -97,8 +84,6 @@
                         <option value="">--Select  Sub category--</option>
                     </select>
                     <label asp-for="Category.category_id" class="ms-2">Sub category</label>
-                    @* <span asp-validation-for="Category.category_id" class="text-danger"></span> *@
-                   
                 </div>
                 }
 
@@ -128,32 +113,21 @@
                     <div id="5" class="content-box" style="display:none;"><partial name="_Misc" model="@Model" /></div>
                 </div>
 
-                
-
-               
                 <div class="row pt-2 d-flex justify-content-center align-items-center">
                     <div class="col-6 col-md-3">
                         <button type="submit" asp-action="Create" class="btn btn-success w-100">
                             <i class="bi bi-check-circle"></i>Create
                         </button>
-                    
                     </div>
                     <div class="col-6 col-md-3">
                         <a asp-controller="Categories" asp-action="Index" class="btn btn-secondary w-100"> <i class="bi bi-x-circle"></i>Cancel</a>
                     
                     </div>
-
                    
                 </div>
-
-                
-
             </div>
-
         </form>
-
     </div>
-
 </div>
 
 

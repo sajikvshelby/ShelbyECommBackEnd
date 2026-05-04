@@ -35,11 +35,11 @@ namespace ShelbyBackEnd.Web.Controllers
 
                 Title = "",
 
-               categoryList = categories.Where(l => l.parent_category_id == 0).Select(u => new SelectListItem
-               {
-                   Text = u.category_name,
-                   Value = u.category_id.ToString()
-               }),
+                categoryList = categories.Where(l => l.parent_category_id == 0).Select(u => new SelectListItem
+                {
+                    Text = u.category_name,
+                    Value = u.category_id.ToString()
+                }),
 
 
                 sortByList = (await _categorieService.GetSortByList()).Select(u => new SelectListItem
@@ -52,34 +52,26 @@ namespace ShelbyBackEnd.Web.Controllers
             return View(categoriesVM);
         }
 
-
-     
-
         [HttpPost]
         public async Task<IActionResult> Create(CategoriesVM obj)
         {
             obj.Category.parent_category_id = (obj.Title == "Sub Sub") ? obj.Category.category_id : obj.Category.parent_category_id;
 
-                await  _categorieService.Insert_Categories(obj.Category);
-                TempData["success"] = "created successFully";
-                return RedirectToAction(nameof(Index));
+            await _categorieService.Insert_Categories(obj.Category);
+            TempData["success"] = "created successFully";
+            return RedirectToAction(nameof(Index));
 
         }
 
-        //[HttpGet]
-        //[Route("Categories/CreateCategories/{categoryid:int}")]
 
         [HttpGet("Categories/CreateCategories/{cid}")]
-       
         public async Task<IActionResult> CreateCategories(int cid)
         {
-            
-         
             var categories = await _categorieService.GetCategories();
             CategoriesVM categoriesVM = new()
             {
 
-                Title ="Sub",
+                Title = "Sub",
                 Category = new Select_All_CategoriesResult { parent_category_id = cid },
 
                 categoryList = categories.Where(l => l.parent_category_id == 0).Select(u => new SelectListItem
@@ -98,18 +90,16 @@ namespace ShelbyBackEnd.Web.Controllers
 
 
         [HttpGet("Categories/CreateCategories/{pid}/{cid}")]
-        //[Route("Categories/CreateCategories/{pid}/{cid}")]
-
         public async Task<IActionResult> CreateCategories(int pid, int cid)
         {
 
-                    
+
             var categories = await _categorieService.GetCategories();
             CategoriesVM categoriesVM = new()
             {
 
                 Title = "Sub Sub",
-                Category = new Select_All_CategoriesResult { parent_category_id = pid , category_id = cid },
+                Category = new Select_All_CategoriesResult { parent_category_id = pid, category_id = cid },
 
                 categoryList = categories.Where(l => l.parent_category_id == 0).Select(u => new SelectListItem
                 {
@@ -129,12 +119,6 @@ namespace ShelbyBackEnd.Web.Controllers
             };
             return View(categoriesVM);
         }
-
-
-
-   
-
-
         public async Task<IActionResult> UpdateCategories(int categoryid)
         {
             var categories = await _categorieService.GetAllCategories(0, categoryid);
@@ -150,7 +134,6 @@ namespace ShelbyBackEnd.Web.Controllers
 
         }
 
-
         [HttpPost]
         public IActionResult UpdateCategories(Select_All_CategoriesResult obj)
         {
@@ -158,9 +141,6 @@ namespace ShelbyBackEnd.Web.Controllers
 
             if (ModelState.IsValid && obj.category_id > 0)
             {
-
-                //_categorieService.UpdateCategories(obj);
-
                 TempData["success"] = "update successFully";
                 return RedirectToAction(nameof(Index));
             }
@@ -184,30 +164,20 @@ namespace ShelbyBackEnd.Web.Controllers
 
         }
 
-
         [HttpPost]
         public async Task<IActionResult> DeleteCategories(Select_All_CategoriesResult obj)
         {
-
             var categories = await _categorieService.GetAllCategories();
-
             if (categories is not null)
             {
-
-
-                //  _categorieService.DeleteCategoriesAsync(categories);
-
                 TempData["success"] = "Deleted successFully";
                 return RedirectToAction(nameof(Index));
             }
             TempData["error"] = "category could not be deleted";
             return View(categories);
-
         }
-
-
         public async Task<IActionResult> GetSubcategories(int parentCategoryId)
-        {                   
+        {
             var categories = await _categorieService.GetCategories();
             var subCategories = categories.Where(c => c.parent_category_id == parentCategoryId)
                 .Select(s => new { s.category_id, s.category_name })

@@ -39,9 +39,9 @@
 
                 <div class="accordion w-100 border" id="accordionMain-@category.category_id">
                  
-                        <button class="accordion-button collapsed w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-@category.category_id">
-                            <partial name="_category" model="@category" />
-                        </button>
+                    <button class="accordion-button collapsed w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-@category.category_id">
+                        <partial name="_category" model="@category" />
+                    </button>
                     
                     @foreach (var subMenuItem in Model.Where(l => l.parent_category_id == category.category_id))
                     {
@@ -50,15 +50,15 @@
                         {
                             <div class="accordion-collapse collapse w-100 border" id="collapseOne-@category.category_id" data-bs-parent="#accordionMain-@category.category_id">
                                
-                                    <button class="accordion-button collapsed w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapsetwo-@category.category_id">
-                                        <partial name="_subcategory" model="@subMenuItem" />
-                                    </button>
+                                <button class="accordion-button collapsed w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapsetwo-@category.category_id">
+                                    <partial name="_subcategory" model="@subMenuItem" />
+                                </button>
                                 
                                 @foreach (var subsubMenuItem in Model.Where(l => l.parent_category_id == subMenuItem.category_id).ToList())
                                 {
 
                                     <div id="collapsetwo-@category.category_id" class="accordion-collapse collapse  border-5" data-bs-parent="#collapseOne-@category.category_id">
-                                                <partial name="_subcategory" model="@subsubMenuItem" />
+                                        <partial name="_subsubcategory" model="@subsubMenuItem" />
                    
                                     </div>
                                 }
