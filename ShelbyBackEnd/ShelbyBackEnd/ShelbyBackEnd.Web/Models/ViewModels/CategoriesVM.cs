@@ -7,10 +7,14 @@ namespace ShelbyBackEnd.Web.Models.ViewModels
     public class CategoriesVM
     {
         [ValidateNever]
-        public Select_CategoriesResult? Category { get; set; }
+        public Select_All_CategoriesResult? Category { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> categoryList {  get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> sortByList { get; set; }
+
+        [ValidateNever]
+        public string Title { get; set; }
+
     }
 }

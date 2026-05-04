@@ -63,7 +63,7 @@
     <div class="card-header bg-success bg-gradient m-lg-0 py-3">
         <div class="row">
             <div class="col text-center">
-                <h2 class="text-white py-2">Create @Model.Title Category</h2>
+                <h2 class="text-white py-2">Create Category</h2>
 
             </div>
         </div>
@@ -74,13 +74,13 @@
 
                 <div class="form-floating py-2 col-12">
                     <input asp-for="Category.category_name" class="form-control border shadow" required="required" />
-                    <label asp-for="Category.category_name" class="ms-2"> @Model.Title Category Name</label>
+                    <label asp-for="Category.category_name" class="ms-2">Category Name</label>
                     <span asp-validation-for="Category.category_name" class="text-danger"></span>
                 </div>
            
                 <div class="form-floating py-2 col-12">
                     
-                    <select id="parent_category" asp-for="Category.parent_category_id" asp-items="@Model.categoryList" class="form-control form-select border shadow">
+                    <select id="parent_category" asp-for="Category.parent_category_id" asp-items="@Model.categoryList"  class="form-control form-select border shadow">
                         <option value="">--Select Parent Category--</option>
                     </select>
                     <label asp-for="Category.parent_category_id" class="ms-2">Parent Category</label>
@@ -88,8 +88,7 @@
                     @* <span asp-validation-for="Category.parent_category_id" class="text-danger"></span> *@
                    
                 </div>
-                @if (@Model.Title != "Sub")
-                {
+
                 <div class="form-floating py-2 col-12">
                     <select id="sub_category" asp-for="Category.category_id" class="form-control form-select border shadow">
                         <option value="">--Select  Sub category--</option>
@@ -98,7 +97,6 @@
                     @* <span asp-validation-for="Category.category_id" class="text-danger"></span> *@
                    
                 </div>
-                }
 
                 <div class="form-floating py-2 col-12">
                     
@@ -131,7 +129,7 @@
                
                 <div class="row pt-2 d-flex justify-content-center align-items-center">
                     <div class="col-6 col-md-3">
-                        <button type="submit" asp-action="CreateCategories" class="btn btn-success w-100">
+                        <button type="submit" class="btn btn-success w-100">
                             <i class="bi bi-check-circle"></i>Create
                         </button>
                     

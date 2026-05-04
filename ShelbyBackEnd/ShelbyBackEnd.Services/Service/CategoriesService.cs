@@ -17,9 +17,9 @@ namespace ShelbyBackEnd.Services.Service
             _db = db;
         }
 
-        public async Task<IEnumerable<Select_CategoriesResult>> GetAllCategories(int? ParentCatID = 0, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Select_All_CategoriesResult>> GetAllCategories(int? ParentCatID = 0, int? categoryid=0, CancellationToken cancellationToken = default)
         {
-            return await _db.Procedures.Select_CategoriesAsync(ParentCatID ?? 0, cancellationToken: cancellationToken);
+            return await _db.Procedures.Select_All_CategoriesAsync(ParentCatID ?? 0, categoryid??0, cancellationToken: cancellationToken);
         }
 
         public async Task<IEnumerable<Select_All_Categories_MenuResult>> GetCategories( CancellationToken cancellationToken = default)
@@ -34,7 +34,7 @@ namespace ShelbyBackEnd.Services.Service
 
 
 
-        public async Task<bool> Insert_Categories(Select_CategoriesResult category, CancellationToken cancellationToken = default)
+        public async Task<bool> Insert_Categories(Select_All_CategoriesResult category, CancellationToken cancellationToken = default)
         {
             int returnValue = await _db.Procedures.Insert_CategoriesAsync(
             category.parent_category_id
@@ -63,7 +63,7 @@ namespace ShelbyBackEnd.Services.Service
             return returnValue > 0;
         }
 
-        public async Task<bool> Update_Categories(Select_CategoriesResult category, CancellationToken cancellationToken = default)
+        public async Task<bool> Update_Categories(Select_All_CategoriesResult category, CancellationToken cancellationToken = default)
         {
             int returnValue = await _db.Procedures.Update_CategoriesAsync(
                 category.category_id
@@ -92,7 +92,7 @@ namespace ShelbyBackEnd.Services.Service
             return returnValue > 0;
         }
 
-        public async Task<bool> Archive_CategoriesAsync(Select_CategoriesResult category, CancellationToken cancellationToken = default)
+        public async Task<bool> Archive_CategoriesAsync(Select_All_CategoriesResult category, CancellationToken cancellationToken = default)
         {
             int returnValue = await _db.Procedures.Archive_CategoriesAsync(category.category_id, category.parent_category_id, category.modified_by, DateTime.UtcNow);
             return returnValue > 0;

@@ -251,6 +251,38 @@ namespace ShelbyBackEnd.Infrastructure.Models
             return _;
         }
 
+        public virtual async Task<List<Select_All_CategoriesResult>> Select_All_CategoriesAsync(int? parentCatID, int? categoryid, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "ParentCatID",
+                    Value = parentCatID ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "categoryid",
+                    Value = categoryid ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<Select_All_CategoriesResult>("EXEC @returnValue = [dbo].[Select_All_Categories] @ParentCatID = @ParentCatID, @categoryid = @categoryid", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
         public virtual async Task<List<Select_All_Categories_MenuResult>> Select_All_Categories_MenuAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
@@ -285,32 +317,6 @@ namespace ShelbyBackEnd.Infrastructure.Models
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<Select_BackEnd_MenuResult>("EXEC @returnValue = [dbo].[Select_BackEnd_Menu]", sqlParameters, cancellationToken);
-
-            returnValue?.SetValue(parameterreturnValue.Value);
-
-            return _;
-        }
-
-        public virtual async Task<List<Select_CategoriesResult>> Select_CategoriesAsync(int? parentCatID, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
-        {
-            var parameterreturnValue = new SqlParameter
-            {
-                ParameterName = "returnValue",
-                Direction = System.Data.ParameterDirection.Output,
-                SqlDbType = System.Data.SqlDbType.Int,
-            };
-
-            var sqlParameters = new []
-            {
-                new SqlParameter
-                {
-                    ParameterName = "ParentCatID",
-                    Value = parentCatID ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                },
-                parameterreturnValue,
-            };
-            var _ = await _context.SqlQueryAsync<Select_CategoriesResult>("EXEC @returnValue = [dbo].[Select_Categories] @ParentCatID = @ParentCatID", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 

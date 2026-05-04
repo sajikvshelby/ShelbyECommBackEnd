@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ShelbyBackEnd.Infrastructure.Models
 {
-    public partial class Select_CategoriesResult
+    public partial class Select_All_CategoriesResult
     {
         public int category_id { get; set; }
         public int parent_category_id { get; set; }

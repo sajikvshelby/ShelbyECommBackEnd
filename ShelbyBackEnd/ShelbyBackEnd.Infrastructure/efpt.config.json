@@ -31,11 +31,11 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[Select_BackEnd_Menu]",
+         "Name": "[dbo].[Select_All_Categories]",
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[Select_Categories]",
+         "Name": "[dbo].[Select_BackEnd_Menu]",
          "ObjectType": 1
       },
       {
