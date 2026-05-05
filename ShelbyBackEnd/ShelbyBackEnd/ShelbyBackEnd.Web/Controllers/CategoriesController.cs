@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using ShelbyBackEnd.Infrastructure.Models;
 using ShelbyBackEnd.Services.Contract;
@@ -22,16 +23,13 @@ namespace ShelbyBackEnd.Web.Controllers
         public async Task<IActionResult> Index(int CatID)
         {
             var categories = await _categorieService.GetAllCategories();
-
             return View(categories);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> CreateCategories()
-        {
 
-            var categoriesVM = await GetCategoriesVM(0, 0);
-            categoriesVM.Title = "";
+        public async Task<IActionResult> CreateCategories(int pid, int cid, string ctg)
+        {
+            var categoriesVM = await ManageCreate(pid, cid, ctg);
             return View(categoriesVM);
         }
 
@@ -39,60 +37,32 @@ namespace ShelbyBackEnd.Web.Controllers
         public async Task<IActionResult> Create(CategoriesVM obj)
         {
             obj.Category.parent_category_id = (obj.Title == "Sub Sub") ? obj.Category.category_id : obj.Category.parent_category_id;
-
             await _categorieService.Insert_Categories(obj.Category);
             TempData["success"] = "created successFully";
             return RedirectToAction(nameof(Index));
 
         }
+     
 
-
-        [HttpGet("Categories/CreateCategories/{cid}")]
-        public async Task<IActionResult> CreateCategories(int cid)
+        public async Task<IActionResult> UpdateCategories(int pid, int cid, string ctg)
         {
-           
 
-            var categoriesVM = await GetCategoriesVM(cid, 0);
-            categoriesVM.Title = "Sub";
-            return View(categoriesVM);
-        }
-
-
-        [HttpGet("Categories/CreateCategories/{pid}/{cid}")]
-        public async Task<IActionResult> CreateCategories(int pid, int cid)
-        {
-            var categoriesVM = await GetCategoriesVM(pid, cid);
-            categoriesVM.Title = "Sub Sub";
+            var categoriesVM = await ManageUpdate(pid, cid, ctg);
 
             return View(categoriesVM);
-        }
-        public async Task<IActionResult> UpdateCategories(int cid)
-        {
-            var categories = await _categorieService.GetAllCategories(0, cid);
-
-            var category = categories.SingleOrDefault(l => l.category_id == cid);
-            if (categories == null)
-            {
-                return RedirectToAction("Error", "Home");
-            }
-
-            return View(category);
-
         }
 
         [HttpPost]
-        public IActionResult UpdateCategories(Select_All_CategoriesResult obj)
+        public async Task<IActionResult> UpdateCategories(CategoriesVM obj)
         {
+            obj.Category.parent_category_id = (obj.ctg == "2") ? obj.maincategoryid : (obj.ctg == "3") ? obj.subcategoryid : 0;
+            await _categorieService.Update_Categories(obj.Category);
 
+            return RedirectToAction(nameof(Index));
 
-            if (ModelState.IsValid && obj.category_id > 0)
-            {
-                TempData["success"] = "update successFully";
-                return RedirectToAction(nameof(Index));
-            }
-            return View(obj);
 
         }
+
 
 
         public async Task<IActionResult> DeleteCategories(int categoryid)
@@ -124,24 +94,74 @@ namespace ShelbyBackEnd.Web.Controllers
         }
         public async Task<IActionResult> GetSubcategories(int parentCategoryId)
         {
-            var categories = await _categorieService.GetCategories();
-            var subCategories = categories.Where(c => c.parent_category_id == parentCategoryId)
-                .Select(s => new { s.category_id, s.category_name })
-                .ToList();
+            var subCategories = await _categorieService.GetAllCategories(parentCategoryId, 0);
+            //var subCategories = categories.Where(c => c.parent_category_id == parentCategoryId)
+            //    .Select(s => new { s.category_id, s.category_name })
+            //    .ToList();
 
             return Json(subCategories);
         }
 
 
-        private async Task<CategoriesVM> GetCategoriesVM(int pid, int cid)
+
+        private async Task<CategoriesVM> ManageUpdate(int pid, int cid, string ctg)
+        {
+            var categories = await _categorieService.GetAllCategories();
+            CategoriesVM categoriesVM = new();
+            categoriesVM.ctg = ctg;
+            categoriesVM.Category = categories.SingleOrDefault(c => c.category_id == cid);
+            categoriesVM.categoryList = categories.Where(l => l.parent_category_id == 0).Select(u => new SelectListItem
+            {
+                Text = u.category_name,
+                Value = u.category_id.ToString()
+            });
+
+            if (ctg == "2")
+            {
+                categoriesVM.Title = "Sub";
+
+                categoriesVM.subCategoryList = categories.Where(l => l.parent_category_id == pid).Select(u => new SelectListItem
+                {
+                    Text = u.category_name,
+                    Value = u.category_id.ToString()
+                });
+                categoriesVM.maincategoryid = pid;
+            }
+            if (ctg == "3")
+            {
+                categoriesVM.Title = "Sub Sub";
+                categoriesVM.subCategoryList = categories.Where(l => l.category_id == pid).Select(u => new SelectListItem
+                {
+                    Text = u.category_name,
+                    Value = u.category_id.ToString()
+                });
+                categoriesVM.maincategoryid = categories.SingleOrDefault(c => c.category_id == pid)?.parent_category_id ?? 0;
+                categoriesVM.subcategoryid = pid;
+
+            }
+            categoriesVM.sortByList = (await _categorieService.GetSortByList()).Select(u => new SelectListItem
+            {
+                Text = u.sort_by_desc,
+                Value = u.sort_by_id.ToString()
+            });
+
+            return categoriesVM;
+        }
+
+
+
+    
+
+        private async Task<CategoriesVM> ManageCreate(int pid, int cid, string ctg)
         {
 
-            var categories = await _categorieService.GetCategories();
+            var categories = await _categorieService.GetAllCategories();
             CategoriesVM categoriesVM = new()
             {
-
-              
                 Category = new Select_All_CategoriesResult { parent_category_id = pid, category_id = cid },
+
+
+                Title = ctg == "1" ? "Sub" : ctg == "2" ? "Sub Sub" : "",
 
                 categoryList = categories.Where(l => l.parent_category_id == 0).Select(u => new SelectListItem
                 {
@@ -159,6 +179,7 @@ namespace ShelbyBackEnd.Web.Controllers
                     Value = u.sort_by_id.ToString()
                 })
             };
+
             return categoriesVM;
         }
     }

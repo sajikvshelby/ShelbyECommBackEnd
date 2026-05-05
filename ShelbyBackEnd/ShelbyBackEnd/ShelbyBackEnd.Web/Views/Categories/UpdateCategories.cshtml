@@ -61,11 +61,60 @@
     <div class="card-body border p-4">
         <form method="post" class="row" enctype="multipart/form-data">
 
-            @Html.HiddenFor(m => m.Title)
+            @Html.HiddenFor(m => m.ctg)
+            @Html.HiddenFor(m => m.Category.category_id)
+            @Html.HiddenFor(m => m.maincategoryid)
+            @Html.HiddenFor(m => m.subcategoryid)
             <div class="p-3">
 
-                
-                <partial name="_maincategory" model="@Model" />
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="Category.category_name" class="form-control border shadow" required="required" />
+                    <label asp-for="Category.category_name" class="ms-2"> @Model.Title Category Name</label>
+                    <span asp-validation-for="Category.category_name" class="text-danger"></span>
+                </div>
+           
+                <div class="form-floating py-2 col-12">
+                    
+                    <select id="parent_category" asp-for="maincategoryid" asp-items="@Model.categoryList" class="form-control form-select border shadow">
+                        <option value="">--Select Parent Category--</option>
+                    </select>
+                    <label asp-for="maincategoryid" class="ms-2">Parent Category</label>
+                </div>
+              
+                    <div class="form-floating py-2 col-12">
+                    <select id="sub_category" asp-for="subcategoryid" asp-items="@Model.subCategoryList" class="form-control form-select border shadow">
+                            <option value="">--Select  Sub category--</option>
+                        </select>
+                    <label asp-for="subcategoryid" class="ms-2">Sub category</label>
+                    </div>
+
+              
+
+                <div class="form-floating py-2 col-12">
+                    
+                    <div>  <input type="checkbox" class="me-3" asp-for="Category.hidden" />   Hidden </div>
+                </div>
+                <div class="container">
+                    <div class="row flex-nowrap overflow-auto py-3">
+
+                        <button type="button" id="btn-1" class="col-2 btn btn-secondary content-button" onclick="showOnly('1')">Category Descriptions</button>
+                        <button type="button" id="btn-2" class="col-3 btn btn-secondary content-button" onclick="showOnly('2')">Search Engine Optimization</button>
+                        <button type="button" id="btn-3" class="col-2 btn btn-secondary content-button" onclick="showOnly('3')">Category Display</button>
+                        @* <button type="button" id="btn-4" class="col-2 btn btn-secondary content-button" onclick="showOnly('4')">Subcategory Display</button> *@
+                        <button type="button" id="btn-4" class="col-2 btn btn-secondary content-button" onclick="showOnly('4')">Product Display</button>
+                        <button type="button" id="btn-5" class="col-2 btn btn-secondary content-button" onclick="showOnly('5')">Misc</button>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center fw-bold text-decoration-underline">Advanced Info</div>
+                </div>
+
+                <div>
+                    <div id="1" class="content-box"> <partial name="_CategoryDescriptions" model="@Model" /></div>
+                    <div id="2" class="content-box" style="display:none;"><partial name="_SearchEngineOptimization" model="@Model" /></div>
+                    <div id="3" class="content-box" style="display:none;"><partial name="_CategoryDisplay" model="@Model" /></div>
+                    @* <div id="4" class="content-box" style="display:none;"><partial name="_SubcategoryDisplay" model="@Model" />  </div> *@
+                    <div id="4" class="content-box" style="display:none;"><partial name="_ProductDisplay" model="@Model" /></div>
+                    <div id="5" class="content-box" style="display:none;"><partial name="_Misc" model="@Model" /></div>
+                </div>
 
                 <div class="row pt-2 d-flex justify-content-center align-items-center">
                     <div class="col-6 col-md-3">

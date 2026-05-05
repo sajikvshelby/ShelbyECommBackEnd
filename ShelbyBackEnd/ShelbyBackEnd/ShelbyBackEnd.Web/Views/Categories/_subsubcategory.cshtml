@@ -12,7 +12,7 @@
 
                
             <a class="btn btn btn-success mx-2 "
-                   onclick="event.stopPropagation(); location.href='@Url.Action("UpdateCategories", "Categories", new { categoryid = @Model.category_id })'">
+                   onclick="event.stopPropagation(); location.href='@Url.Action("UpdateCategories", "Categories", new { pid = @Model.parent_category_id, cid = @Model.category_id, ctg = "3" })'">
                 Edit
             </a>
 

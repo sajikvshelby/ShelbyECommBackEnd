@@ -11,18 +11,18 @@
         <div class="w-75 btn-group  " role="group">
 
                <a class="btn btn-secondary mx-2 "
-                   onclick="event.stopPropagation(); location.href='@Url.Action("CreateCategories", "Categories", new { pid = @Model.parent_category_id, cid = @Model.category_id })'">
+                   onclick="event.stopPropagation(); location.href='@Url.Action("CreateCategories", "Categories", new { pid = @Model.parent_category_id, cid = @Model.category_id, ctg = "2" })'">
                 Create Sub Sub
             </a>
                                
             <a class="btn btn btn-success mx-2 "
-                   onclick="event.stopPropagation(); location.href='@Url.Action("UpdateCategories", "Categories", new { categoryid = @Model.category_id })'">
+                   onclick="event.stopPropagation(); location.href='@Url.Action("UpdateCategories", "Categories", new { pid = @Model.parent_category_id, cid = @Model.category_id, ctg = "2" })'">
                 Edit
             </a>
 
                                         
             <a class="btn btn-danger mx-2"
-                   onclick="event.stopPropagation(); location.href='@Url.Action("DeleteCategories", "Categories", new { categoryid = @Model.category_id })'">
+                   onclick="event.stopPropagation(); location.href='@Url.Action("DeleteCategories", "Categories", new { pid = @Model.parent_category_id, cid = @Model.category_id })'">
                 Delete
             </a>
 

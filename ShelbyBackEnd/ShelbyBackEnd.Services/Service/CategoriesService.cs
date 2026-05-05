@@ -22,10 +22,10 @@ namespace ShelbyBackEnd.Services.Service
             return await _db.Procedures.Select_All_CategoriesAsync(ParentCatID ?? 0, categoryid??0, cancellationToken: cancellationToken);
         }
 
-        public async Task<IEnumerable<Select_All_Categories_MenuResult>> GetCategories( CancellationToken cancellationToken = default)
-        {
-            return await _db.Procedures.Select_All_Categories_MenuAsync( cancellationToken: cancellationToken);
-        }
+        //public async Task<IEnumerable<Select_All_Categories_MenuResult>> GetCategories( CancellationToken cancellationToken = default)
+        //{
+        //    return await _db.Procedures.Select_All_Categories_MenuAsync( cancellationToken: cancellationToken);
+        //}
 
         public async Task<IEnumerable<Select_Sort_By_ListResult>> GetSortByList(CancellationToken cancellationToken = default)
         {
