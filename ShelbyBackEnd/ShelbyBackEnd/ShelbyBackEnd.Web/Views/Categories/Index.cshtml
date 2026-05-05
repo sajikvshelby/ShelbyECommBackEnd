@@ -1,9 +1,5 @@
 ﻿@using ShelbyBackEnd.Infrastructure.Models
 @model IEnumerable<Select_All_CategoriesResult>
-@{
-
-    string id = "";
-}
 
 
 <div class="w-100 card border-0 p-4">
@@ -37,7 +33,7 @@
             @if (Model.Any(m => m.parent_category_id == category.category_id))
             {
 
-                <div class="accordion w-100 border" id="accordionMain-@category.category_id">
+                <div class="accordion w-100 border " id="accordionMain-@category.category_id">
                  
                     <button class="accordion-button collapsed w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-@category.category_id">
                         <partial name="_category" model="@category" />
@@ -90,11 +86,21 @@
     </div>
 </div>
 
-
-
-
+ 
+<script language="javascript" type="text/javascript">
+   
+    function callDelete(id, name) {
+    if (confirm("Are you sure you want to delete category - "+name +"?")) {
+    $.post('/Categories/DeleteCategories', { id: id }, function() {
+    alert(name + " - Successfully deleted"  );
+    location.reload();
+    }).fail(function() {
+    alert("An error occurred.");
+    });
+    }
+    }
   
-
+</script>
 
 
 

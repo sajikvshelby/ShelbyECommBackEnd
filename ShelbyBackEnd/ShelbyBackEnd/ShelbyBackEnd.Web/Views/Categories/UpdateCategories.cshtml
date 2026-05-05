@@ -66,13 +66,6 @@
             @Html.HiddenFor(m => m.maincategoryid)
             @Html.HiddenFor(m => m.subcategoryid)
             <div class="p-3">
-
-                <div class="form-floating py-2 col-12">
-                    <input asp-for="Category.category_name" class="form-control border shadow" required="required" />
-                    <label asp-for="Category.category_name" class="ms-2"> @Model.Title Category Name</label>
-                    <span asp-validation-for="Category.category_name" class="text-danger"></span>
-                </div>
-           
                 <div class="form-floating py-2 col-12">
                     
                     <select id="parent_category" asp-for="maincategoryid" asp-items="@Model.categoryList" class="form-control form-select border shadow">
@@ -88,7 +81,11 @@
                     <label asp-for="subcategoryid" class="ms-2">Sub category</label>
                     </div>
 
-              
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="Category.category_name" class="form-control border shadow" required="required" />
+                    <label asp-for="Category.category_name" class="ms-2 fw-bold"> @Model.Title Category Name</label>
+                    <span asp-validation-for="Category.category_name" class="text-danger"></span>
+                </div>
 
                 <div class="form-floating py-2 col-12">
                     

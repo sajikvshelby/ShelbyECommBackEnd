@@ -43,7 +43,7 @@ namespace ShelbyBackEnd.Infrastructure.Models
             _context = context;
         }
 
-        public virtual async Task<int> Archive_CategoriesAsync(int? category_id, int? parent_category_id, int? modified_by, DateTime? deleted_date, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<int> Archive_CategoriesAsync(int? category_id, int? modified_by, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -62,25 +62,13 @@ namespace ShelbyBackEnd.Infrastructure.Models
                 },
                 new SqlParameter
                 {
-                    ParameterName = "parent_category_id",
-                    Value = parent_category_id ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                },
-                new SqlParameter
-                {
                     ParameterName = "modified_by",
                     Value = modified_by ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
-                new SqlParameter
-                {
-                    ParameterName = "deleted_date",
-                    Value = deleted_date ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.DateTime,
-                },
                 parameterreturnValue,
             };
-            var _ = await _context.Database.ExecuteSqlRawAsync("EXEC @returnValue = [dbo].[Archive_Categories] @category_id = @category_id, @parent_category_id = @parent_category_id, @modified_by = @modified_by, @deleted_date = @deleted_date", sqlParameters, cancellationToken);
+            var _ = await _context.Database.ExecuteSqlRawAsync("EXEC @returnValue = [dbo].[Archive_Categories] @category_id = @category_id, @modified_by = @modified_by", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 

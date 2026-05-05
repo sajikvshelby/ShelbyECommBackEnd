@@ -64,11 +64,7 @@
             @Html.HiddenFor(m => m.Title)
             <div class="p-3">
 
-                <div class="form-floating py-2 col-12">
-                    <input asp-for="Category.category_name" class="form-control border shadow" required="required" />
-                    <label asp-for="Category.category_name" class="ms-2"> @Model.Title Category Name</label>
-                    <span asp-validation-for="Category.category_name" class="text-danger"></span>
-                </div>
+               
            
                 <div class="form-floating py-2 col-12">
                     
@@ -86,6 +82,12 @@
                     <label asp-for="Category.category_id" class="ms-2">Sub category</label>
                 </div>
                 }
+
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="Category.category_name" class="form-control border shadow" required="required" />
+                    <label asp-for="Category.category_name" class="ms-2 fw-bold"> ** Enter new @Model.Title Category Name**</label>
+                    <span asp-validation-for="Category.category_name" class="text-danger"></span>
+                </div>
 
                 <div class="form-floating py-2 col-12">
                     

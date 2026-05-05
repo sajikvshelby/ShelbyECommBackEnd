@@ -13,7 +13,7 @@ namespace ShelbyBackEnd.Infrastructure.Models
 {
     public partial interface IShelbyECommContextProcedures
     {
-        Task<int> Archive_CategoriesAsync(int? category_id, int? parent_category_id, int? modified_by, DateTime? deleted_date, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<int> Archive_CategoriesAsync(int? category_id, int? modified_by, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> Insert_CategoriesAsync(int? parent_category_id, string category_name, int? display_order, short? default_sort_by_id, bool? hidden, string category_placement, bool? display_subcat_items, string alt_url, string alt_url_target, string link_title, string meta_title, string meta_desc, string meta_keywords, string search_tags, string category_desc, bool? category_desc_hidden, string category_short_desc, bool? category_short_desc_hidden, string category_secondary_desc, bool? category_secondary_desc_hidden, int? created_by, int? modified_by, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<Select_All_CategoriesResult>> Select_All_CategoriesAsync(int? parentCatID, int? categoryid, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<Select_All_Categories_MenuResult>> Select_All_Categories_MenuAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);

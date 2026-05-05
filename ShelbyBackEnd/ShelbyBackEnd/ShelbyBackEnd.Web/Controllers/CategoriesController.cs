@@ -25,8 +25,6 @@ namespace ShelbyBackEnd.Web.Controllers
             var categories = await _categorieService.GetAllCategories();
             return View(categories);
         }
-
-
         public async Task<IActionResult> CreateCategories(int pid, int cid, string ctg)
         {
             var categoriesVM = await ManageCreate(pid, cid, ctg);
@@ -57,53 +55,20 @@ namespace ShelbyBackEnd.Web.Controllers
         {
             obj.Category.parent_category_id = (obj.ctg == "2") ? obj.maincategoryid : (obj.ctg == "3") ? obj.subcategoryid : 0;
             await _categorieService.Update_Categories(obj.Category);
-
             return RedirectToAction(nameof(Index));
-
-
         }
 
-
-
-        public async Task<IActionResult> DeleteCategories(int categoryid)
+          [HttpPost]
+        public async Task<IActionResult> DeleteCategories(int id)
         {
-
-            var categories = await _categorieService.GetAllCategories();
-            var category = categories.SingleOrDefault(l => l.category_id == categoryid);
-
-            if (categories == null)
-            {
-                return RedirectToAction("Error", "Home");
-            }
-
-            return View(category);
-
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> DeleteCategories(Select_All_CategoriesResult obj)
-        {
-            var categories = await _categorieService.GetAllCategories();
-            if (categories is not null)
-            {
-                TempData["success"] = "Deleted successFully";
-                return RedirectToAction(nameof(Index));
-            }
-            TempData["error"] = "category could not be deleted";
-            return View(categories);
+            await _categorieService.Archive_CategoriesAsync(id, 0);
+            return RedirectToAction(nameof(Index));
         }
         public async Task<IActionResult> GetSubcategories(int parentCategoryId)
         {
             var subCategories = await _categorieService.GetAllCategories(parentCategoryId, 0);
-            //var subCategories = categories.Where(c => c.parent_category_id == parentCategoryId)
-            //    .Select(s => new { s.category_id, s.category_name })
-            //    .ToList();
-
             return Json(subCategories);
         }
-
-
-
         private async Task<CategoriesVM> ManageUpdate(int pid, int cid, string ctg)
         {
             var categories = await _categorieService.GetAllCategories();
@@ -147,11 +112,7 @@ namespace ShelbyBackEnd.Web.Controllers
 
             return categoriesVM;
         }
-
-
-
     
-
         private async Task<CategoriesVM> ManageCreate(int pid, int cid, string ctg)
         {
 

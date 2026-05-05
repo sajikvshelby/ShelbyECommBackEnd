@@ -21,13 +21,7 @@ namespace ShelbyBackEnd.Services.Service
         {
             return await _db.Procedures.Select_All_CategoriesAsync(ParentCatID ?? 0, categoryid??0, cancellationToken: cancellationToken);
         }
-
-        //public async Task<IEnumerable<Select_All_Categories_MenuResult>> GetCategories( CancellationToken cancellationToken = default)
-        //{
-        //    return await _db.Procedures.Select_All_Categories_MenuAsync( cancellationToken: cancellationToken);
-        //}
-
-        public async Task<IEnumerable<Select_Sort_By_ListResult>> GetSortByList(CancellationToken cancellationToken = default)
+         public async Task<IEnumerable<Select_Sort_By_ListResult>> GetSortByList(CancellationToken cancellationToken = default)
         {
             return await _db.Procedures.Select_Sort_By_ListAsync(cancellationToken: cancellationToken);
         }
@@ -92,9 +86,9 @@ namespace ShelbyBackEnd.Services.Service
             return returnValue > 0;
         }
 
-        public async Task<bool> Archive_CategoriesAsync(Select_All_CategoriesResult category, CancellationToken cancellationToken = default)
+        public async Task<bool> Archive_CategoriesAsync(int category_id, int modified_by, CancellationToken cancellationToken = default)
         {
-            int returnValue = await _db.Procedures.Archive_CategoriesAsync(category.category_id, category.parent_category_id, category.modified_by, DateTime.UtcNow);
+            int returnValue = await _db.Procedures.Archive_CategoriesAsync(category_id,  modified_by, cancellationToken: cancellationToken);
             return returnValue > 0;
         }
 
