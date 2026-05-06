@@ -33,7 +33,7 @@
             @if (Model.Any(m => m.parent_category_id == category.category_id))
             {
 
-                <div class="accordion w-100 border " id="accordionMain-@category.category_id">
+                <div class="accordion w-100 border" id="accordionMain-@category.category_id">
                  
                     <button class="accordion-button collapsed w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-@category.category_id">
                         <partial name="_category" model="@category" />
@@ -85,13 +85,13 @@
         }
     </div>
 
-    <div class="modal" id="deleteModal">
-        <div class="modal-dialog">
+    <div class="modal" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
                 <input type="hidden" id="categoryIdToDelete" />
                 <div class="modal-header">
-                    <h4 class="modal-title">Delete</h4>
+                    <h4 class="modal-title">Delete Category</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">

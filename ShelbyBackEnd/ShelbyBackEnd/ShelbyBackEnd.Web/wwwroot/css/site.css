@@ -174,14 +174,14 @@
 
 
 /*--------------------------*/
-/* Change border color of the header button when expanded */
-.accordion-button:not(.collapsed) {
-    border-color: red;
-    /* Often you'll want to change the focus ring too */
-    box-shadow: 0 0 0 0.25rem rgba(your-color-rgb, 0.25);
-}
 
-/* Optional: Change the border of the content body when expanded */
+/*.accordion-button:not(.collapsed) {
+    border-color: red;
+    box-shadow: 0 0 0 0.25rem rgba(your-color-rgb, 0.25);
+}*/
+
+
 .accordion-collapse.show {
-    border: 1px solid hsla(0, 0%, 0%, 1);
+    border: 2px solid hsla(0, 0%, 0%, 1);
+    border-color: forestgreen;
 }
