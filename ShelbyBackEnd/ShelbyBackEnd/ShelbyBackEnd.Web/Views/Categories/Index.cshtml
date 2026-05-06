@@ -84,20 +84,48 @@
             }
         }
     </div>
+
+    <div class="modal" id="deleteModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <input type="hidden" id="categoryIdToDelete" />
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <label id="categorytxtToDelete" />
+                </div>
+                <div class="modal-footer">
+                    <a id="btnYES" class="btn btn-danger mx-2" onclick="callDelete(categoryIdToDelete.value);">
+                        Yes
+                    </a>
+                    <button id="btnNO" type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="window.location.reload(); return false;">No</button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
 </div>
 
- 
+
 <script language="javascript" type="text/javascript">
-   
-    function callDelete(id, name) {
-    if (confirm("Are you sure you want to delete category - "+name +"?")) {
-    $.post('/Categories/DeleteCategories', { id: id }, function() {
-    alert(name + " - Successfully deleted"  );
-    location.reload();
-    }).fail(function() {
-    alert("An error occurred.");
-    });
+    function setDelete(id, name) {
+    document.getElementById("categoryIdToDelete").value = id;
+    document.getElementById("categorytxtToDelete").textContent  = "Are you sure you want to delete category - "+ name + "?";
     }
+    function callDelete(id) {
+    $.post('/Categories/DeleteCategories', { id: id }, function() {
+    document.getElementById("categorytxtToDelete").textContent  =  "Successfully deleted"  ;
+    document.getElementById("btnNO").textContent = "Close";
+    document.getElementById("btnYES").hidden = true;
+    }).fail(function() {
+    });
     }
   
 </script>
