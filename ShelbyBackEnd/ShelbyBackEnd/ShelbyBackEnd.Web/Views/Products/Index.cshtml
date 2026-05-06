@@ -1,0 +1,71 @@
+﻿@using ShelbyBackEnd.Infrastructure.Models
+@using ShelbyEComm.Services.Models
+@model PaginatedList<Select_All_Products_ListResult>
+
+
+<div class="w-100 card border-0 p-4">
+    <div class="card-header bg-success bg-gradient m-lg-0 py-3">
+        <div class="row">
+            <div class="col text-center">
+                <h2 class="text-white py-2">All Products</h2>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<div class="w-100 card border-0 p-4">
+
+    <div class="row pb-3">
+        <div class="col-6 offset-6 text-end">
+            <a asp-action="Create" asp-controller="Products" class="btn btn-secondary"> <i class="bi bi-plus-circle"></i>Create new Product</a>
+        </div>
+
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Product Code</th>
+                <th>Main Image </th>
+                <th>Product Name</th>
+                <th>Product Price</th>
+                <th>Categories</th>
+                <th>Stock Status</th>
+                <th>Hidden</th>
+                <th>Delete</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Items)
+            {
+                <tr>
+                    <td>@product.product_code</td>
+                    <td><img src="~/Media/@product.photo_url" alt="@product.product_name" class="img-thumbnail" style="max-width: 100px;"></td>
+                    <td>@product.product_name</td>
+                    <td>@product.product_price</td>
+                    <td>@product.Categories</td>
+                    <td>@product.quantity</td>
+                    <td>@product.hidden</td>
+                  
+                    <td>
+
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="Products" asp-action="Update" asp-route-pc="@product.product_code" class="btn btn-success mx-2">
+                                <i class="bi bi-pencil-square"></i>Edit
+                            </a>
+                        
+                            <a asp-controller="Products" asp-action="Delete" asp-route-pc="@product.product_code class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i>Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+
+    <div class="p-5 d-flex justify-content-center align-items-center vh-75" style="height:300px">
+        <partial name="_Paging" model="Model" />
+    </div>

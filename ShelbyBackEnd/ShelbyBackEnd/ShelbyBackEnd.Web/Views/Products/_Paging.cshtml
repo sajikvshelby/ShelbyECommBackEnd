@@ -1,0 +1,52 @@
+﻿@using ShelbyBackEnd.Infrastructure.Models
+@using ShelbyEComm.Services.Models
+@model PaginatedList<Select_All_Products_ListResult>
+
+@{
+    int totalPages = Model.TotalPages;
+    int currentPage = Model.PageIndex;
+    int midSize = 2; 
+}
+
+
+<div class="pagination">
+
+
+    <a class="page-link text-black" href="@Url.Action("Index", new { page =1 })"><<</a>
+
+    @if (currentPage > 1)
+    {
+        <a class="page-link text-black" href="@Url.Action("Index", new { page = currentPage - 1 })">Prev</a>
+    }
+
+    @for (int i = 1; i <= totalPages; i++)
+    {
+      
+        if (i == 1 || i == totalPages || (i >= currentPage - midSize && i <= currentPage + midSize))
+        {
+            if (i == currentPage)
+            {
+                <span class="active page-link text-black" >@i</span>
+            }
+            else
+            {
+                <a class="page-link text-black" href="@Url.Action("Index", new { page = i })">@i</a>
+            }
+        }
+     
+        else if (i == 2 || i == totalPages - 1)
+        {
+            <span >.   .   .</span>
+        }
+    }
+
+    @if (currentPage < totalPages)
+    {
+        <a class="page-link text-black"  href="@Url.Action("Index", new { page = currentPage + 1 })">Next</a>
+    }
+    <a class="page-link text-black" href="@Url.Action("Index", new { page = totalPages })">>></a>
+</div>
+
+
+
+

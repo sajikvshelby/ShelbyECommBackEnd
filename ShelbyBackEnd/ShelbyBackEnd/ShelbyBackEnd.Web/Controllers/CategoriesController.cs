@@ -36,7 +36,6 @@ namespace ShelbyBackEnd.Web.Controllers
         {
             obj.Category.parent_category_id = (obj.Title == "Sub Sub") ? obj.Category.category_id : obj.Category.parent_category_id;
             await _categorieService.Insert_Categories(obj.Category);
-            TempData["success"] = "created successFully";
             return RedirectToAction(nameof(Index));
 
         }

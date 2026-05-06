@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using ShelbyBackEnd.Application.Common.Service;
 using ShelbyBackEnd.Infrastructure.Models;
 using ShelbyBackEnd.Services.Contract;
@@ -16,6 +17,7 @@ builder.Services.AddScoped<IShelbyECommContextProcedures, ShelbyECommContextProc
 
 builder.Services.AddScoped<IBackEndMenuService, BackEndMenuService>();
 builder.Services.AddScoped<ICategorieService, CategoriesService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 
 var app = builder.Build();
@@ -27,8 +29,17 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+app.UseStaticFiles();
 app.UseHttpsRedirection();
+
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+           Path.Combine(Directory.GetCurrentDirectory(), "//neptuneii/SHARES/Users/sajik/Development/Media20/")),
+    RequestPath = "/Media"
+});
+
 app.UseRouting();
 
 app.UseAuthorization();
