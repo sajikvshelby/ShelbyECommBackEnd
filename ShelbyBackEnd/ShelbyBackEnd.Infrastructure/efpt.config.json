@@ -35,6 +35,10 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[Select_All_LowInventory_Products]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[Select_All_Products_List]",
          "ObjectType": 1
       },

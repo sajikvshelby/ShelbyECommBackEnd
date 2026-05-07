@@ -291,6 +291,26 @@ namespace ShelbyBackEnd.Infrastructure.Models
             return _;
         }
 
+        public virtual async Task<List<Select_All_LowInventory_ProductsResult>> Select_All_LowInventory_ProductsAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<Select_All_LowInventory_ProductsResult>("EXEC @returnValue = [dbo].[Select_All_LowInventory_Products]", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
         public virtual async Task<List<Select_All_Products_ListResult>> Select_All_Products_ListAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter

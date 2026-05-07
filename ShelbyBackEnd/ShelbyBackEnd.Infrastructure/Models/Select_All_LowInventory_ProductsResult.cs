@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ShelbyBackEnd.Infrastructure.Models
 {
-    public partial class Select_All_Products_ListResult
+    public partial class Select_All_LowInventory_ProductsResult
     {
         public long product_id { get; set; }
         [StringLength(30)]
@@ -21,5 +21,11 @@ namespace ShelbyBackEnd.Infrastructure.Models
         public bool hidden { get; set; }
         [StringLength(305)]
         public string photo_url { get; set; }
+        public long? stockstatus { get; set; }
+        public long? stocklowqtyalarm { get; set; }
+        public long? lastpo_qty { get; set; }
+        public DateTime? lastpo_date { get; set; }
+        [StringLength(1)]
+        public string addtopo_now { get; set; }
     }
 }

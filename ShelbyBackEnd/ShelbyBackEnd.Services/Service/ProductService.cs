@@ -19,8 +19,16 @@ namespace ShelbyBackEnd.Services.Service
         {
             var Products = await _db.Procedures.Select_All_Products_ListAsync( cancellationToken: cancellationToken);
             pageSize = pageSize == 1 ? Products.Count : pageSize;
-            var paginatedList = await PaginatedList<Select_All_Products_ListResult>.CreateAsync((Products), pageNumber ?? 1, pageSize ?? 20);
-            return paginatedList;
+            return await PaginatedList<Select_All_Products_ListResult>.CreateAsync((Products), pageNumber ?? 1, pageSize ?? 20);
+            
+        }
+
+        public async Task<PaginatedList<Select_All_LowInventory_ProductsResult>> GetAllLowInventoryProducts(int? pageNumber, int? pageSize, CancellationToken cancellationToken = default)
+        { 
+            var Products = await _db.Procedures.Select_All_LowInventory_ProductsAsync(cancellationToken: cancellationToken);
+            pageSize = pageSize == 1 ? Products.Count : pageSize;
+            return await PaginatedList<Select_All_LowInventory_ProductsResult>.CreateAsync((Products), pageNumber ?? 1, pageSize ?? 20);
+
         }
     }
 }
