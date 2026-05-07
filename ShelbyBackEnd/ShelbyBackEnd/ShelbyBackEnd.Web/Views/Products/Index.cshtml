@@ -15,22 +15,19 @@
 
 </div>
 
+
 <div class="container">
-    <div class="row w-100 container">
-
+    <div class="row">
+     
         <div class="col p-2 d-flex justify-content-center align-items-center" style="height:10px">
-            <partial name="_Paging" model="Model" />
-
+            <partial name="_Paging" model="Model" style="height:5px" />
         </div>
-   
-        <div class="col-6 offset-5 text-end">
-            <a asp-action="Create" asp-controller="Products" class="btn btn-secondary">Create New Product</a>
+    
+        <div class="col-auto">
+            <a asp-action="Create" asp-controller="Products" class="btn btn-secondary "> Create New Product</a>
         </div>
-
     </div>
 </div>
-
-
 
 <div class="w-100 card border-0 p-4 overflow-auto" style="max-height: 950px;">
 
@@ -56,7 +53,7 @@
             {
                 <tr>
                     <td>@product.product_code</td>
-                    <td><img src="~/Media/@product.photo_url" alt="@product.product_name" class="img-thumbnail" style="max-width: 100px;"></td>
+                    <td><img src="~/Media/@product.photo_url" onerror="NoImg(this);" alt="@product.product_name" class="img-thumbnail img-fluid" style=" max-width: 5rem;"></td>
                     <td>@product.product_name</td>
                     <td>@product.product_price</td>
                     <td>@product.Categories</td>
