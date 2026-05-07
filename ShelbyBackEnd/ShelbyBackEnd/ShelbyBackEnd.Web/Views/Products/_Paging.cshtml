@@ -24,7 +24,7 @@
       
         if (i == 1 || i == totalPages || (i >= currentPage - midSize && i <= currentPage + midSize))
         {
-            if (i == currentPage)
+            if (i == currentPage || (currentPage == 0 && i == 1))
             {
                 <span class="active page-link text-black" >@i</span>
             }

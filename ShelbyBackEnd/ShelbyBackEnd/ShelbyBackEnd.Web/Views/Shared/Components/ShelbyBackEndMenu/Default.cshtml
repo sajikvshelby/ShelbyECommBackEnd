@@ -13,7 +13,7 @@
 
             @if (Model.Any(m => m.parent_backend_menu_id == category.backend_menu_id))
             {
-                <ul class="dropdown-menu sub-menu" aria-labelledby="navbarDropdown_@category.backend_menu_id">
+                <ul class="dropdown-menu sub-menu" data-bs-auto-close="outside" aria-labelledby="navbarDropdown_@category.backend_menu_id">
                     @foreach (var subMenuItem in Model.Where(l => l.parent_backend_menu_id == category.backend_menu_id))
                     {
                         <li>
@@ -31,7 +31,7 @@
 <style>
   
     .sub-menu {
-        /* display: none; */
+        display: none;
         grid-template-columns: repeat(1, 1fr);
     }
 
