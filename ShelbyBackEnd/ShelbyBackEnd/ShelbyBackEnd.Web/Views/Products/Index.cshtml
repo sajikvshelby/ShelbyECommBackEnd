@@ -12,14 +12,10 @@
              var id = $(this).val();
            window.location.href ='/Products/Index?ps=' + $('#dllpagesize').val() + "&pt=" + id;
         });
-
-
-               
-
     </script>
 }
 
-<div id="test"class="w-100 card border-0 p-4">
+<div class="w-100 card border-0 p-4">
     <div class="card-header bg-success bg-gradient m-lg-0 py-3">
         <div class="row">
             <div class="col text-center">
@@ -31,91 +27,18 @@
 
 </div>
 
-
-<div class="container w-100">
-    <div class="row">
-
-
-        <div class="col-2 d-flex justify-content-end">
-           
-            <select id="dllpageType" asp-for="@Model.pageType" class="form-select">
-                <option value="1">Products</option>
-                <option value="2">Low Inventory</option>
-                <option value="3">Queued for PO</option>
-                <option value="4">Search</option>
-                <option value="5">Add</option>
-            </select>
-        </div>
-     
-       
-    
-        <div class="col-2 d-flex justify-content-end">
-          
-            <select id="dllpagesize" asp-for="@Model.pagesize" class="form-select">
-                <option value="20">20 Per Page</option>
-                <option value="50">50 Per Page</option>
-                <option value="100">100 Per Page</option>
-              
-            </select>
-        </div>
-    </div>
+<div class="text-start">
+    <select id="dllpageType" asp-for="@Model.pageType" style="width: 250px;" class="form-select">
+        <option value="1">Products</option>
+        <option value="2">Low Inventory</option>
+        <option value="3">Queued for PO</option>
+        <option value="4">Search</option>
+        <option value="5">Add</option>
+    </select>
 </div>
-
 
 <div id="divProduct" style="display: @(Model.isProducts ? "block" : "none")">
-
-    <div  class="col p-2 d-flex justify-content-center align-items-center" style="height:10px">
-        <partial name="_Paging" model="Model" style="height:5px" />
-    </div>
-<div class="w-100 card border-0 p-4 overflow-auto" style="max-height: 950px;">
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Product Code</th>
-                <th>Main Image </th>
-                <th>Product Name</th>
-                <th>Product Price</th>
-                <th>Categories</th>
-                <th>Stock Status</th>
-                <th>Hidden</th>
-                <th>Delete</th>
-                <th></th>
-            </tr>
-        </thead>
-       
-        <tbody>
-     
-            @foreach (var prod in Model.Products.Items)
-            {
-                <tr>
-                    <td>     <a asp-controller="Products" asp-action="Delete" asp-route-pc="@prod.product_code class="btn btn-danger mx-2">@prod.product_code</a></td>
-                    <td><img src="~/Media/@prod.photo_url" onerror="NoImg(this);" alt="@prod.product_name" class="img-thumbnail img-fluid" style=" max-width: 5rem; max-height: 10rem;"></td>
-                    <td>@prod.product_name</td>
-                    <td>@prod.product_price</td>
-                    <td>@prod.Categories</td>
-                    <td>@prod.quantity</td>
-                    <td>@prod.hidden</td>
-                  
-                    <td>
-
-                        <div class="w-75 btn-group" role="group">
-                            <a asp-controller="Products" asp-action="Update" asp-route-pc="@prod.product_code" class="btn btn-success mx-2">
-                                <i class="bi bi-pencil-square"></i>Edit
-                            </a>
-                        
-                            <a asp-controller="Products" asp-action="Delete" asp-route-pc="@prod.product_code class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i>Delete</a>
-                        </div>
-                    </td>
-                </tr>
-            }
-        </tbody>
-         
-    </table>
-</div>
-
-<div class="p-4 d-flex justify-content-center align-items-center vh-25" style="height:5px">
-    <partial name="_Paging" model="Model" />
-</div>
+    <partial name="_Products" model="Model" />
 </div>
 
 <script>

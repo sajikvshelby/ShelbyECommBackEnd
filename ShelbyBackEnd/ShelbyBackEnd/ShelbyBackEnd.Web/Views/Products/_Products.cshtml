@@ -1,0 +1,68 @@
+﻿@using ShelbyBackEnd.Web.Models.ViewModels
+@model ProductsVM
+
+<div class="row">
+<div class="col pb-4 d-flex justify-content-center align-items-center" style="height:15px">
+    <partial name="_Paging" model="Model" style="height:5px" />
+</div>
+
+<div class="col-2 d-flex justify-content-end">
+          
+    <select id="dllpagesize" asp-for="@Model.pagesize" style="width: 250px;" class="form-select">
+        <option value="20">20 Per Page</option>
+        <option value="50">50 Per Page</option>
+        <option value="100">100 Per Page</option>
+              
+    </select>
+</div>
+</div>
+
+<div class="w-100    card border-0 p-1 overflow-auto" style="max-height: 950px;">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Product Code</th>
+                <th>Main Image </th>
+                <th>Product Name</th>
+                <th>Product Price</th>
+                <th>Categories</th>
+                <th>Stock Status</th>
+                <th>Hidden</th>
+                <th>Delete</th>
+                <th></th>
+            </tr>
+        </thead>
+       
+        <tbody>
+     
+            @foreach (var prod in Model.Products.Items)
+            {
+                <tr>
+                    <td>     <a asp-controller="Products" asp-action="Delete" asp-route-pc="@prod.product_code class="btn btn-danger mx-2">@prod.product_code</a></td>
+                    <td><img src="~/Media/@prod.photo_url" onerror="NoImg(this);" alt="@prod.product_name" class="img-thumbnail img-fluid" style=" max-width: 5rem; max-height: 10rem;"></td>
+                    <td>@prod.product_name</td>
+                    <td>@prod.product_price</td>
+                    <td>@prod.Categories</td>
+                    <td>@prod.quantity</td>
+                    <td>@prod.hidden</td>
+                  
+                    <td>
+
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="Products" asp-action="Update" asp-route-pc="@prod.product_code" class="btn btn-success mx-2">
+                                <i class="bi bi-pencil-square"></i>Edit
+                            </a>
+                        
+                            <a asp-controller="Products" asp-action="Delete" asp-route-pc="@prod.product_code class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i>Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+         
+    </table>
+</div>
+
+<div class="pb-4 pt-3 d-flex justify-content-center align-items-center vh-25" style="height:5px">
+    <partial name="_Paging" model="Model" />
+</div>
