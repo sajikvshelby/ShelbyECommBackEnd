@@ -1,10 +1,8 @@
-﻿@using ShelbyBackEnd.Infrastructure.Models
-@using ShelbyEComm.Services.Models
-@model PaginatedList<Select_All_Products_ListResult>
-
+﻿@using ShelbyBackEnd.Web.Models.ViewModels
+@model ProductsVM
 @{
-    int totalPages = Model.TotalPages;
-    int currentPage = Model.PageIndex;
+    int totalPages = Model.Products.TotalPages;
+    int currentPage = Model.Products.PageIndex;
     int midSize = 2; 
 }
 
@@ -12,11 +10,11 @@
 <div class="pagination">
 
 
-    <a class="page-link text-black" href="@Url.Action("Index", new { page =1 })"><<</a>
+    <a class="page-link text-black" href="@Url.Action("Index", new { page = 1, ps = ViewData["pagesize"], pt = ViewData["pageType"] })"><<</a>
 
     @if (currentPage > 1)
     {
-        <a class="page-link text-black" href="@Url.Action("Index", new { page = currentPage - 1 })">Prev</a>
+        <a class="page-link text-black" href="@Url.Action("Index", new { page = currentPage - 1, ps = ViewData["pagesize"], pt = ViewData["pageType"] })">Prev</a>
     }
 
     @for (int i = 1; i <= totalPages; i++)
@@ -30,7 +28,7 @@
             }
             else
             {
-                <a class="page-link text-black" href="@Url.Action("Index", new { page = i })">@i</a>
+                <a class="page-link text-black" href="@Url.Action("Index", new { page = i, ps = ViewData["pagesize"], pt = ViewData["pageType"] })">@i</a>
             }
         }
      
@@ -42,9 +40,9 @@
 
     @if (currentPage < totalPages)
     {
-        <a class="page-link text-black"  href="@Url.Action("Index", new { page = currentPage + 1 })">Next</a>
+        <a class="page-link text-black" href="@Url.Action("Index", new { page = currentPage + 1, ps = ViewData["pagesize"], pt = ViewData["pageType"] })">Next</a>
     }
-    <a class="page-link text-black" href="@Url.Action("Index", new { page = totalPages })">>></a>
+    <a class="page-link text-black" href="@Url.Action("Index", new { page = totalPages, ps = ViewData["pagesize"], pt = ViewData["pageType"] })">>></a>
 </div>
 
 

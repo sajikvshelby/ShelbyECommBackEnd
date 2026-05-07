@@ -3,7 +3,7 @@
 
 // Write your JavaScript code.
 
-function NoImg(i) {
+//function NoImg(i) {
 
-    i.src = "../images/nophoto.gif";
-}
+//    i.src = "../images/nophoto.gif";
+//}
