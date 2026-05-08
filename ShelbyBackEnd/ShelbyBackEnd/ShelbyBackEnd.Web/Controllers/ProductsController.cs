@@ -11,8 +11,8 @@ namespace ShelbyBackEnd.Web.Controllers
 {
     public class ProductsController : Controller
     {
-        IProductService _productService;    
-      
+        IProductService _productService;
+
 
         public ProductsController(IProductService productService)
         {
@@ -21,33 +21,78 @@ namespace ShelbyBackEnd.Web.Controllers
 
         public async Task<IActionResult> Index(int page, int ps, int pt)
         {
-            PaginatedList<Select_All_Products_ListResult> products;
+            ProductsVM vm = new();
             ps = ps == 0 ? 20 : ps;
-            bool isProducts = (pt == 1 || pt == 0);
-            if (isProducts)
+          
+                     
+            if (pt == 1 || pt == 0)
             {
-                 products = await _productService.GetAllProducts(page, ps);
-            
+                vm = await ManageProducts(page, ps, pt);
+            }
+            else if (pt == 2)
+            {
+                vm = await ManageLowInventoryProducts(page, ps, pt);
             }
             else
             {
-
-                List<Select_All_Products_ListResult> lProducts = new List<Select_All_Products_ListResult>();
-                products = new PaginatedList<Select_All_Products_ListResult>(lProducts, 0,0,0);
+                vm = DefaultProducts(page, ps, pt);
             }
+           
+            ViewData["pagesize"] = ps;
+            ViewData["pageType"] = pt;
+            return View(vm);
+        }
 
-            // return View(products);
 
+      
+
+
+        private async Task<ProductsVM> ManageProducts(int page, int ps, int pt)
+        {
+        var   products = await _productService.GetAllProducts(page, ps);
+               
             ProductsVM productListViewModel = new()
             {
                 Products = products,
                 pagesize = ps,
-                pageType=pt,
-                isProducts = isProducts
+                pageType = pt,
+                isProducts = true,
+                totalPages = products.TotalPages,
+                currentPage = products.PageIndex,
+                Title = "All Products"
             };
-            ViewData["pagesize"] = ps;
-            ViewData["pageType"] = pt;
-            return View(productListViewModel);
+            return productListViewModel;
+        }
+
+
+        private async Task<ProductsVM> ManageLowInventoryProducts(int page, int ps, int pt)
+        {
+       
+          var liProducts = await _productService.GetAllLowInventoryProducts(page, ps);
+            ProductsVM productListViewModel = new()
+            {
+                lowInventoryProducts = liProducts,
+                pagesize = ps,
+                pageType = pt,
+                isLIProducts = true,
+                totalPages = liProducts.TotalPages,
+                currentPage = liProducts.PageIndex,
+                Title="Products : Low Inventory"
+            };
+            return productListViewModel;
+        }
+
+        private ProductsVM DefaultProducts(int page, int ps, int pt)
+        {
+
+            ProductsVM vm = new()
+            {
+                Products = new PaginatedList<Select_All_Products_ListResult>(new List<Select_All_Products_ListResult>(), 0, 1, ps),
+                pagesize = ps,
+                pageType = pt
+               
+            };
+            return vm;
         }
     }
 }

@@ -24,8 +24,10 @@ namespace ShelbyBackEnd.Infrastructure.Models
         public long? stockstatus { get; set; }
         public long? stocklowqtyalarm { get; set; }
         public long? lastpo_qty { get; set; }
-        public DateTime? lastpo_date { get; set; }
         [StringLength(1)]
         public string addtopo_now { get; set; }
+        public long? stockreorderqty { get; set; }
+        [StringLength(10)]
+        public string lastpo_date { get; set; }
     }
 }

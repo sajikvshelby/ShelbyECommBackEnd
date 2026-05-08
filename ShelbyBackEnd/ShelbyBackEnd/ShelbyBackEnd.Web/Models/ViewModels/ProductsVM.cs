@@ -10,6 +10,10 @@ namespace ShelbyBackEnd.Web.Models.ViewModels
 
         public PaginatedList<Select_All_Products_ListResult> Products { get; set; }
 
+        public PaginatedList<Select_All_LowInventory_ProductsResult> lowInventoryProducts { get; set; }
+
+   
+
         //[ValidateNever]
         //public IEnumerable<SelectListItem> SortByList { get; set; }
         //[ValidateNever]
@@ -22,9 +26,19 @@ namespace ShelbyBackEnd.Web.Models.ViewModels
 
 
         [ValidateNever]
-        public bool isProducts { get; set; }
+        public int totalPages { get; set; }
 
+        [ValidateNever]
+        public int currentPage { get; set; }
 
+        [ValidateNever]
+        public bool isProducts { get; set; } = false;
+
+        [ValidateNever]
+        public bool isLIProducts { get; set; } = false;
+
+        [ValidateNever]
+        public string Title { get; set; }
     }
 
 }

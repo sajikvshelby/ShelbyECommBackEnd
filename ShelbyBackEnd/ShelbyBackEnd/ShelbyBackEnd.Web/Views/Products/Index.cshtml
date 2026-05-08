@@ -5,13 +5,55 @@
     <script>
                  $('#dllpagesize').on('change', function() {
                 
-                  window.location.href ='/Products/Index?ps=' + $('#dllpagesize').val() + "&pt=" + $('#dllpageType').val();
-                });
+                       window.location.href ='/Products/Index?ps=' + $('#dllpagesize').val() + "&pt=" + $('#dllpageType').val();
+                     });
 
-            $('#dllpageType').on('change', function() {
-             var id = $(this).val();
-           window.location.href ='/Products/Index?ps=' + $('#dllpagesize').val() + "&pt=" + id;
-        });
+       
+                 $('#dllpageType').on('change', function() {
+                  var id = $(this).val();
+                window.location.href ='/Products/Index?ps=' + $('#dllpagesize').val() + "&pt=" + $('#dllpageType').val();
+             });
+
+
+
+
+             //   $('#myTable thead tr').clone(true).appendTo('#myTable thead');
+             // $('#myTable thead tr:eq(1) th').each(function (i) {
+             //     $(this).html('<input type="text" placeholder="Search..." />');
+             //     $('input', this).on('keyup change', function () {
+             //         if (table.column(i).search() !== this.value) {
+             //             table.column(i).search(this.value).draw();
+             //         }
+             //     });
+             // });
+
+
+
+        function myFunction() {
+          var input, filter, table, tr, td, i, txtValue;
+          input = document.getElementById("myInput");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("myTable");
+          tr = table.getElementsByTagName("tr");
+          for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+              txtValue = td.textContent || td.innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+              } else {
+                tr[i].style.display = "none";
+              }
+            }
+          }
+        }
+
+
+
+
+
+
+
     </script>
 }
 
@@ -19,7 +61,7 @@
     <div class="card-header bg-success bg-gradient m-lg-0 py-3">
         <div class="row">
             <div class="col text-center">
-                <h2 class="text-white py-2">All Products</h2>
+                <h2 class="text-white py-2">@Model.Title</h2>
 
             </div>
         </div>
@@ -27,20 +69,53 @@
 
 </div>
 
-<div class="text-start">
-    <select id="dllpageType" asp-for="@Model.pageType" style="width: 250px;" class="form-select">
-        <option value="1">Products</option>
-        <option value="2">Low Inventory</option>
-        <option value="3">Queued for PO</option>
-        <option value="4">Search</option>
-        <option value="5">Add</option>
-    </select>
-</div>
+<table>
 
-<div id="divProduct" style="display: @(Model.isProducts ? "block" : "none")">
-    <partial name="_Products" model="Model" />
-</div>
+    <tr>
 
+        <td>
+            <select id="dllpageType" asp-for="@Model.pageType" style="width: 250px;" class="form-select">
+                <option value="1">Products</option>
+                <option value="2">Low Inventory</option>
+                <option value="3">Queued for PO</option>
+                <option value="4">Search</option>
+                <option value="5">Add</option>
+            </select>
+
+        </td>
+        <td>
+
+            <select id="dllpagesize" asp-for="@Model.pagesize" style="width: 250px;" class="form-select">
+                <option value="20">20 Per Page</option>
+                <option value="50">50 Per Page</option>
+                <option value="100">100 Per Page</option>
+              
+            </select>
+
+        </td>
+    </tr>
+</table>
+
+ 
+
+
+
+     
+
+
+
+@if (Model.isProducts)
+{
+    <div id="divProduct">
+        <partial name="_Products" model="Model" />
+    </div>
+}
+@if (Model.isLIProducts)
+{
+    <div id="divProduct">
+        <partial name="_LowInventoryProducts" model="Model" />
+    </div>
+}
 <script>
 
     function NoImg(i) {

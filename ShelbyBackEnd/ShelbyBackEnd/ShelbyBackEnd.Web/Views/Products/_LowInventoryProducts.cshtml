@@ -2,26 +2,41 @@
 @model ProductsVM
 
 
+@section Scripts {
+    <script>
+         $('#dllpagesize').on('change', function() {
+                
+          window.location.href ='/Products/Index?ps=' + $('#dllpagesize').val() + "&pt=" + $('#dllpageType').val();
+        });
+
+       
+    </script>
+}
 
 
 <div class="row">
-<div class="col pb-4 d-flex justify-content-center align-items-center" style="height:15px">
-    <partial name="_Paging" model="Model" style="height:5px" />
-</div>
+    <div class="col pb-4 d-flex justify-content-center align-items-center" style="height:15px">
+        <partial name="_Paging" model="Model" style="height:5px" />
+    </div>
 
 
 </div>
 
 <div class="w-100    card border-0 p-1 overflow-auto" style="max-height: 950px;">
-    <table id="myTable" class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>Product Code</th>
+                <th>Product Code<br /> <input type="text" class="header-filter" placeholder="Filter Code..."></th>
                 <th>Main Image </th>
                 <th>Product Name</th>
                 <th>Product Price</th>
                 <th>Categories</th>
                 <th>Stock Status</th>
+                <th>Low Qty Alarm</th>
+                <th>ReOrder Qty</th>
+                <th>Add To PO</th>
+                <th>Last PO Qty</th>
+                <th>Last PO Date</th>
                 <th>Hidden</th>
                 <th>Delete</th>
                 <th></th>
@@ -30,7 +45,7 @@
        
         <tbody>
      
-            @foreach (var prod in Model.Products.Items)
+            @foreach (var prod in Model.lowInventoryProducts.Items)
             {
                 <tr>
                     <td>     <a asp-controller="Products" asp-action="Delete" asp-route-pc="@prod.product_code class="btn btn-danger mx-2">@prod.product_code</a></td>
@@ -39,6 +54,13 @@
                     <td>@prod.product_price</td>
                     <td>@prod.Categories</td>
                     <td>@prod.quantity</td>
+                    <td>@prod.stocklowqtyalarm</td>
+                    <td>@prod.stockreorderqty</td>
+                    <td>@prod.addtopo_now</td>
+                    <td>@prod.lastpo_qty</td>
+                    <td>@prod.lastpo_date</td>
+                    
+
                     <td>@prod.hidden</td>
                   
                     <td>
