@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using ShelbyBackEnd.Infrastructure.Models;
 using ShelbyBackEnd.Services.Contract;
 using ShelbyBackEnd.Web.Models.ViewModels;
@@ -19,38 +20,53 @@ namespace ShelbyBackEnd.Web.Controllers
             _productService = productService;
         }
 
-        public async Task<IActionResult> Index(int page, int ps, int pt)
+        public async Task<IActionResult> Index(int page, int ps, int pt, string so)
         {
             ProductsVM vm = new();
             ps = ps == 0 ? 20 : ps;
-          
-                     
+
+
             if (pt == 1 || pt == 0)
             {
-                vm = await ManageProducts(page, ps, pt);
+                vm = await ManageProducts(page, ps, pt, so);
             }
             else if (pt == 2)
             {
-                vm = await ManageLowInventoryProducts(page, ps, pt);
+                vm = await ManageLowInventoryProducts(page, ps, pt, so);
             }
             else
             {
                 vm = DefaultProducts(page, ps, pt);
             }
-           
-            ViewData["pagesize"] = ps;
-            ViewData["pageType"] = pt;
+
+            setViewData(ps, pt, so);
+
             return View(vm);
         }
 
-
-      
-
-
-        private async Task<ProductsVM> ManageProducts(int page, int ps, int pt)
+        private void setViewData(int ps, int pt, string so)
         {
-        var   products = await _productService.GetAllProducts(page, ps);
-               
+            ViewData["PCSort"] = string.IsNullOrEmpty(so) ? "pc_desc" : "";
+            ViewData["PNSort"] = so == "pn_asc" ? "pn_desc" : "pn_asc";
+            ViewData["PPSort"] = so == "pp_asc" ? "pp_desc" : "pp_asc";
+            ViewData["SSSort"] = so == "ss_asc" ? "ss_desc" : "ss_asc";
+            ViewData["HSort"] = so == "h_asc" ? "h_desc" : "h_asc";
+            ViewData["LQASort"] = so == "lqa_asc" ? "lqa_desc" : "lqa_asc";
+            ViewData["RQSort"] = so == "rq_asc" ? "rq_desc" : "rq_asc";
+            ViewData["ATPSort"] = so == "atp_asc" ? "atp_desc" : "atp_asc";
+            ViewData["LPQSort"] = so == "lpq_asc" ? "lpq_desc" : "lpq_asc";
+            ViewData["LPDSort"] = so == "lpd_asc" ? "lpd_desc" : "lpd_asc";
+            ViewData["pagesize"] = ps;
+            ViewData["pageType"] = pt;
+            ViewData["CurrentSort"] = so;
+        }
+
+
+
+        private async Task<ProductsVM> ManageProducts(int page, int ps, int pt, string so)
+        {
+            var products = await _productService.GetAllProducts(page, ps, so);
+
             ProductsVM productListViewModel = new()
             {
                 Products = products,
@@ -65,10 +81,10 @@ namespace ShelbyBackEnd.Web.Controllers
         }
 
 
-        private async Task<ProductsVM> ManageLowInventoryProducts(int page, int ps, int pt)
+        private async Task<ProductsVM> ManageLowInventoryProducts(int page, int ps, int pt, string so)
         {
-       
-          var liProducts = await _productService.GetAllLowInventoryProducts(page, ps);
+
+            var liProducts = await _productService.GetAllLowInventoryProducts(page, ps, so);
             ProductsVM productListViewModel = new()
             {
                 lowInventoryProducts = liProducts,
@@ -77,7 +93,7 @@ namespace ShelbyBackEnd.Web.Controllers
                 isLIProducts = true,
                 totalPages = liProducts.TotalPages,
                 currentPage = liProducts.PageIndex,
-                Title="Products : Low Inventory"
+                Title = "Products : Low Inventory"
             };
             return productListViewModel;
         }
@@ -90,7 +106,7 @@ namespace ShelbyBackEnd.Web.Controllers
                 Products = new PaginatedList<Select_All_Products_ListResult>(new List<Select_All_Products_ListResult>(), 0, 1, ps),
                 pagesize = ps,
                 pageType = pt
-               
+
             };
             return vm;
         }

@@ -13,16 +13,22 @@
 </div>
 
 <div class="w-100    card border-0 p-1 overflow-auto" style="max-height: 950px;">
-    <table id="myTable" class="table table-bordered table-striped">
+    <table  class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>Product Code</th>
+              
+                <th><a class="text-dark" asp-controller="Products" asp-action="Index" asp-route-ps="@ViewData["pagesize"]" asp-route-pt="@ViewData["pageType"]" asp-route-so=@ViewData["PCSort"]>
+                        Product Code <i class="fa fa-fw fa-sort"></i>
+                    </a>
+                </th>
                 <th>Main Image </th>
-                <th>Product Name</th>
-                <th>Product Price</th>
+                <th><a class="text-dark" asp-controller="Products" asp-action="Index" asp-route-ps="@ViewData["pagesize"]" asp-route-pt="@ViewData["pageType"]" asp-route-so=@ViewData["PNSort"]>Product Name
+                        <i class="fa fa-fw fa-sort"></i>
+                </a></th>
+                <th><a class="text-dark" asp-controller="Products" asp-action="Index" asp-route-ps="@ViewData["pagesize"]" asp-route-pt="@ViewData["pageType"]" asp-route-so=@ViewData["PPSort"]>Product Price <i class="fa fa-fw fa-sort"></i></a></th>
                 <th>Categories</th>
-                <th>Stock Status</th>
-                <th>Hidden</th>
+                <th><a class="text-dark" asp-controller="Products" asp-action="Index" asp-route-ps="@ViewData["pagesize"]" asp-route-pt="@ViewData["pageType"]" asp-route-so=@ViewData["SSSort"]>Stock Status <i class="fa fa-fw fa-sort"></i></a></th>
+                <th><a class="text-dark" asp-controller="Products" asp-action="Index" asp-route-ps="@ViewData["pagesize"]" asp-route-pt="@ViewData["pageType"]" asp-route-so=@ViewData["HSort"]>Hidden <i class="fa fa-fw fa-sort"></i></a></th>
                 <th>Delete</th>
                 <th></th>
             </tr>
@@ -38,7 +44,7 @@
                     <td>@prod.product_name</td>
                     <td>@prod.product_price</td>
                     <td>@prod.Categories</td>
-                    <td>@prod.quantity</td>
+                    <td>@prod.stockstatus</td>
                     <td>@prod.hidden</td>
                   
                     <td>

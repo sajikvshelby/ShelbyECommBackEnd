@@ -10,11 +10,11 @@
 <div class="pagination">
 
 
-    <a class="page-link text-black" href="@Url.Action("Index", new { page = 1, ps = ViewData["pagesize"], pt = ViewData["pageType"] })"><<</a>
+    <a class="page-link text-black" href="@Url.Action("Index", new { page = 1, ps = ViewData["pagesize"], pt = ViewData["pageType"], so = ViewData["CurrentSort"] })"><<</a>
 
     @if (currentPage > 1)
     {
-        <a class="page-link text-black" href="@Url.Action("Index", new { page = currentPage - 1, ps = ViewData["pagesize"], pt = ViewData["pageType"] })">Prev</a>
+        <a class="page-link text-black" href="@Url.Action("Index", new { page = currentPage - 1, ps = ViewData["pagesize"], pt = ViewData["pageType"], so = ViewData["CurrentSort"] })">Prev</a>
     }
 
     @for (int i = 1; i <= totalPages; i++)
@@ -28,7 +28,7 @@
             }
             else
             {
-                <a class="page-link text-black" href="@Url.Action("Index", new { page = i, ps = ViewData["pagesize"], pt = ViewData["pageType"] })">@i</a>
+                <a class="page-link text-black" href="@Url.Action("Index", new { page = i, ps = ViewData["pagesize"], pt = ViewData["pageType"], so = ViewData["CurrentSort"] })">@i</a>
             }
         }
      
@@ -40,9 +40,9 @@
 
     @if (currentPage < totalPages)
     {
-        <a class="page-link text-black" href="@Url.Action("Index", new { page = currentPage + 1, ps = ViewData["pagesize"], pt = ViewData["pageType"] })">Next</a>
+        <a class="page-link text-black" href="@Url.Action("Index", new { page = currentPage + 1, ps = ViewData["pagesize"], pt = ViewData["pageType"], so = ViewData["CurrentSort"] })">Next</a>
     }
-    <a class="page-link text-black" href="@Url.Action("Index", new { page = totalPages, ps = ViewData["pagesize"], pt = ViewData["pageType"] })">>></a>
+    <a class="page-link text-black" href="@Url.Action("Index", new { page = totalPages, ps = ViewData["pagesize"], pt = ViewData["pageType"], so = ViewData["CurrentSort"] })">>></a>
 </div>
 
 

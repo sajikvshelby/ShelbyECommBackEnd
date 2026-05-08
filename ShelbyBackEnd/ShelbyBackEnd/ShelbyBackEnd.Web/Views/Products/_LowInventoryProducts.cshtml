@@ -26,18 +26,25 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>Product Code</th>
+                <th>
+                    <a class="text-dark" asp-controller="Products" asp-action="Index" asp-route-ps="@ViewData["pagesize"]" asp-route-pt="@ViewData["pageType"]" asp-route-so=@ViewData["PCSort"]>
+                        Product Code <i class="fa fa-fw fa-sort"></i>
+                    </a>
+                </th>
                 <th>Main Image </th>
-                <th>Product Name</th>
-                <th>Product Price</th>
+                <th><a class="text-dark" asp-controller="Products" asp-action="Index" asp-route-ps="@ViewData["pagesize"]" asp-route-pt="@ViewData["pageType"]" asp-route-so=@ViewData["PNSort"]>Product Name <i class="fa fa-fw fa-sort"></i></a></th>
+                <th><a class="text-dark" asp-controller="Products" asp-action="Index" asp-route-ps="@ViewData["pagesize"]" asp-route-pt="@ViewData["pageType"]" asp-route-so=@ViewData["PPSort"]>Product Price <i class="fa fa-fw fa-sort"></i></a></th>
                 <th>Categories</th>
-                <th>Stock Status</th>
-                <th>Low Qty Alarm</th>
-                <th>ReOrder Qty</th>
-                <th>Add To PO</th>
-                <th>Last PO Qty</th>
-                <th>Last PO Date</th>
-                <th>Hidden</th>
+                <th><a class="text-dark" asp-controller="Products" asp-action="Index" asp-route-ps="@ViewData["pagesize"]" asp-route-pt="@ViewData["pageType"]" asp-route-so=@ViewData["SSSort"]>Stock Status <i class="fa fa-fw fa-sort"></i></a></th>
+
+               
+                <th><a class="text-dark" asp-controller="Products" asp-action="Index" asp-route-ps="@ViewData["pagesize"]" asp-route-pt="@ViewData["pageType"]" asp-route-so=@ViewData["LQASort"]>Low Qty Alarm <i class="fa fa-fw fa-sort"></i></a></th>
+                <th><a class="text-dark" asp-controller="Products" asp-action="Index" asp-route-ps="@ViewData["pagesize"]" asp-route-pt="@ViewData["pageType"]" asp-route-so=@ViewData["RQSort"]>ReOrder Qty<i class="fa fa-fw fa-sort"></i></a></th>
+                <th><a class="text-dark" asp-controller="Products" asp-action="Index" asp-route-ps="@ViewData["pagesize"]" asp-route-pt="@ViewData["pageType"]" asp-route-so=@ViewData["ATPSort"]>Add To PO<i class="fa fa-fw fa-sort"></i></a></th>
+                <th><a class="text-dark" asp-controller="Products" asp-action="Index" asp-route-ps="@ViewData["pagesize"]" asp-route-pt="@ViewData["pageType"]" asp-route-so=@ViewData["LPQSort"]>Last PO Qty<i class="fa fa-fw fa-sort"></i></a></th>
+                 
+                <th><a class="text-dark" asp-controller="Products" asp-action="Index" asp-route-ps="@ViewData["pagesize"]" asp-route-pt="@ViewData["pageType"]" asp-route-so=@ViewData["LPDSort"]>Last PO Date<i class="fa fa-fw fa-sort"></i></a></th>
+                <th><a class="text-dark" asp-controller="Products" asp-action="Index" asp-route-ps="@ViewData["pagesize"]" asp-route-pt="@ViewData["pageType"]" asp-route-so=@ViewData["HSort"]>Hidden<i class="fa fa-fw fa-sort"></i></a></th>
                 <th>Delete</th>
                 <th></th>
             </tr>
@@ -59,8 +66,8 @@
                     <td>@prod.addtopo_now</td>
                     <td>@prod.lastpo_qty</td>
                     <td>@prod.lastpo_date</td>
-                    
 
+                    
                     <td>@prod.hidden</td>
                   
                     <td>

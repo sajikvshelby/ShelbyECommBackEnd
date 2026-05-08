@@ -19,6 +19,7 @@ namespace ShelbyBackEnd.Infrastructure.Models
         public string Categories { get; set; }
         public int quantity { get; set; }
         public bool hidden { get; set; }
+        public long? stockstatus { get; set; }
         [StringLength(305)]
         public string photo_url { get; set; }
     }
