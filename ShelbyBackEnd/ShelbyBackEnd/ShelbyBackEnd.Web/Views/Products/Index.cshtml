@@ -3,56 +3,16 @@
 
 @section Scripts {
     <script>
-                 $('#dllpagesize').on('change', function() {
+            $('#dllpagesize').on('change', function() {
                 
-                       window.location.href ='/Products/Index?ps=' + $('#dllpagesize').val() + "&pt=" + $('#dllpageType').val();
-                     });
+                  window.location.href ='/Products/Index?ps=' + $('#dllpagesize').val() + "&pt=" + $('#dllpageType').val();
+                });
 
        
-                 $('#dllpageType').on('change', function() {
-                  var id = $(this).val();
-                window.location.href ='/Products/Index?ps=' + $('#dllpagesize').val() + "&pt=" + $('#dllpageType').val();
-             });
-
-
-
-
-             //   $('#myTable thead tr').clone(true).appendTo('#myTable thead');
-             // $('#myTable thead tr:eq(1) th').each(function (i) {
-             //     $(this).html('<input type="text" placeholder="Search..." />');
-             //     $('input', this).on('keyup change', function () {
-             //         if (table.column(i).search() !== this.value) {
-             //             table.column(i).search(this.value).draw();
-             //         }
-             //     });
-             // });
-
-
-
-        function myFunction() {
-          var input, filter, table, tr, td, i, txtValue;
-          input = document.getElementById("myInput");
-          filter = input.value.toUpperCase();
-          table = document.getElementById("myTable");
-          tr = table.getElementsByTagName("tr");
-          for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1];
-            if (td) {
-              txtValue = td.textContent || td.innerText;
-              if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-              } else {
-                tr[i].style.display = "none";
-              }
-            }
-          }
-        }
-
-
-
-
-
-
+            $('#dllpageType').on('change', function() {
+             var id = $(this).val();
+           window.location.href ='/Products/Index?ps=' + $('#dllpagesize').val() + "&pt=" + $('#dllpageType').val();
+        });
 
     </script>
 }
