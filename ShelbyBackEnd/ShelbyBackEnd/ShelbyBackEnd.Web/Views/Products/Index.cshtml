@@ -1,4 +1,4 @@
-﻿@using ShelbyBackEnd.Web.Models.ViewModels
+﻿
 @model ProductsVM
 
 @section Scripts {
@@ -12,6 +12,11 @@
             $('#dllpageType').on('change', function() {
              var id = $(this).val();
            window.location.href ='/Products/Index?ps=' + $('#dllpagesize').val() + "&pt=" + $('#dllpageType').val();
+
+           if(id==4){
+            window.location.href ='/Products/ProductSearch?ps=' + $('#dllpagesize').val() + "&pt=" + $('#dllpageType').val();
+           }
+
         });
 
                function setDelete(product_code, name) {
@@ -74,7 +79,7 @@
 @if (Model.isProducts)
 {
     <div id="divProduct">
-        <partial name="_Products" model="Model" />
+        <partial name="_LoadProducts" model="Model" />
     </div>
 }
 @if (Model.isLIProducts)

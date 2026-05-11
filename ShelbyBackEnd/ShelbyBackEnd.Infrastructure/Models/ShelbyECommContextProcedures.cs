@@ -351,6 +351,93 @@ namespace ShelbyBackEnd.Infrastructure.Models
             return _;
         }
 
+        public virtual async Task<List<Select_ProductResult>> Select_ProductAsync(long? prodID, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "ProdID",
+                    Value = prodID ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.BigInt,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<Select_ProductResult>("EXEC @returnValue = [dbo].[Select_Product] @ProdID = @ProdID", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<Select_Search_ProductsResult>> Select_Search_ProductsAsync(string product_name, string product_code, string product_price, string product_weight, string tab_product_desc, int? category_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "product_name",
+                    Size = 255,
+                    Value = product_name ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "product_code",
+                    Size = 30,
+                    Value = product_code ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "product_price",
+                    Size = 30,
+                    Value = product_price ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "product_weight",
+                    Size = 20,
+                    Value = product_weight ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "tab_product_desc",
+                    Size = -1,
+                    Value = tab_product_desc ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "category_id",
+                    Value = category_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<Select_Search_ProductsResult>("EXEC @returnValue = [dbo].[Select_Search_Products] @product_name = @product_name, @product_code = @product_code, @product_price = @product_price, @product_weight = @product_weight, @tab_product_desc = @tab_product_desc, @category_id = @category_id", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
         public virtual async Task<List<Select_Sort_By_ListResult>> Select_Sort_By_ListAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter

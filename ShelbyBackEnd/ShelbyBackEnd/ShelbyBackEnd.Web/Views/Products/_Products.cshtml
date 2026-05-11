@@ -1,72 +1,34 @@
-﻿@using ShelbyBackEnd.Web.Models.ViewModels
+﻿
 @model ProductsVM
 
-
-
-
-<div class="row">
-<div class="col pb-4 d-flex justify-content-center align-items-center" style="height:15px">
-    <partial name="_Paging" model="Model" style="height:5px" />
-</div>
-
-
-</div>
-
-<div class="w-100    card border-0 p-1 overflow-auto" style="max-height: 950px;">
-    <table  class="table table-bordered table-striped">
-        <thead>
-            <tr>
+<div class="p-3">
               
-                <th><a class="text-dark" asp-controller="Products" asp-action="Index" asp-route-ps="@ViewData["pagesize"]" asp-route-pt="@ViewData["pageType"]" asp-route-so=@ViewData["PCSort"]>
-                        Product Code <i class="fa fa-fw fa-sort"></i>
-                    </a>
-                </th>
-                <th>Main Image </th>
-                <th><a class="text-dark" asp-controller="Products" asp-action="Index" asp-route-ps="@ViewData["pagesize"]" asp-route-pt="@ViewData["pageType"]" asp-route-so=@ViewData["PNSort"]>Product Name
-                        <i class="fa fa-fw fa-sort"></i>
-                </a></th>
-                <th><a class="text-dark" asp-controller="Products" asp-action="Index" asp-route-ps="@ViewData["pagesize"]" asp-route-pt="@ViewData["pageType"]" asp-route-so=@ViewData["PPSort"]>Product Price <i class="fa fa-fw fa-sort"></i></a></th>
-                <th>Categories</th>
-                <th><a class="text-dark" asp-controller="Products" asp-action="Index" asp-route-ps="@ViewData["pagesize"]" asp-route-pt="@ViewData["pageType"]" asp-route-so=@ViewData["SSSort"]>Stock Status <i class="fa fa-fw fa-sort"></i></a></th>
-                <th><a class="text-dark" asp-controller="Products" asp-action="Index" asp-route-ps="@ViewData["pagesize"]" asp-route-pt="@ViewData["pageType"]" asp-route-so=@ViewData["HSort"]>Hidden <i class="fa fa-fw fa-sort"></i></a></th>
-                <th>Delete</th>
-                <th></th>
-            </tr>
-        </thead>
-       
-        <tbody>
-     
-            @foreach (var prod in Model.Products.Items)
-            {
-                <tr>
-                    <td>     <a asp-controller="Products" asp-action="Delete" asp-route-pc="@prod.product_code class="btn btn-danger mx-2">@prod.product_code</a></td>
-                    <td><img src="~/Media/@prod.photo_url" onerror="NoImg(this);" alt="@prod.product_name" class="img-thumbnail img-fluid" style=" max-width: 5rem; max-height: 10rem;"></td>
-                    <td>@prod.product_name</td>
-                    <td>@prod.product_price</td>
-                    <td>@prod.Categories</td>
-                    <td>@prod.stockstatus</td>
-                    <td>@prod.hidden</td>
-                  
-                    <td>
+    <div class="form-floating py-2 col-12">
+        <input asp-for="Product.product_name" class="form-control border shadow"/>
+        <label asp-for="Product.product_name" class="ms-2 fw-bold"> product_name</label>
+        <span asp-validation-for="Product.product_name" class="text-danger"></span>
+    </div>
 
-                        <div class="w-75 btn-group" role="group">
-                          @*   <a asp-controller="Products" asp-action="Update" asp-route-pc="@prod.product_code" class="btn btn-success mx-2">
-                                <i class="bi bi-pencil-square"></i>Edit
-                            </a>
-                        
-                            <a asp-controller="Products" asp-action="Delete" asp-route-pc="@prod.product_code class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i>Delete</a> *@
-                            <a class="btn btn-danger mx-2" onclick="event.stopPropagation(); setDelete('@prod.product_code','@prod.product_name');" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                                Delete
-                            </a>
-                        </div>
-                    </td>
-                </tr>
-            }
-        </tbody>
-         
-    </table>
-</div>
+    <div class="form-floating py-2 col-12">
+        <input asp-for="Product.product_code" class="form-control border shadow" />
+        <label asp-for="Product.product_code" class="ms-2 fw-bold"> product_code</label>
+        <span asp-validation-for="Product.product_code" class="text-danger"></span>
+    </div>
 
-<div class="pb-4 pt-3 d-flex justify-content-center align-items-center vh-25" style="height:5px">
-    <partial name="_Paging" model="Model" />
-</div>
+    <div class="form-floating py-2 col-12">
+        <input asp-for="Product.product_price" class="form-control border shadow" />
+        <label asp-for="Product.product_price" class="ms-2 fw-bold"> product_price</label>
+        <span asp-validation-for="Product.product_price" class="text-danger"></span>
+    </div>
+    <div class="form-floating py-2 col-12">
+        <input asp-for="Product.product_weight" class="form-control border shadow" />
+        <label asp-for="Product.product_weight" class="ms-2 fw-bold"> product_weight</label>
+        <span asp-validation-for="Product.product_weight" class="text-danger"></span>
+    </div>
+    <div class="form-floating py-2 col-12">
+        <input asp-for="Product.tab_product_desc" class="form-control border shadow" />
+        <label asp-for="Product.tab_product_desc" class="ms-2 fw-bold"> tab_product_desc</label>
+        <span asp-validation-for="Product.tab_product_desc" class="text-danger"></span>
+    </div>
+
+ </div>

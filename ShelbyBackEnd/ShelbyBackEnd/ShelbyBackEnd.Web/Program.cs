@@ -4,7 +4,8 @@ using ShelbyBackEnd.Application.Common.Service;
 using ShelbyBackEnd.Infrastructure.Models;
 using ShelbyBackEnd.Services.Contract;
 using ShelbyBackEnd.Services.Service;
-
+using System.Reflection;
+using AutoMapper;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -14,6 +15,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContextPool<ShelbyECommContext>(options =>
     options.UseSqlServer(CryptoLib.Decrypt(SharedLib.GetRegKeyVal(@"SOFTWARE\enterprise", "CstrSec"), CryptoLib.Projects.SHELBYECOMM)));
 builder.Services.AddScoped<IShelbyECommContextProcedures, ShelbyECommContextProcedures>();
+
+builder.Services.AddAutoMapper(cfg => { }, typeof(Program).Assembly);
 
 builder.Services.AddScoped<IBackEndMenuService, BackEndMenuService>();
 builder.Services.AddScoped<ICategorieService, CategoriesService>();

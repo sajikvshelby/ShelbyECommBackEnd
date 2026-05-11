@@ -28,7 +28,8 @@ namespace ShelbyBackEnd.Web.Controllers
 
             if (pt == 1 || pt == 0)
             {
-                vm = await ManageProducts(page, ps, pt, so);
+                var products = await _productService.GetAllProducts(page, ps, so);
+                vm = await ManageProducts(products, page, ps, pt, so);
             }
             else if (pt == 2)
             {
@@ -44,6 +45,23 @@ namespace ShelbyBackEnd.Web.Controllers
             return View(vm);
         }
 
+        public async Task<IActionResult> ProductSearch()
+        {
+       
+            ProductsVM vm = new();
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ProductSearch(ProductsVM? obj)
+        {
+           
+            var products = await _productService.GetSearchProducts(1, 20, null, obj?.Product?.product_name, obj?.Product?.product_code, obj?.Product?.product_price.ToString(), obj?.Product?.product_weight.ToString(), obj?.Product?.tab_product_desc, obj.categoryid);
+
+            //vm = await ManageProducts(products, page, ps, pt, so);
+            return View();
+        }
         private void setViewData(int ps, int pt, string so)
         {
             ViewData["PCSort"] = string.IsNullOrEmpty(so) ? "pc_desc" : "";
@@ -63,9 +81,9 @@ namespace ShelbyBackEnd.Web.Controllers
 
 
 
-        private async Task<ProductsVM> ManageProducts(int page, int ps, int pt, string so)
+        private async Task<ProductsVM> ManageProducts(PaginatedList<Select_All_Products_ListResult> products, int page, int ps, int pt, string so)
         {
-            var products = await _productService.GetAllProducts(page, ps, so);
+            
 
             ProductsVM productListViewModel = new()
             {
