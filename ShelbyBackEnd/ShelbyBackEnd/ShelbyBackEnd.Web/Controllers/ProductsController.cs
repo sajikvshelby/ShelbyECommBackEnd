@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using ShelbyBackEnd.Infrastructure.Models;
@@ -13,11 +14,12 @@ namespace ShelbyBackEnd.Web.Controllers
     public class ProductsController : Controller
     {
         IProductService _productService;
+        private readonly IMapper _mapper;
 
-
-        public ProductsController(IProductService productService)
+        public ProductsController(IProductService productService, IMapper mapper)
         {
             _productService = productService;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index(int page, int ps, int pt, string so)
@@ -58,6 +60,8 @@ namespace ShelbyBackEnd.Web.Controllers
         {
            
             var products = await _productService.GetSearchProducts(1, 20, null, obj?.Product?.product_name, obj?.Product?.product_code, obj?.Product?.product_price.ToString(), obj?.Product?.product_weight.ToString(), obj?.Product?.tab_product_desc, obj.categoryid);
+
+            var product = _mapper.Map<List<Select_All_Products_ListResult>>(products);
 
             //vm = await ManageProducts(products, page, ps, pt, so);
             return View();
