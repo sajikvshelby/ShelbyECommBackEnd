@@ -30,9 +30,16 @@ namespace ShelbyBackEnd.Services.Service
                 ProductSort productSort = new ProductSort();
                 lproduct = productSort.sortProducts(sortorder, lproduct);
             }
+            //pageSize = pageSize == 1 ? lproduct.Count : pageSize;
+            //return await PaginatedList<Select_All_Products_ListResult>.CreateAsync((lproduct), pageNumber ?? 1, pageSize ?? 20);
+            return await GetProductsPaginated(pageNumber, pageSize, sortorder, lproduct);
+
+        }
+
+        public async Task<PaginatedList<Select_All_Products_ListResult>> GetProductsPaginated(int? pageNumber, int? pageSize, string sortorder, List<Select_All_Products_ListResult> lproduct)
+        {
             pageSize = pageSize == 1 ? lproduct.Count : pageSize;
             return await PaginatedList<Select_All_Products_ListResult>.CreateAsync((lproduct), pageNumber ?? 1, pageSize ?? 20);
-
         }
 
         public async Task<PaginatedList<Select_All_LowInventory_ProductsResult>> GetAllLowInventoryProducts(int? pageNumber, int? pageSize, string sortorder, CancellationToken cancellationToken = default)
@@ -52,22 +59,9 @@ namespace ShelbyBackEnd.Services.Service
         public async Task<List<Select_Search_ProductsResult>> GetSearchProducts(int? pageNumber, int? pageSize, string sortorder,
             string product_name= "",string product_code = "",string product_price = "",string product_weight = "",string tab_product_desc = "",int category_id = 0,           CancellationToken cancellationToken = default)
         {
-            List<Select_Search_ProductsResult> lproduct = new List<Select_Search_ProductsResult>();
-            List<Select_All_Products_ListResult> product = new List<Select_All_Products_ListResult>();
-            //lproduct = await _db.Procedures.Select_Search_ProductsAsync(product_name, product_code, product_price, product_weight, tab_product_desc, category_id, cancellationToken: cancellationToken);
-            //product_name= "Rocker";
-            product_code = "mis";
-           return await _db.Procedures.Select_Search_ProductsAsync(product_name, product_code);
-
-            // product = _mapper.Map<List<Select_All_Products_ListResult>>(lproduct);
-
-            //if (!string.IsNullOrEmpty(sortorder))
-            //{
-            //    ProductSort productSort = new ProductSort();
-            //    product = productSort.sortProducts(sortorder, product);
-            //}
-            //pageSize = pageSize == 1 ? product.Count : pageSize;
-            //return await PaginatedList<Select_All_Products_ListResult>.CreateAsync((product), pageNumber ?? 1, pageSize ?? 20);
+        
+            return await _db.Procedures.Select_Search_ProductsAsync(product_name, product_code, product_price, product_weight, tab_product_desc, category_id, cancellationToken: cancellationToken);
+         
         }
     }
 }

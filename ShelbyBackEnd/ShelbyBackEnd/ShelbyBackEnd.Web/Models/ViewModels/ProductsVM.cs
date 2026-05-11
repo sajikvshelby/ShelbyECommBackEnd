@@ -45,6 +45,9 @@ namespace ShelbyBackEnd.Web.Models.ViewModels
 
         [ValidateNever]
         public string Title { get; set; }
+
+    
+       
     }
 
 }

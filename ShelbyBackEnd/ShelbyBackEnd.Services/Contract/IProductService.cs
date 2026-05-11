@@ -13,5 +13,6 @@ namespace ShelbyBackEnd.Services.Contract
         public Task<PaginatedList<Select_All_LowInventory_ProductsResult>> GetAllLowInventoryProducts(int? pageNumber, int? pageSize, string sortorder, CancellationToken cancellationToken = default);
         public  Task<List<Select_Search_ProductsResult>> GetSearchProducts(int? pageNumber, int? pageSize, string sortorder,
            string product_name = "", string product_code = "", string product_price = "", string product_weight = "", string tab_product_desc = "", int category_id = 0, CancellationToken cancellationToken = default);
+        public Task<PaginatedList<Select_All_Products_ListResult>> GetProductsPaginated(int? pageNumber, int? pageSize, string sortorder, List<Select_All_Products_ListResult> lproduct);
     }
 }

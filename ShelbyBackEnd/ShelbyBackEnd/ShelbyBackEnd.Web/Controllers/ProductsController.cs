@@ -16,37 +16,43 @@ namespace ShelbyBackEnd.Web.Controllers
         IProductService _productService;
         private readonly IMapper _mapper;
 
+        bool isSearch = false;
+     
         public ProductsController(IProductService productService, IMapper mapper)
         {
             _productService = productService;
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> Index(int page, int ps, int pt, string so)
+        [HttpGet]
+        
+        public async Task<IActionResult> Index(int page, int ps, int pt, string so, ProductsVM vm)
         {
-            ProductsVM vm = new();
+            vm = vm ?? new ProductsVM();
             ps = ps == 0 ? 20 : ps;
 
-
-            if (pt == 1 || pt == 0)
+            if (isSearch==false && vm.Products == null)
             {
-                var products = await _productService.GetAllProducts(page, ps, so);
-                vm = await ManageProducts(products, page, ps, pt, so);
-            }
-            else if (pt == 2)
-            {
-                vm = await ManageLowInventoryProducts(page, ps, pt, so);
-            }
-            else
-            {
-                vm = DefaultProducts(page, ps, pt);
+                if (pt == 1 || pt == 0)
+                {
+                    var products = await _productService.GetAllProducts(page, ps, so);
+                    vm = await ManageProducts(products, page, ps, pt, so);
+                }
+                else if (pt == 2)
+                {
+                    vm = await ManageLowInventoryProducts(page, ps, pt, so);
+                }
+                else
+                {
+                    vm = DefaultProducts(page, ps, pt);
+                }
             }
 
             setViewData(ps, pt, so);
 
             return View(vm);
         }
-
+  
         public async Task<IActionResult> ProductSearch()
         {
        
@@ -59,12 +65,13 @@ namespace ShelbyBackEnd.Web.Controllers
         public async Task<IActionResult> ProductSearch(ProductsVM? obj)
         {
            
-            var products = await _productService.GetSearchProducts(1, 20, null, obj?.Product?.product_name, obj?.Product?.product_code, obj?.Product?.product_price.ToString(), obj?.Product?.product_weight.ToString(), obj?.Product?.tab_product_desc, obj.categoryid);
-
-            var product = _mapper.Map<List<Select_All_Products_ListResult>>(products);
-
-            //vm = await ManageProducts(products, page, ps, pt, so);
-            return View();
+            var sproducts = await _productService.GetSearchProducts(1, 20, null, obj?.Product?.product_name, obj?.Product?.product_code, obj?.Product?.product_price.ToString(), obj?.Product?.product_weight.ToString(), obj?.Product?.tab_product_desc, obj.categoryid);
+            var product = _mapper.Map<List<Select_All_Products_ListResult>>(sproducts);
+            var paginated = await _productService.GetProductsPaginated(1, 20, null, product);
+            ProductsVM vm = await ManageProducts(paginated, 1, 20, 1, null);
+            isSearch = true;
+            return View("Index", vm);
+         
         }
         private void setViewData(int ps, int pt, string so)
         {

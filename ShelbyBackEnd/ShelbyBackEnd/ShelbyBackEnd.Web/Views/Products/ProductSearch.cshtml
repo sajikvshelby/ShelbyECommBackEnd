@@ -51,3 +51,10 @@
                    
     </div>
 </form>
+
+@if(Model?.Products != null)
+{
+    <div id="divProduct">
+        <partial name="_LoadProducts" model="Model" />
+    </div>
+}
