@@ -40,7 +40,7 @@ namespace ShelbyBackEnd.Web.Controllers
             if (pt == 1 || pt == 0)
             {
                 var products = await _productService.GetAllProducts(page, ps, so);
-                vm = await ManageProducts(products, page, ps, pt, so);
+                vm = await SetProducts(products, page, ps, pt, so);
             }
             else if (pt == 2)
             {
@@ -56,7 +56,7 @@ namespace ShelbyBackEnd.Web.Controllers
                 {
                     var searchSession = JsonSerializer.Deserialize<SearchSession>(jsonString);
                     var products = await _productService.GetAllProducts(page, ps, so, searchSession?.product_name, searchSession?.product_code, searchSession?.product_price, searchSession?.product_weight, searchSession?.tab_product_desc, searchSession?.category_id ?? 0);
-                    vm = await ManageProducts(products, page, ps, pt, so);
+                    vm = await SetProducts(products, page, ps, pt, so);
 
                 }
 
@@ -72,6 +72,7 @@ namespace ShelbyBackEnd.Web.Controllers
             return View(vm);
         }
 
+        [HttpGet]
         public async Task<IActionResult> ProductSearch()
         {
             ProductsVM vm = new();
@@ -94,11 +95,23 @@ namespace ShelbyBackEnd.Web.Controllers
             string jsonString = JsonSerializer.Serialize(_searchSession);
             HttpContext.Session.SetString("searchSession", jsonString);
             var products = await _productService.GetAllProducts(1, 20, null, _searchSession?.product_name, _searchSession?.product_code, _searchSession?.product_price, _searchSession?.product_weight, _searchSession?.tab_product_desc, _searchSession?.category_id ?? 0);
-            ProductsVM vm = await ManageProducts(products, 1, 20, 4, null);
-
+            ProductsVM vm = await SetProducts(products, 1, 20, 4, null);
             setViewData(20, 4, null);
             return View("Index", vm);
         }
+
+
+        public async Task<IActionResult> ManageProduct()
+        {
+            ProductsVM vm = new();
+            await GetCategory(vm);
+            return View(vm);
+        }
+
+
+
+
+
         private void setViewData(int ps, int pt, string so)
         {
             ViewData["PCSort"] = string.IsNullOrEmpty(so) ? "pc_desc" : "";
@@ -116,7 +129,7 @@ namespace ShelbyBackEnd.Web.Controllers
             ViewData["CurrentSort"] = so;
         }
 
-        private async Task<ProductsVM> ManageProducts(PaginatedList<Select_All_Products_ListResult> products, int page, int ps, int pt, string so)
+        private async Task<ProductsVM> SetProducts(PaginatedList<Select_All_Products_ListResult> products, int page, int ps, int pt, string so)
         {
             ProductsVM productListViewModel = new()
             {
