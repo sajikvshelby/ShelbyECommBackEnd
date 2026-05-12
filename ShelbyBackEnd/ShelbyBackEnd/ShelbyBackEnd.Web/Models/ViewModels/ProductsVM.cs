@@ -50,9 +50,18 @@ namespace ShelbyBackEnd.Web.Models.ViewModels
 
         [ValidateNever]
         public string Title { get; set; }
+        [ValidateNever]
+        public string product_price_min { get; set; }
+        [ValidateNever]
+        public string product_price_max { get; set; }
+        [ValidateNever]
+        public string product_weight_min { get; set; }
+        [ValidateNever]
+        public string product_weight_max { get; set; }
 
-    
-       
+
+
+
     }
 
 }

@@ -311,7 +311,7 @@ namespace ShelbyBackEnd.Infrastructure.Models
             return _;
         }
 
-        public virtual async Task<List<Select_All_Products_ListResult>> Select_All_Products_ListAsync(string product_name, string product_code, string product_price, string product_weight, string tab_product_desc, int? category_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<Select_All_Products_ListResult>> Select_All_Products_ListAsync(string product_name, string product_code, string product_price_min, string product_price_max, string product_weight_min, string product_weight_max, string tab_product_desc, int? category_id, bool? inactive, bool? restricted, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -338,16 +338,30 @@ namespace ShelbyBackEnd.Infrastructure.Models
                 },
                 new SqlParameter
                 {
-                    ParameterName = "product_price",
+                    ParameterName = "product_price_min",
                     Size = 30,
-                    Value = product_price ?? Convert.DBNull,
+                    Value = product_price_min ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.VarChar,
                 },
                 new SqlParameter
                 {
-                    ParameterName = "product_weight",
+                    ParameterName = "product_price_max",
+                    Size = 30,
+                    Value = product_price_max ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "product_weight_min",
                     Size = 20,
-                    Value = product_weight ?? Convert.DBNull,
+                    Value = product_weight_min ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "product_weight_max",
+                    Size = 20,
+                    Value = product_weight_max ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.VarChar,
                 },
                 new SqlParameter
@@ -363,9 +377,21 @@ namespace ShelbyBackEnd.Infrastructure.Models
                     Value = category_id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
+                new SqlParameter
+                {
+                    ParameterName = "inactive",
+                    Value = inactive ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Bit,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "restricted",
+                    Value = restricted ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Bit,
+                },
                 parameterreturnValue,
             };
-            var _ = await _context.SqlQueryAsync<Select_All_Products_ListResult>("EXEC @returnValue = [dbo].[Select_All_Products_List] @product_name = @product_name, @product_code = @product_code, @product_price = @product_price, @product_weight = @product_weight, @tab_product_desc = @tab_product_desc, @category_id = @category_id", sqlParameters, cancellationToken);
+            var _ = await _context.SqlQueryAsync<Select_All_Products_ListResult>("EXEC @returnValue = [dbo].[Select_All_Products_List] @product_name = @product_name, @product_code = @product_code, @product_price_min = @product_price_min, @product_price_max = @product_price_max, @product_weight_min = @product_weight_min, @product_weight_max = @product_weight_max, @tab_product_desc = @tab_product_desc, @category_id = @category_id, @inactive = @inactive, @restricted = @restricted", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 
@@ -412,67 +438,6 @@ namespace ShelbyBackEnd.Infrastructure.Models
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<Select_ProductResult>("EXEC @returnValue = [dbo].[Select_Product] @ProdID = @ProdID", sqlParameters, cancellationToken);
-
-            returnValue?.SetValue(parameterreturnValue.Value);
-
-            return _;
-        }
-
-        public virtual async Task<List<Select_Search_ProductsResult>> Select_Search_ProductsAsync(string product_name, string product_code, string product_price, string product_weight, string tab_product_desc, int? category_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
-        {
-            var parameterreturnValue = new SqlParameter
-            {
-                ParameterName = "returnValue",
-                Direction = System.Data.ParameterDirection.Output,
-                SqlDbType = System.Data.SqlDbType.Int,
-            };
-
-            var sqlParameters = new []
-            {
-                new SqlParameter
-                {
-                    ParameterName = "product_name",
-                    Size = 255,
-                    Value = product_name ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
-                },
-                new SqlParameter
-                {
-                    ParameterName = "product_code",
-                    Size = 30,
-                    Value = product_code ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
-                },
-                new SqlParameter
-                {
-                    ParameterName = "product_price",
-                    Size = 30,
-                    Value = product_price ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
-                },
-                new SqlParameter
-                {
-                    ParameterName = "product_weight",
-                    Size = 20,
-                    Value = product_weight ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
-                },
-                new SqlParameter
-                {
-                    ParameterName = "tab_product_desc",
-                    Size = -1,
-                    Value = tab_product_desc ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
-                },
-                new SqlParameter
-                {
-                    ParameterName = "category_id",
-                    Value = category_id ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                },
-                parameterreturnValue,
-            };
-            var _ = await _context.SqlQueryAsync<Select_Search_ProductsResult>("EXEC @returnValue = [dbo].[Select_Search_Products] @product_name = @product_name, @product_code = @product_code, @product_price = @product_price, @product_weight = @product_weight, @tab_product_desc = @tab_product_desc, @category_id = @category_id", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 

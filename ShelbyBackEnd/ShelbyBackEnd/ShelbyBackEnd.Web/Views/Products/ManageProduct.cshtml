@@ -83,24 +83,10 @@
         </select>
         <label asp-for="@Model.category_id" class="ms-2">Sub category</label>
     </div>
-
-    <div class="row pt-2 d-flex justify-content-center align-items-center">
-        <div class="col-6 col-md-3">
-            <button type="submit" asp-action="ProductSearch" class="btn btn-success w-100">
-                <i class="bi bi-check-circle"></i>Search
-            </button>
-        </div>
-        <div class="col-6 col-md-3">
-            <a asp-controller="Categories" asp-action="Index" class="btn btn-secondary w-100"> <i class="bi bi-x-circle"></i>Cancel</a>
-                    
-        </div>
-                   
-    </div>
     <div class="container">
         <div class="row flex-nowrap overflow-auto py-3">
 
-            <button type="button" id="btn-1" class="col-2 btn btn-success content-button" onclick="showOnly('1')">Category Descriptions</button>
-            <button type="button" id="btn-2" class="col-3 btn btn-secondary content-button" onclick="showOnly('2')">Search Engine Optimization</button>
+            <button type="button" id="btn-1" class="col-3 btn btn-secondary content-button" onclick="showOnly('1')">Search Engine Optimization</button>
             <button type="button" id="btn-3" class="col-2 btn btn-secondary content-button" onclick="showOnly('3')">Category Display</button>
             @* <button type="button" id="btn-4" class="col-2 btn btn-secondary content-button" onclick="showOnly('4')">Subcategory Display</button> *@
             <button type="button" id="btn-4" class="col-2 btn btn-secondary content-button" onclick="showOnly('4')">Product Display</button>

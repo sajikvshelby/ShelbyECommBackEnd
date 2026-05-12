@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using ShelbyBackEnd.Infrastructure.Models;
 using ShelbyBackEnd.Services.Contract;
+using ShelbyBackEnd.Services.Models;
 using ShelbyBackEnd.Services.Service;
 using ShelbyBackEnd.Web.Models;
 using ShelbyBackEnd.Web.Models.ViewModels;
@@ -39,7 +40,7 @@ namespace ShelbyBackEnd.Web.Controllers
 
             if (pt == 1 || pt == 0)
             {
-                var products = await _productService.GetAllProducts(page, ps, so);
+                var products = await _productService.GetAllProducts(page, ps, so, new SearchSession());
                 vm = await SetProducts(products, page, ps, pt, so);
             }
             else if (pt == 2)
@@ -55,7 +56,7 @@ namespace ShelbyBackEnd.Web.Controllers
                 if (jsonString != null)
                 {
                     var searchSession = JsonSerializer.Deserialize<SearchSession>(jsonString);
-                    var products = await _productService.GetAllProducts(page, ps, so, searchSession?.product_name, searchSession?.product_code, searchSession?.product_price, searchSession?.product_weight, searchSession?.tab_product_desc, searchSession?.category_id ?? 0);
+                    var products = await _productService.GetAllProducts(page, ps, so, searchSession);
                     vm = await SetProducts(products, page, ps, pt, so);
 
                 }
@@ -87,14 +88,16 @@ namespace ShelbyBackEnd.Web.Controllers
             {
                 product_name = obj?.Product?.product_name,
                 product_code = obj?.Product?.product_code,
-                product_price = obj?.Product?.product_price.ToString(),
-                product_weight = obj?.Product?.product_weight.ToString(),
+                product_price_min = obj?.product_price_min.ToString(),
+                product_price_max = obj?.product_price_max.ToString(),
+                product_weight_min = obj?.product_weight_min.ToString(),
+                product_weight_max = obj?.product_weight_max.ToString(),
                 tab_product_desc = obj?.Product?.tab_product_desc,
-                category_id = (obj?.category_id ==0 || obj?.category_id == null)? obj?.parent_category_id ?? 0: obj?.category_id ?? 0
+                category_id = (obj?.category_id == 0 || obj?.category_id == null) ? obj?.parent_category_id ?? 0 : obj?.category_id ?? 0
             });
             string jsonString = JsonSerializer.Serialize(_searchSession);
             HttpContext.Session.SetString("searchSession", jsonString);
-            var products = await _productService.GetAllProducts(1, 20, null, _searchSession?.product_name, _searchSession?.product_code, _searchSession?.product_price, _searchSession?.product_weight, _searchSession?.tab_product_desc, _searchSession?.category_id ?? 0);
+            var products = await _productService.GetAllProducts(1, 20, null, _searchSession);
             ProductsVM vm = await SetProducts(products, 1, 20, 4, null);
             setViewData(20, 4, null);
             return View("Index", vm);

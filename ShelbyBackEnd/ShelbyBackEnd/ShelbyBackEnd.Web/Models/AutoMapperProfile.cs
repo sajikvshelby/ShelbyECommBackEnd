@@ -9,7 +9,7 @@ namespace ShelbyBackEnd.Web.Models
         public AutoMapperProfile()
         {
             ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
-            CreateMap<Select_Search_ProductsResult, Select_All_Products_ListResult>()
+           // CreateMap<Select_Search_ProductsResult, Select_All_Products_ListResult>()
                 // Add explicit members if names differ:
                 // .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.id))
                 ;

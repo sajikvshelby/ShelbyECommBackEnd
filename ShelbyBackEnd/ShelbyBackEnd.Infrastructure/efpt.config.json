@@ -51,10 +51,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[Select_Search_Products]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[Select_Sort_By_List]",
          "ObjectType": 1
       },
