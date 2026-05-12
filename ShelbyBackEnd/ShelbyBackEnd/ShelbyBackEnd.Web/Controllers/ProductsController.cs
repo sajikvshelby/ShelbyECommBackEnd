@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using ShelbyBackEnd.Infrastructure.Models;
 using ShelbyBackEnd.Services.Contract;
+using ShelbyBackEnd.Services.Service;
 using ShelbyBackEnd.Web.Models;
 using ShelbyBackEnd.Web.Models.ViewModels;
 using ShelbyEComm.Services.Models;
@@ -17,19 +18,22 @@ namespace ShelbyBackEnd.Web.Controllers
     public class ProductsController : Controller
     {
         IProductService _productService;
+        ICategorieService _categorieService;
 
-        public ProductsController(IProductService productService)
+        public ProductsController(IProductService productService, ICategorieService categorieService)
         {
             _productService = productService;
+            _categorieService = categorieService;
+
 
 
         }
 
         [HttpGet]
 
-        public async Task<IActionResult> Index(int page, int ps, int pt, string so, ProductsVM vm)
+        public async Task<IActionResult> Index(int page, int ps, int pt, string so)
         {
-            vm = vm ?? new ProductsVM();
+            ProductsVM vm = new();
             ps = ps == 0 ? 20 : ps;
 
 
@@ -51,9 +55,9 @@ namespace ShelbyBackEnd.Web.Controllers
                 if (jsonString != null)
                 {
                     var searchSession = JsonSerializer.Deserialize<SearchSession>(jsonString);
-
                     var products = await _productService.GetAllProducts(page, ps, so, searchSession?.product_name, searchSession?.product_code, searchSession?.product_price, searchSession?.product_weight, searchSession?.tab_product_desc, searchSession?.category_id ?? 0);
                     vm = await ManageProducts(products, page, ps, pt, so);
+
                 }
 
             }
@@ -71,6 +75,7 @@ namespace ShelbyBackEnd.Web.Controllers
         public async Task<IActionResult> ProductSearch()
         {
             ProductsVM vm = new();
+            await GetCategory(vm);
             return View(vm);
         }
 
@@ -84,12 +89,13 @@ namespace ShelbyBackEnd.Web.Controllers
                 product_price = obj?.Product?.product_price.ToString(),
                 product_weight = obj?.Product?.product_weight.ToString(),
                 tab_product_desc = obj?.Product?.tab_product_desc,
-                category_id = obj?.categoryid ?? 0
+                category_id = (obj?.category_id ==0 || obj?.category_id == null)? obj?.parent_category_id ?? 0: obj?.category_id ?? 0
             });
             string jsonString = JsonSerializer.Serialize(_searchSession);
             HttpContext.Session.SetString("searchSession", jsonString);
             var products = await _productService.GetAllProducts(1, 20, null, _searchSession?.product_name, _searchSession?.product_code, _searchSession?.product_price, _searchSession?.product_weight, _searchSession?.tab_product_desc, _searchSession?.category_id ?? 0);
             ProductsVM vm = await ManageProducts(products, 1, 20, 4, null);
+
             setViewData(20, 4, null);
             return View("Index", vm);
         }
@@ -156,6 +162,22 @@ namespace ShelbyBackEnd.Web.Controllers
             };
             return vm;
         }
+
+
+        private async Task<ProductsVM> GetCategory(ProductsVM vm)
+        {
+            var categories = await _categorieService.GetAllCategories();
+
+            vm.categoryList = categories.Where(l => l.parent_category_id == 0).Select(u => new SelectListItem
+            {
+                Text = u.category_name,
+                Value = u.category_id.ToString()
+            });
+
+            return vm;
+        }
+
+
 
     }
 

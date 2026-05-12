@@ -13,12 +13,20 @@ namespace ShelbyBackEnd.Web.Models.ViewModels
         public PaginatedList<Select_All_LowInventory_ProductsResult> lowInventoryProducts { get; set; }
 
         [ValidateNever]
-        public Select_ProductResult? Product { get; set; }
+        public IEnumerable<SelectListItem> categoryList { get; set; }
+        [ValidateNever]
+        public IEnumerable<SelectListItem> subCategoryList { get; set; }
 
 
 
         [ValidateNever]
-        public int categoryid { get; set; }
+        public Select_ProductResult? Product { get; set; }
+
+        [ValidateNever]
+        public int parent_category_id { get; set; }
+
+        [ValidateNever]
+        public int category_id { get; set; }
 
       
         [ValidateNever]

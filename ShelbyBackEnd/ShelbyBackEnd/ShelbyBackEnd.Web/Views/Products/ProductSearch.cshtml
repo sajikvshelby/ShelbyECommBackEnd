@@ -2,6 +2,36 @@
 
 
 
+@section Scripts {
+    
+    <script>
+
+        $(document).ready(function () {
+           
+            $('#parent_category').change(function () {
+                var parentCategoryId = $(this).val();
+                var subCategorySelect = $('#sub_category');
+                subCategorySelect.empty();
+                subCategorySelect.append('<option value="">-- Select Subcategory --</option>');
+                if (parentCategoryId) {
+                    $.ajax({
+                        url: '@Url.Action("GetSubcategories", "Categories")',
+                        type: 'GET',
+                        data: { parentCategoryId: parentCategoryId },
+                        success: function (subcategories) {
+                            $.each(subcategories, function (i, subcategory) {
+                                subCategorySelect.append($('<option>', {
+                                    value: subcategory.category_id,
+                                    text: subcategory.category_name
+                                }));
+                            });
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+        }
 
 
 
@@ -10,38 +40,54 @@
               
         <div class="form-floating py-2 col-12">
             <input asp-for="Product.product_name" class="form-control border shadow" />
-            <label asp-for="Product.product_name" class="ms-2 fw-bold"> product_name</label>
+            <label  class="ms-2 fw-bold"> Product Name</label>
             <span asp-validation-for="Product.product_name" class="text-danger"></span>
         </div>
 
         <div class="form-floating py-2 col-12">
             <input asp-for="Product.product_code" class="form-control border shadow" />
-            <label asp-for="Product.product_code" class="ms-2 fw-bold"> product_code</label>
+            <label  class="ms-2 fw-bold"> Product Code</label>
             <span asp-validation-for="Product.product_code" class="text-danger"></span>
         </div>
 
         <div class="form-floating py-2 col-12">
             <input asp-for="Product.product_price" class="form-control border shadow" />
-            <label asp-for="Product.product_price" class="ms-2 fw-bold"> product_price</label>
+            <label  class="ms-2 fw-bold"> Product Price</label>
             <span asp-validation-for="Product.product_price" class="text-danger"></span>
         </div>
         <div class="form-floating py-2 col-12">
             <input asp-for="Product.product_weight" class="form-control border shadow" />
-            <label asp-for="Product.product_weight" class="ms-2 fw-bold"> product_weight</label>
+            <label class="ms-2 fw-bold"> Product Weight</label>
             <span asp-validation-for="Product.product_weight" class="text-danger"></span>
         </div>
         <div class="form-floating py-2 col-12">
             <input asp-for="Product.tab_product_desc" class="form-control border shadow" />
-            <label asp-for="Product.tab_product_desc" class="ms-2 fw-bold"> tab_product_desc</label>
+            <label  class="ms-2 fw-bold">Product Desc</label>
             <span asp-validation-for="Product.tab_product_desc" class="text-danger"></span>
         </div>
 
     </div>
 
+    
+    <div class="form-floating py-2 col-12">
+                    
+        <select id="parent_category" asp-for="@Model.parent_category_id" asp-items="@Model.categoryList" class="form-control form-select border shadow">
+            <option value="">--Select Parent Category--</option>
+        </select>
+        <label asp-for="@Model.parent_category_id" class="ms-2">Parent Category</label>
+    </div>
+
+    <div class="form-floating py-2 col-12">
+        <select id="sub_category" asp-for="@Model.category_id" asp-items="@Model.subCategoryList" class="form-control form-select border shadow">
+            <option value="">--Select  Sub category--</option>
+        </select>
+        <label asp-for="@Model.category_id" class="ms-2">Sub category</label>
+    </div>
+
     <div class="row pt-2 d-flex justify-content-center align-items-center">
         <div class="col-6 col-md-3">
             <button type="submit" asp-action="ProductSearch" class="btn btn-success w-100">
-                <i class="bi bi-check-circle"></i>search
+                <i class="bi bi-check-circle"></i>Search
             </button>
         </div>
         <div class="col-6 col-md-3">
@@ -50,6 +96,16 @@
         </div>
                    
     </div>
+
+    @* @if (@Model.Title != "Sub")
+    {
+        <div class="form-floating py-2 col-12">
+            <select id="sub_category" asp-for="Category.category_id" asp-items="@Model.subCategoryList" class="form-control form-select border shadow">
+                <option value="">--Select  Sub category--</option>
+            </select>
+            <label asp-for="Category.category_id" class="ms-2">Sub category</label>
+        </div>
+    } *@
 </form>
 
 @if(Model?.Products != null)
