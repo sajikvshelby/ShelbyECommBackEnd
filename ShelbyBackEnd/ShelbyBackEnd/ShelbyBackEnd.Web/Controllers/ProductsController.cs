@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using ShelbyBackEnd.Infrastructure.Models;
 using ShelbyBackEnd.Services.Contract;
+using ShelbyBackEnd.Web.Models;
 using ShelbyBackEnd.Web.Models.ViewModels;
 using ShelbyEComm.Services.Models;
 using System.Collections;
+using System.Runtime.Intrinsics.Arm;
+using System.Text.Json;
 using static ShelbyBackEnd.Application.Common.Service.CryptoLib;
 
 namespace ShelbyBackEnd.Web.Controllers
@@ -14,64 +17,81 @@ namespace ShelbyBackEnd.Web.Controllers
     public class ProductsController : Controller
     {
         IProductService _productService;
-        private readonly IMapper _mapper;
 
-        bool isSearch = false;
-     
-        public ProductsController(IProductService productService, IMapper mapper)
+        public ProductsController(IProductService productService)
         {
             _productService = productService;
-            _mapper = mapper;
+
+
         }
 
         [HttpGet]
-        
+
         public async Task<IActionResult> Index(int page, int ps, int pt, string so, ProductsVM vm)
         {
             vm = vm ?? new ProductsVM();
             ps = ps == 0 ? 20 : ps;
 
-            if (isSearch==false && vm.Products == null)
+
+            if (pt == 1 || pt == 0)
             {
-                if (pt == 1 || pt == 0)
+                var products = await _productService.GetAllProducts(page, ps, so);
+                vm = await ManageProducts(products, page, ps, pt, so);
+            }
+            else if (pt == 2)
+            {
+                vm = await ManageLowInventoryProducts(page, ps, pt, so);
+            }
+
+            else if (pt == 4)
+            {
+
+                string jsonString = HttpContext.Session.GetString("searchSession");
+
+                if (jsonString != null)
                 {
-                    var products = await _productService.GetAllProducts(page, ps, so);
+                    var searchSession = JsonSerializer.Deserialize<SearchSession>(jsonString);
+
+                    var products = await _productService.GetAllProducts(page, ps, so, searchSession?.product_name, searchSession?.product_code, searchSession?.product_price, searchSession?.product_weight, searchSession?.tab_product_desc, searchSession?.category_id ?? 0);
                     vm = await ManageProducts(products, page, ps, pt, so);
                 }
-                else if (pt == 2)
-                {
-                    vm = await ManageLowInventoryProducts(page, ps, pt, so);
-                }
-                else
-                {
-                    vm = DefaultProducts(page, ps, pt);
-                }
+
             }
+            else
+            {
+                vm = DefaultProducts(page, ps, pt);
+            }
+
 
             setViewData(ps, pt, so);
 
             return View(vm);
         }
-  
+
         public async Task<IActionResult> ProductSearch()
         {
-       
             ProductsVM vm = new();
-
             return View(vm);
         }
 
         [HttpPost]
         public async Task<IActionResult> ProductSearch(ProductsVM? obj)
         {
-           
-            var sproducts = await _productService.GetSearchProducts(1, 20, null, obj?.Product?.product_name, obj?.Product?.product_code, obj?.Product?.product_price.ToString(), obj?.Product?.product_weight.ToString(), obj?.Product?.tab_product_desc, obj.categoryid);
-            var product = _mapper.Map<List<Select_All_Products_ListResult>>(sproducts);
-            var paginated = await _productService.GetProductsPaginated(1, 20, null, product);
-            ProductsVM vm = await ManageProducts(paginated, 1, 20, 1, null);
-            isSearch = true;
+            SearchSession _searchSession = (new SearchSession
+            {
+                product_name = obj?.Product?.product_name,
+                product_code = obj?.Product?.product_code,
+                product_price = obj?.Product?.product_price.ToString(),
+                product_weight = obj?.Product?.product_weight.ToString(),
+                tab_product_desc = obj?.Product?.tab_product_desc,
+                category_id = obj?.categoryid ?? 0
+            });
+            string jsonString = JsonSerializer.Serialize(_searchSession);
+            HttpContext.Session.SetString("searchSession", jsonString);
+            var products = await _productService.GetAllProducts(1, 20, null, _searchSession?.product_name, _searchSession?.product_code, _searchSession?.product_price, _searchSession?.product_weight, _searchSession?.tab_product_desc, _searchSession?.category_id ?? 0);
+            ProductsVM vm = await ManageProducts(products, 1, 20, 4, null);
+            setViewData(20, 4, null);
             return View("Index", vm);
-         
         }
         private void setViewData(int ps, int pt, string so)
         {
@@ -90,12 +110,8 @@ namespace ShelbyBackEnd.Web.Controllers
             ViewData["CurrentSort"] = so;
         }
 
-
-
         private async Task<ProductsVM> ManageProducts(PaginatedList<Select_All_Products_ListResult> products, int page, int ps, int pt, string so)
         {
-            
-
             ProductsVM productListViewModel = new()
             {
                 Products = products,
@@ -127,9 +143,10 @@ namespace ShelbyBackEnd.Web.Controllers
             return productListViewModel;
         }
 
+
+
         private ProductsVM DefaultProducts(int page, int ps, int pt)
         {
-
             ProductsVM vm = new()
             {
                 Products = new PaginatedList<Select_All_Products_ListResult>(new List<Select_All_Products_ListResult>(), 0, 1, ps),
@@ -139,5 +156,8 @@ namespace ShelbyBackEnd.Web.Controllers
             };
             return vm;
         }
+
     }
+
+
 }

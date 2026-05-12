@@ -20,10 +20,7 @@ namespace ShelbyBackEnd.Web.Models.ViewModels
         [ValidateNever]
         public int categoryid { get; set; }
 
-        //[ValidateNever]
-        //public IEnumerable<SelectListItem> SortByList { get; set; }
-        //[ValidateNever]
-        //public int SelectedSortById { get; set; }
+      
         [ValidateNever]
         public int pagesize { get; set; }
 

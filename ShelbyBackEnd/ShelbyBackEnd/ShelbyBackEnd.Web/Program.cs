@@ -17,13 +17,20 @@ builder.Services.AddDbContextPool<ShelbyECommContext>(options =>
     options.UseSqlServer(CryptoLib.Decrypt(SharedLib.GetRegKeyVal(@"SOFTWARE\enterprise", "CstrSec"), CryptoLib.Projects.SHELBYECOMM)));
 builder.Services.AddScoped<IShelbyECommContextProcedures, ShelbyECommContextProcedures>();
 
+//builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
+//var mapper = builder.Services.BuildServiceProvider().GetRequiredService<IMapper>();
+//mapper.ConfigurationProvider.AssertConfigurationIsValid();
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 
- 
 
-builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
-var mapper = builder.Services.BuildServiceProvider().GetRequiredService<IMapper>();
-mapper.ConfigurationProvider.AssertConfigurationIsValid();
 
 builder.Services.AddScoped<IBackEndMenuService, BackEndMenuService>();
 builder.Services.AddScoped<ICategorieService, CategoriesService>();
@@ -55,6 +62,9 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+
+app.UseSession();
+
 
 app.MapControllerRoute(
     name: "default",

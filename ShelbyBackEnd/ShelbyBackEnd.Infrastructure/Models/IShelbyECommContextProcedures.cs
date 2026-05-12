@@ -18,7 +18,7 @@ namespace ShelbyBackEnd.Infrastructure.Models
         Task<List<Select_All_CategoriesResult>> Select_All_CategoriesAsync(int? parentCatID, int? categoryid, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<Select_All_Categories_MenuResult>> Select_All_Categories_MenuAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<Select_All_LowInventory_ProductsResult>> Select_All_LowInventory_ProductsAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<Select_All_Products_ListResult>> Select_All_Products_ListAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<Select_All_Products_ListResult>> Select_All_Products_ListAsync(string product_name, string product_code, string product_price, string product_weight, string tab_product_desc, int? category_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<Select_BackEnd_MenuResult>> Select_BackEnd_MenuAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<Select_ProductResult>> Select_ProductAsync(long? prodID, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<Select_Search_ProductsResult>> Select_Search_ProductsAsync(string product_name, string product_code, string product_price, string product_weight, string tab_product_desc, int? category_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
