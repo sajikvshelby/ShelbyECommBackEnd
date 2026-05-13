@@ -157,7 +157,7 @@ namespace ShelbyBackEnd.Web.Controllers
                 isProductSearch = true,
                 totalPages = products.TotalPages,
                 currentPage = products.PageIndex,
-                Title = "All Products"
+                Title = "Searched Products"
             };
             return productListViewModel;
         }
