@@ -113,6 +113,27 @@
         <label asp-for="@Model.category_id" class="ms-2">Sub category</label>
     </div>
 
+
+     <div class="form-floating py-2 col-12">
+            <select id="sub_category" asp-for="@Model.isInactive" class="form-control form-select border shadow">
+            <option value="">--Select Is Active--</option>
+                <option value="false">Active</option>
+                <option value="true">Inactive</option>
+        </select>
+            <label asp-for="@Model.category_id" class="ms-2">Active Type</label>
+    </div>
+
+
+        <div class="form-floating py-2 col-12">
+            <select id="sub_category" asp-for="@Model.isRestricted" asp-items="@Model.subCategoryList" class="form-control form-select border shadow">
+                <option value="">--Select  is Restricted--</option>
+                <option value="false">UnRestricted</option>
+                <option value="true">Restricted</option>
+            </select>
+            <label asp-for="@Model.isRestricted" class="ms-2">Restricted Type</label>
+        </div>
+
+
     <div class="row pt-2 d-flex justify-content-center align-items-center">
         <div class="col-6 col-md-3">
             <button type="submit" asp-action="ProductSearch" class="btn btn-success w-100">

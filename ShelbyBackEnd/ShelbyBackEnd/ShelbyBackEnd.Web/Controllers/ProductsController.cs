@@ -93,7 +93,9 @@ namespace ShelbyBackEnd.Web.Controllers
                 product_weight_min = obj?.product_weight_min,
                 product_weight_max = obj?.product_weight_max,
                 tab_product_desc = obj?.Product?.tab_product_desc,
-                category_id = (obj?.category_id == 0 || obj?.category_id == null) ? obj?.parent_category_id ?? 0 : obj?.category_id ?? 0
+                category_id = (obj?.category_id == 0 || obj?.category_id == null) ? obj?.parent_category_id ?? 0 : obj?.category_id ?? 0,
+                inactive= obj.isInactive,
+                restricted=obj.isRestricted
             });
             string jsonString = JsonSerializer.Serialize(_searchSession);
             HttpContext.Session.SetString("searchSession", jsonString);

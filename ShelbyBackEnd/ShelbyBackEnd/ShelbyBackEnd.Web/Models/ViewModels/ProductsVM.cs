@@ -30,7 +30,14 @@ namespace ShelbyBackEnd.Web.Models.ViewModels
         [ValidateNever]
         public int category_id { get; set; }
 
-      
+
+        [ValidateNever]
+        public bool isInactive { get; set; } = false;
+
+        [ValidateNever]
+        public bool isRestricted { get; set; } = false;
+
+
         [ValidateNever]
         public int pagesize { get; set; }
 
