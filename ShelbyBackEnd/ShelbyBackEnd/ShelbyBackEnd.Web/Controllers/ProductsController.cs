@@ -40,7 +40,7 @@ namespace ShelbyBackEnd.Web.Controllers
 
             if (pt == 1 || pt == 0)
             {
-                var products = await _productService.GetAllProducts(page, ps, so, new SearchSession());
+                var products = await _productService.GetAllProducts(page, ps, so);
                 vm = await SetProducts(products, page, ps, pt, so);
             }
             else if (pt == 2)
@@ -56,8 +56,8 @@ namespace ShelbyBackEnd.Web.Controllers
                 if (jsonString != null)
                 {
                     var searchSession = JsonSerializer.Deserialize<SearchSession>(jsonString);
-                    var products = await _productService.GetAllProducts(page, ps, so, searchSession);
-                    vm = await SetProducts(products, page, ps, pt, so);
+                    var products = await _productService.GetAllSearchProducts(page, ps, so, searchSession);
+                    vm = await SetSearchProducts(products, page, ps, pt, so);
 
                 }
 
@@ -88,17 +88,17 @@ namespace ShelbyBackEnd.Web.Controllers
             {
                 product_name = obj?.Product?.product_name,
                 product_code = obj?.Product?.product_code,
-                product_price_min = obj?.product_price_min.ToString(),
-                product_price_max = obj?.product_price_max.ToString(),
-                product_weight_min = obj?.product_weight_min.ToString(),
-                product_weight_max = obj?.product_weight_max.ToString(),
+                product_price_min = obj?.product_price_min,
+                product_price_max = obj?.product_price_max,
+                product_weight_min = obj?.product_weight_min,
+                product_weight_max = obj?.product_weight_max,
                 tab_product_desc = obj?.Product?.tab_product_desc,
                 category_id = (obj?.category_id == 0 || obj?.category_id == null) ? obj?.parent_category_id ?? 0 : obj?.category_id ?? 0
             });
             string jsonString = JsonSerializer.Serialize(_searchSession);
             HttpContext.Session.SetString("searchSession", jsonString);
-            var products = await _productService.GetAllProducts(1, 20, null, _searchSession);
-            ProductsVM vm = await SetProducts(products, 1, 20, 4, null);
+            var products = await _productService.GetAllSearchProducts(1, 20, null, _searchSession);
+            ProductsVM vm = await SetSearchProducts(products, 1, 20, 4, null);
             setViewData(20, 4, null);
             return View("Index", vm);
         }
@@ -147,6 +147,20 @@ namespace ShelbyBackEnd.Web.Controllers
             return productListViewModel;
         }
 
+        private async Task<ProductsVM> SetSearchProducts(PaginatedList<Select_All_search_ProductsResult> products, int page, int ps, int pt, string so)
+        {
+            ProductsVM productListViewModel = new()
+            {
+                SearchProducts = products,
+                pagesize = ps,
+                pageType = pt,
+                isProductSearch = true,
+                totalPages = products.TotalPages,
+                currentPage = products.PageIndex,
+                Title = "All Products"
+            };
+            return productListViewModel;
+        }
 
         private async Task<ProductsVM> ManageLowInventoryProducts(int page, int ps, int pt, string so)
         {

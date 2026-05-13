@@ -43,6 +43,10 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[Select_All_search_Products]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[Select_BackEnd_Menu]",
          "ObjectType": 1
       },

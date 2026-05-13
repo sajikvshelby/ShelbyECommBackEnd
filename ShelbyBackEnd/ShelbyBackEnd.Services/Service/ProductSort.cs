@@ -47,7 +47,47 @@ namespace ShelbyBackEnd.Services.Service
             }
             return lproduct;
         }
-      
+
+
+        public List<Select_All_search_ProductsResult> sortSearchProducts(string sortorder, List<Select_All_search_ProductsResult> lproduct)
+        {
+            switch (sortorder)
+            {
+                case "pc_desc":
+                    lproduct = lproduct.OrderByDescending(e => e.product_code).ToList();
+                    break;
+
+                case "pn_asc":
+                    lproduct = lproduct.OrderBy(s => s.product_name).ToList();
+                    break;
+                case "pn_desc":
+                    lproduct = lproduct.OrderByDescending(s => s.product_name).ToList();
+                    break;
+                case "pp_desc":
+                    lproduct = lproduct.OrderByDescending(e => e.product_price).ToList();
+                    break;
+                case "pp_asc":
+                    lproduct = lproduct.OrderBy(e => e.product_price).ToList();
+                    break;
+                case "ss_desc":
+                    lproduct = lproduct.OrderByDescending(e => e.stockstatus).ToList();
+                    break;
+                case "ss_asc":
+                    lproduct = lproduct.OrderBy(e => e.stockstatus).ToList();
+                    break;
+                case "h_desc":
+                    lproduct = lproduct.OrderByDescending(e => e.hidden).ToList();
+                    break;
+                case "h_asc":
+                    lproduct = lproduct.OrderBy(e => e.hidden).ToList();
+                    break;
+
+                default:
+                    lproduct = lproduct.OrderBy(e => e.product_code).ToList(); ;
+                    break;
+            }
+            return lproduct;
+        }
         public List<Select_All_LowInventory_ProductsResult> lpsortProducts(string sortorder, List<Select_All_LowInventory_ProductsResult> lproduct)
         {
             switch (sortorder)

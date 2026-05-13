@@ -1,6 +1,9 @@
 ﻿@model ProductsVM
 
 
+
+
+
 <div class="row">
 <div class="col pb-4 d-flex justify-content-center align-items-center" style="height:15px">
     <partial name="_Paging" model="Model" style="height:5px" />
@@ -33,14 +36,15 @@
        
         <tbody>
      
-            @foreach (var prod in Model.Products.Items)
+            @foreach (var prod in Model.SearchProducts.Items)
             {
                 <tr>
                     <td>     <a asp-controller="Products" asp-action="Delete" asp-route-pc="@prod.product_code class="btn btn-danger mx-2">@prod.product_code</a></td>
                     <td><img src="~/Media/@prod.photo_url" onerror="NoImg(this);" alt="@prod.product_name" class="img-thumbnail img-fluid" style=" max-width: 5rem; max-height: 10rem;"></td>
                     <td>@prod.product_name</td>
                     <td>@prod.product_price</td>
-                    <td>@prod.category_name
+                    <td>
+                        @prod.category_name
                     </td>
                     <td>@prod.stockstatus</td>
                     <td>@prod.hidden</td>
@@ -65,7 +69,19 @@
 </div>
 
 
-@* <div class="row">
+
+
+
+
+
+
+
+
+
+
+@* 
+
+<div class="row">
     <div class="col pb-4 d-flex justify-content-center align-items-center" style="height:15px">
         <partial name="_Paging" model="Model" style="height:5px" />
     </div>
@@ -97,7 +113,7 @@
 
     </div>
     <div class="card border-0 p-1 overflow-x-hidden overflow-y-auto" style="max-height: 950px;">
-        @foreach (var prod in Model.Products.Items)
+        @foreach (var prod in Model.SearchProducts.Items)
         {
             <div class="row border-bottom py-2 ">
                 <div class="col">     <a asp-controller="Products" asp-action="Delete" asp-route-pc="@prod.product_code class="btn btn-danger mx-2">@prod.product_code</a></div>
@@ -108,12 +124,10 @@
                     <a onmouseout="hidewmodel()" onmouseover="event.stopPropagation(); showmodel('@prod.category_name');" onmousemove="hidewmodel()">
                         @prod.Categories
                     </a>
-                      </div>
-                     
+                </div>
                 <div class="col">
                     @prod.category_name
                 </div>
-              
                 <div class="col">@prod.stockstatus</div>
                 <div class="col">@prod.hidden</div>
                 <div class="col">
@@ -126,12 +140,13 @@
             </div>
         }
     </div>
-</div> 
- <div class="pb-4 pt-3 d-flex justify-content-center align-items-center vh-25" style="height:5px">
+</div>
+<div class="pb-4 pt-3 d-flex justify-content-center align-items-center vh-25" style="height:5px">
     <partial name="_Paging" model="Model" />
-</div> 
+</div>
 
- <div class="modal fade" id="hoverModal" tabindex="-1">
+
+<div class="modal fade" id="hoverModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

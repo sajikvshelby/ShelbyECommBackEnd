@@ -311,7 +311,27 @@ namespace ShelbyBackEnd.Infrastructure.Models
             return _;
         }
 
-        public virtual async Task<List<Select_All_Products_ListResult>> Select_All_Products_ListAsync(string product_name, string product_code, string product_price_min, string product_price_max, string product_weight_min, string product_weight_max, string tab_product_desc, int? category_id, bool? inactive, bool? restricted, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<Select_All_Products_ListResult>> Select_All_Products_ListAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<Select_All_Products_ListResult>("EXEC @returnValue = [dbo].[Select_All_Products_List]", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<Select_All_search_ProductsResult>> Select_All_search_ProductsAsync(string product_name, string product_code, string product_price_min, string product_price_max, string product_weight_min, string product_weight_max, string tab_product_desc, int? category_id, bool? inactive, bool? restricted, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -391,7 +411,7 @@ namespace ShelbyBackEnd.Infrastructure.Models
                 },
                 parameterreturnValue,
             };
-            var _ = await _context.SqlQueryAsync<Select_All_Products_ListResult>("EXEC @returnValue = [dbo].[Select_All_Products_List] @product_name = @product_name, @product_code = @product_code, @product_price_min = @product_price_min, @product_price_max = @product_price_max, @product_weight_min = @product_weight_min, @product_weight_max = @product_weight_max, @tab_product_desc = @tab_product_desc, @category_id = @category_id, @inactive = @inactive, @restricted = @restricted", sqlParameters, cancellationToken);
+            var _ = await _context.SqlQueryAsync<Select_All_search_ProductsResult>("EXEC @returnValue = [dbo].[Select_All_search_Products] @product_name = @product_name, @product_code = @product_code, @product_price_min = @product_price_min, @product_price_max = @product_price_max, @product_weight_min = @product_weight_min, @product_weight_max = @product_weight_max, @tab_product_desc = @tab_product_desc, @category_id = @category_id, @inactive = @inactive, @restricted = @restricted", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 

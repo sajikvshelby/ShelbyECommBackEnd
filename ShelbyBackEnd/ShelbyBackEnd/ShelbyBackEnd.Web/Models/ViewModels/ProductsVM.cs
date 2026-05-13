@@ -2,14 +2,16 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ShelbyBackEnd.Infrastructure.Models;
 using ShelbyEComm.Services.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace ShelbyBackEnd.Web.Models.ViewModels
 {
     public class ProductsVM
     {
-
+        
         public PaginatedList<Select_All_Products_ListResult> Products { get; set; }
 
+        public PaginatedList<Select_All_search_ProductsResult> SearchProducts { get; set; }
         public PaginatedList<Select_All_LowInventory_ProductsResult> lowInventoryProducts { get; set; }
 
         [ValidateNever]
@@ -46,17 +48,20 @@ namespace ShelbyBackEnd.Web.Models.ViewModels
         public bool isProducts { get; set; } = false;
 
         [ValidateNever]
+        public bool isProductSearch { get; set; } = false;
+
+
+        [ValidateNever]
         public bool isLIProducts { get; set; } = false;
 
         [ValidateNever]
         public string Title { get; set; }
-        [ValidateNever]
-        public string product_price_min { get; set; }
-        [ValidateNever]
+
+         public string product_price_min { get; set; }
+
         public string product_price_max { get; set; }
-        [ValidateNever]
         public string product_weight_min { get; set; }
-        [ValidateNever]
+
         public string product_weight_max { get; set; }
 
 

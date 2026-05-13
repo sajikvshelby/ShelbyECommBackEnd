@@ -87,6 +87,12 @@
         <partial name="_LoadProducts" model="Model" />
     </div>
 }
+@if (Model.isProductSearch)
+{
+    <div id="divProductSearch">
+        <partial name="_LoadSearchProducts" model="Model" />
+    </div>
+}
 @if (Model.isLIProducts)
 {
     <div id="divProduct">

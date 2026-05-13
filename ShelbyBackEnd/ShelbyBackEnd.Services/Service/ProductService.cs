@@ -21,12 +21,10 @@ namespace ShelbyBackEnd.Services.Service
 
         }
 
-        public async Task<PaginatedList<Select_All_Products_ListResult>> GetAllProducts(int? pageNumber, int? pageSize, string sortorder, SearchSession searchSession, CancellationToken cancellationToken = default)
+        public async Task<PaginatedList<Select_All_Products_ListResult>> GetAllProducts(int? pageNumber, int? pageSize, string sortorder, CancellationToken cancellationToken = default)
         {
             List<Select_All_Products_ListResult> lproduct = new List<Select_All_Products_ListResult>();
-            lproduct = await _db.Procedures.Select_All_Products_ListAsync(searchSession.product_name, searchSession.product_code, searchSession.product_price_min, searchSession.product_price_max, searchSession.product_weight_min, searchSession.product_weight_max, searchSession.tab_product_desc, searchSession.category_id,
-                searchSession.inactive, searchSession.restricted,
-                cancellationToken: cancellationToken);
+            lproduct = await _db.Procedures.Select_All_Products_ListAsync(cancellationToken: cancellationToken);
             if (!string.IsNullOrEmpty(sortorder))
             {
                 ProductSort productSort = new ProductSort();
@@ -34,6 +32,21 @@ namespace ShelbyBackEnd.Services.Service
             }
             pageSize = pageSize == 1 ? lproduct.Count : pageSize;
             return await PaginatedList<Select_All_Products_ListResult>.CreateAsync((lproduct), pageNumber ?? 1, pageSize ?? 20);
+        }
+
+        public async Task<PaginatedList<Select_All_search_ProductsResult>> GetAllSearchProducts(int? pageNumber, int? pageSize, string sortorder, SearchSession searchSession, CancellationToken cancellationToken = default)
+        {
+            List<Select_All_search_ProductsResult> lproduct = new List<Select_All_search_ProductsResult>();
+            lproduct = await _db.Procedures.Select_All_search_ProductsAsync(searchSession.product_name, searchSession.product_code, searchSession.product_price_min, searchSession.product_price_max, searchSession.product_weight_min, searchSession.product_weight_max, searchSession.tab_product_desc, searchSession.category_id,
+                searchSession.inactive, searchSession.restricted,
+                cancellationToken: cancellationToken);
+            if (!string.IsNullOrEmpty(sortorder))
+            {
+                ProductSort productSort = new ProductSort();
+                lproduct = productSort.sortSearchProducts(sortorder, lproduct);
+            }
+            pageSize = pageSize == 1 ? lproduct.Count : pageSize;
+            return await PaginatedList<Select_All_search_ProductsResult>.CreateAsync((lproduct), pageNumber ?? 1, pageSize ?? 20);
         }
         public async Task<PaginatedList<Select_All_LowInventory_ProductsResult>> GetAllLowInventoryProducts(int? pageNumber, int? pageSize, string sortorder, CancellationToken cancellationToken = default)
         {
