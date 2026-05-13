@@ -17,6 +17,8 @@ namespace ShelbyBackEnd.Infrastructure.Models
         public decimal product_price { get; set; }
         [StringLength(2147483647)]
         public string Categories { get; set; }
+        [StringLength(2147483647)]
+        public string category_name { get; set; }
         public int quantity { get; set; }
         public bool hidden { get; set; }
         [StringLength(305)]
