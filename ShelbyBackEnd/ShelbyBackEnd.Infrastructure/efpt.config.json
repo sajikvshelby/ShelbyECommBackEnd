@@ -23,6 +23,10 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[Archive_Product]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[Insert_Categories]",
          "ObjectType": 1
       },

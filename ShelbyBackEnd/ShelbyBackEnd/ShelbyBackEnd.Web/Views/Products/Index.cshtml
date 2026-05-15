@@ -27,12 +27,12 @@
 
 
 
-               function setDelete(product_code, name) {
-        document.getElementById("productIdToDelete").value = product_code;
+               function setProductDelete(product_id, name) {
+        document.getElementById("productIdToDelete").value = product_id;
         document.getElementById("producttxtToDelete").textContent  = "Are you sure you want to delete product - "+ name + "?";
         }
-        function callDelete(id) {
-        $.post('/Categories/DeleteCategories', { pc: product_code }, function() {
+        function ProductDelete(id) {
+        $.post('/Products/DeleteProduct', { id: id }, function() {
         document.getElementById("producttxtToDelete").textContent  =  "Successfully deleted"  ;
              document.getElementById("btnNO").hidden = true;
         document.getElementById("btnYES").hidden = true;
@@ -112,11 +112,11 @@
                 <label id="producttxtToDelete" />
             </div>
             <div class="modal-footer">
-                <a id="btnYES" class="btn btn-danger mx-2" onclick="callDelete(productIdToDelete.value);">
+                <a id="btnYES" class="btn btn-danger mx-2" onclick="ProductDelete(productIdToDelete.value);">
                     Yes
                 </a>
                 <button id="btnNO" type="button" class="btn btn-secondary" data-bs-dismiss="modal" return false;">No</button>
-                <button id="btnClose" hidden type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="window.location.reload(); return false;">Close</button>
+                <button id="btnClose" hidden type="button" class="btn btn-secondary busybutton" data-bs-dismiss="modal" onclick="window.location.reload(); return false;">Close</button>
 
             </div>
 

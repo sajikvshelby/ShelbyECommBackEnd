@@ -63,5 +63,11 @@ namespace ShelbyBackEnd.Services.Service
         }
 
 
+        public async Task<bool> Archive_Product(int product_id, int modified_by, CancellationToken cancellationToken = default)
+        {
+            int returnValue = await _db.Procedures.Archive_ProductAsync(product_id, modified_by, cancellationToken: cancellationToken);
+            return returnValue > 0;
+        }
+
     }
 }

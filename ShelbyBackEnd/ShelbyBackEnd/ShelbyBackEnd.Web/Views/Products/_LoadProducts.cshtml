@@ -36,7 +36,7 @@
             @foreach (var prod in Model.Products.Items)
             {
                 <tr>
-                    <td>     <a asp-controller="Products" asp-action="Delete" asp-route-pc="@prod.product_code class="btn btn-danger mx-2">@prod.product_code</a></td>
+                    <td>     <a asp-controller="Products" asp-action="Delete" asp-route-pi="@prod.product_id class="btn btn-danger mx-2">@prod.product_code</a></td>
                     <td><img src="~/Media/@prod.photo_url" onerror="NoImg(this);" alt="@prod.product_name" class="img-thumbnail img-fluid" style=" max-width: 5rem; max-height: 10rem;"></td>
                     <td>@prod.product_name</td>
                     <td>@prod.product_price</td>
@@ -48,7 +48,7 @@
                     <td>
 
                         <div class="w-75 btn-group" role="group">
-                                       <button class="btn btn-danger mx-2" onclick="event.stopPropagation(); setDelete('@prod.product_code','@prod.product_name');" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                            <button class="btn btn-danger mx-2" onclick="event.stopPropagation(); setProductDelete('@prod.product_id','@prod.product_name');" data-bs-toggle="modal" data-bs-target="#deleteModal">
                                 Delete
                             </button>
                         </div>

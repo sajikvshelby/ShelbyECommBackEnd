@@ -14,15 +14,15 @@
 $(document).ready(function () {
 
     $('.busyanchor').not('[target="_blank"]').not('[href^="#"]').click(function () {
-        $('#loader-wrapper').show();
+        $('#busy_ic').show();
     });
-  
-    $('form').submit(function () {
-        $('#loader-wrapper').show();
+
+    $('.busybutton').click(function () {
+        $('#busy_ic').show();
     });
 
     $('.busyselect').change(function () {
-        $('#loader-wrapper').show();
+        $('#busy_ic').show();
     });
   
 
@@ -30,7 +30,7 @@ $(document).ready(function () {
 
 
 $(window).on('pageshow', function () {
-    $('#loader-wrapper').hide();
+    $('#busy_ic').hide();
 });
 
 

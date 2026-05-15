@@ -75,6 +75,38 @@ namespace ShelbyBackEnd.Infrastructure.Models
             return _;
         }
 
+        public virtual async Task<int> Archive_ProductAsync(long? product_id, int? modified_by, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "product_id",
+                    Value = product_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.BigInt,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "modified_by",
+                    Value = modified_by ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.Database.ExecuteSqlRawAsync("EXEC @returnValue = [dbo].[Archive_Product] @product_id = @product_id, @modified_by = @modified_by", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
         public virtual async Task<int> Insert_CategoriesAsync(int? parent_category_id, string category_name, int? display_order, short? default_sort_by_id, bool? hidden, string category_placement, bool? display_subcat_items, string alt_url, string alt_url_target, string link_title, string meta_title, string meta_desc, string meta_keywords, string search_tags, string category_desc, bool? category_desc_hidden, string category_short_desc, bool? category_short_desc_hidden, string category_secondary_desc, bool? category_secondary_desc_hidden, int? created_by, int? modified_by, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter

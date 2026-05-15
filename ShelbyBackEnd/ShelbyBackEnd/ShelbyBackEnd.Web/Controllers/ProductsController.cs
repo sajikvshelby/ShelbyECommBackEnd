@@ -114,7 +114,12 @@ namespace ShelbyBackEnd.Web.Controllers
         }
 
 
-
+        [HttpPost]
+        public async Task<IActionResult> DeleteProduct(int id)
+        {
+            await _productService.Archive_Product(id, 0);
+            return RedirectToAction(nameof(Index));
+        }
 
 
         private void setViewData(int ps, int pt, string so)
