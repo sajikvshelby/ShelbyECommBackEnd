@@ -9,7 +9,7 @@
     @foreach (var category in Model.Where(l => l.parent_backend_menu_id == 0))
     {
         <li class="nav-item dropdown  me-3">
-            <a class="dropdown-item text-white b2b-link_blu" href="#">@category.backend_menu_name</a>
+            <a class="dropdown-item text-white b2b-link_blu busyanchor" href="#">@category.backend_menu_name</a>
 
             @if (Model.Any(m => m.parent_backend_menu_id == category.backend_menu_id))
             {
@@ -17,7 +17,7 @@
                     @foreach (var subMenuItem in Model.Where(l => l.parent_backend_menu_id == category.backend_menu_id))
                     {
                         <li>
-                            <a class="dropdown-item" asp-controller=@subMenuItem.backend_menu_name asp-action="Index">@subMenuItem.backend_menu_name</a>
+                            <a class="dropdown-item busyanchor" asp-controller=@subMenuItem.backend_menu_name asp-action="Index">@subMenuItem.backend_menu_name</a>
                         </li>
                     }
                 </ul>

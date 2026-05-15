@@ -34,8 +34,9 @@
         function callDelete(id) {
         $.post('/Categories/DeleteCategories', { pc: product_code }, function() {
         document.getElementById("producttxtToDelete").textContent  =  "Successfully deleted"  ;
-        document.getElementById("btnNO").textContent = "Close";
+             document.getElementById("btnNO").hidden = true;
         document.getElementById("btnYES").hidden = true;
+         document.getElementById("btnClose").hidden = false;
         }).fail(function() {
         });
         }
@@ -58,7 +59,7 @@
 
 
         <div class="float-start w-25">
-    <select id="dllpageType" style="width: 250px;" class="form-select fw-bold">
+    <select id="dllpageType" style="width: 250px;" class="form-select fw-bold busyselect">
         <option value="0" class="fw-bold">--Select  Product Menu--</option>
                 <option value="1">Products</option>
                 <option value="2">Low Inventory</option>
@@ -114,7 +115,8 @@
                 <a id="btnYES" class="btn btn-danger mx-2" onclick="callDelete(productIdToDelete.value);">
                     Yes
                 </a>
-                <button id="btnNO" type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="window.location.reload(); return false;">No</button>
+                <button id="btnNO" type="button" class="btn btn-secondary" data-bs-dismiss="modal" return false;">No</button>
+                <button id="btnClose" hidden type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="window.location.reload(); return false;">Close</button>
 
             </div>
 

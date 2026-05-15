@@ -13,7 +13,7 @@
 
 $(document).ready(function () {
 
-    $('a').not('[target="_blank"]').not('[href^="#"]').click(function () {
+    $('.busyanchor').not('[target="_blank"]').not('[href^="#"]').click(function () {
         $('#loader-wrapper').show();
     });
   
@@ -21,10 +21,10 @@ $(document).ready(function () {
         $('#loader-wrapper').show();
     });
 
-    $('select').change(function () {
+    $('.busyselect').change(function () {
         $('#loader-wrapper').show();
     });
-
+  
 
 });
 

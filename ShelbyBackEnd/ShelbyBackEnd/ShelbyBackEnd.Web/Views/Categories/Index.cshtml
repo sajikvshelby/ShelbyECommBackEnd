@@ -101,7 +101,9 @@
                     <a id="btnYES" class="btn btn-danger mx-2" onclick="callDelete(categoryIdToDelete.value);">
                         Yes
                     </a>
-                    <button id="btnNO" type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="window.location.reload(); return false;">No</button>
+
+                    <button id="btnNO" type="button" class="btn btn-secondary" data-bs-dismiss="modal"  return false;">No</button>
+                    <button id="btnClose" hidden type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="window.location.reload(); return false;">Close</button>
 
                 </div>
 
@@ -122,8 +124,9 @@
     function callDelete(id) {
     $.post('/Categories/DeleteCategories', { id: id }, function() {
     document.getElementById("categorytxtToDelete").textContent  =  "Successfully deleted"  ;
-    document.getElementById("btnNO").textContent = "Close";
+    document.getElementById("btnNO").hidden = true;
     document.getElementById("btnYES").hidden = true;
+     document.getElementById("btnClose").hidden = false;
     }).fail(function() {
     });
     }
