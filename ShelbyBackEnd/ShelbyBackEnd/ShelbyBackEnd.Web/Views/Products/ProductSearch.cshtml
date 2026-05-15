@@ -31,18 +31,7 @@
               });
           });
 
-
-          //        function validateDecimal(input) {
-          //   let value = input.value.replace(/[^0-9.]/g, '');
-          //   const parts = value.split('.');
-          //   if (parts.length > 2) {
-          //     value = parts[0] + '.' + parts.slice(1).join('');
-          //   }
-          //   input.value = value;
-          // }
-          //oninput="validateDecimal(this)"
-
-        const inputs = document.querySelectorAll('.Decimal-class');
+          const inputs = document.querySelectorAll('.Decimal-class');
           inputs.forEach(input => {
             input.addEventListener('input', function() {
                   this.value = this.value.replace(/[^0-9.]/g, '');
@@ -104,6 +93,7 @@
             <div class=" col form-floating py-2 col-12 w-25">
                 <input asp-for="@Model.product_price_min"   class="form-control border shadow Decimal-class" />
                 <label class="ms-2 fw-bold">Product Price Min</label>
+                <span asp-validation-for="@Model.product_price_min" class="text-danger"></span>
             </div>
             <div class=" col form-floating py-2 col-12 w-25">
                 <input id="myInput" asp-for="@Model.product_price_max"  class="form-control border shadow Decimal-class" />
