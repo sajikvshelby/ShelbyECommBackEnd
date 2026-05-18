@@ -11,7 +11,7 @@ namespace ShelbyBackEnd.Web.Models.ViewModels
         
         public PaginatedList<Select_All_Products_ListResult> Products { get; set; }
 
-        public PaginatedList<Select_All_search_ProductsResult> SearchProducts { get; set; }
+        public PaginatedList<Select_Search_ProductsResult> SearchProducts { get; set; }
         public PaginatedList<Select_All_LowInventory_ProductsResult> lowInventoryProducts { get; set; }
 
         [ValidateNever]

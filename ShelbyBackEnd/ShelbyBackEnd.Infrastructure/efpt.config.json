@@ -47,10 +47,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[Select_All_search_Products]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[Select_BackEnd_Menu]",
          "ObjectType": 1
       },
@@ -59,7 +55,15 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[Select_Search_Products]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[Select_Sort_By_List]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Select_Warehouse]",
          "ObjectType": 1
       },
       {

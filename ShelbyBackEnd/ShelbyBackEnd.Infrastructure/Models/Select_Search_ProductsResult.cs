@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ShelbyBackEnd.Infrastructure.Models
 {
-    public partial class Select_All_search_ProductsResult
+    public partial class Select_Search_ProductsResult
     {
         public long product_id { get; set; }
         [StringLength(30)]

@@ -49,7 +49,7 @@ namespace ShelbyBackEnd.Services.Service
         }
 
 
-        public List<Select_All_search_ProductsResult> sortSearchProducts(string sortorder, List<Select_All_search_ProductsResult> lproduct)
+        public List<Select_Search_ProductsResult> sortSearchProducts(string sortorder, List<Select_Search_ProductsResult> lproduct)
         {
             switch (sortorder)
             {

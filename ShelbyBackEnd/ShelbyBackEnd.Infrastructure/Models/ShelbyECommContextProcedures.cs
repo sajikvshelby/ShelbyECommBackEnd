@@ -363,7 +363,53 @@ namespace ShelbyBackEnd.Infrastructure.Models
             return _;
         }
 
-        public virtual async Task<List<Select_All_search_ProductsResult>> Select_All_search_ProductsAsync(string product_name, string product_code, string product_price_min, string product_price_max, string product_weight_min, string product_weight_max, string tab_product_desc, int? category_id, bool? inactive, bool? restricted, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<Select_BackEnd_MenuResult>> Select_BackEnd_MenuAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<Select_BackEnd_MenuResult>("EXEC @returnValue = [dbo].[Select_BackEnd_Menu]", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<Select_ProductResult>> Select_ProductAsync(long? prodID, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "ProdID",
+                    Value = prodID ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.BigInt,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<Select_ProductResult>("EXEC @returnValue = [dbo].[Select_Product] @ProdID = @ProdID", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<Select_Search_ProductsResult>> Select_Search_ProductsAsync(string product_name, string product_code, string product_price_min, string product_price_max, string product_weight_min, string product_weight_max, string tab_product_desc, int? category_id, bool? inactive, bool? restricted, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -443,53 +489,7 @@ namespace ShelbyBackEnd.Infrastructure.Models
                 },
                 parameterreturnValue,
             };
-            var _ = await _context.SqlQueryAsync<Select_All_search_ProductsResult>("EXEC @returnValue = [dbo].[Select_All_search_Products] @product_name = @product_name, @product_code = @product_code, @product_price_min = @product_price_min, @product_price_max = @product_price_max, @product_weight_min = @product_weight_min, @product_weight_max = @product_weight_max, @tab_product_desc = @tab_product_desc, @category_id = @category_id, @inactive = @inactive, @restricted = @restricted", sqlParameters, cancellationToken);
-
-            returnValue?.SetValue(parameterreturnValue.Value);
-
-            return _;
-        }
-
-        public virtual async Task<List<Select_BackEnd_MenuResult>> Select_BackEnd_MenuAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
-        {
-            var parameterreturnValue = new SqlParameter
-            {
-                ParameterName = "returnValue",
-                Direction = System.Data.ParameterDirection.Output,
-                SqlDbType = System.Data.SqlDbType.Int,
-            };
-
-            var sqlParameters = new []
-            {
-                parameterreturnValue,
-            };
-            var _ = await _context.SqlQueryAsync<Select_BackEnd_MenuResult>("EXEC @returnValue = [dbo].[Select_BackEnd_Menu]", sqlParameters, cancellationToken);
-
-            returnValue?.SetValue(parameterreturnValue.Value);
-
-            return _;
-        }
-
-        public virtual async Task<List<Select_ProductResult>> Select_ProductAsync(long? prodID, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
-        {
-            var parameterreturnValue = new SqlParameter
-            {
-                ParameterName = "returnValue",
-                Direction = System.Data.ParameterDirection.Output,
-                SqlDbType = System.Data.SqlDbType.Int,
-            };
-
-            var sqlParameters = new []
-            {
-                new SqlParameter
-                {
-                    ParameterName = "ProdID",
-                    Value = prodID ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.BigInt,
-                },
-                parameterreturnValue,
-            };
-            var _ = await _context.SqlQueryAsync<Select_ProductResult>("EXEC @returnValue = [dbo].[Select_Product] @ProdID = @ProdID", sqlParameters, cancellationToken);
+            var _ = await _context.SqlQueryAsync<Select_Search_ProductsResult>("EXEC @returnValue = [dbo].[Select_Search_Products] @product_name = @product_name, @product_code = @product_code, @product_price_min = @product_price_min, @product_price_max = @product_price_max, @product_weight_min = @product_weight_min, @product_weight_max = @product_weight_max, @tab_product_desc = @tab_product_desc, @category_id = @category_id, @inactive = @inactive, @restricted = @restricted", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 
@@ -510,6 +510,32 @@ namespace ShelbyBackEnd.Infrastructure.Models
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<Select_Sort_By_ListResult>("EXEC @returnValue = [dbo].[Select_Sort_By_List]", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<Select_WarehouseResult>> Select_WarehouseAsync(int? warehouseId, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "WarehouseId",
+                    Value = warehouseId ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<Select_WarehouseResult>("EXEC @returnValue = [dbo].[Select_Warehouse] @WarehouseId = @WarehouseId", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 

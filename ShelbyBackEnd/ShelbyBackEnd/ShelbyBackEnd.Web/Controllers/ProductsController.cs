@@ -154,7 +154,7 @@ namespace ShelbyBackEnd.Web.Controllers
             return productListViewModel;
         }
 
-        private async Task<ProductsVM> SetSearchProducts(PaginatedList<Select_All_search_ProductsResult> products, int page, int ps, int pt, string so)
+        private async Task<ProductsVM> SetSearchProducts(PaginatedList<Select_Search_ProductsResult> products, int page, int ps, int pt, string so)
         {
             ProductsVM productListViewModel = new()
             {
